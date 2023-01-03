@@ -22,7 +22,8 @@ namespace Core.Input
 
         public bool MouseAimActive = false;
         public bool GamePadAimActive = false;
-        public static Vector3 LookDelta { get; private set; }
+        public Vector3 LookDelta => lookDelta;
+        public Vector3 lookDelta; 
         public static Vector3 NormalizedTopDownAimInput { get; private set; }
         public static Vector3 NormalizedTopDownAimEndPoint => normalizedTopDownAimEndPoint;
         private static Vector3 normalizedTopDownAimEndPoint;
@@ -45,8 +46,6 @@ namespace Core.Input
         [SerializeField] private InputActionReference jumpAction;
         [SerializeField] private InputActionReference lookAction;
         
-        public static InputButtonSlot tabCycleRightButton = new InputButtonSlot();
-        public static InputButtonSlot tabCycleLeftButton = new InputButtonSlot();        
         public static InputButtonSlot jumpButton = new InputButtonSlot();
         
 
@@ -138,14 +137,13 @@ namespace Core.Input
 
         private void OnLookPerformed(InputAction.CallbackContext obj)
         {
-            LookDelta = obj.ReadValue<Vector2>();
+            lookDelta = obj.ReadValue<Vector2>();
             Debug.Log(" l "+ LookDelta);
-
         }
         
         private void OnLookCancelled(InputAction.CallbackContext obj)
         {
-            LookDelta = Vector3.zero;
+            lookDelta = Vector3.zero;
         }
 
         private void OnMovePerformed(InputAction.CallbackContext obj)
@@ -165,6 +163,11 @@ namespace Core.Input
         {
             if(AimOrigin)
                 Gizmos.DrawRay(AimOrigin.position, aimDir);
+        }
+        
+        public static void PlayModeExitCleanUp()
+        {
+            jumpButton.cleanup();
         }
     }
 }

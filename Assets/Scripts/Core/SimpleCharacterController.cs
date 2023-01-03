@@ -49,7 +49,7 @@ public class SimpleCharacterController : MonoBehaviour
     public float knockBackSmoothTime = .6f;
 
     public float groundCheckRadius = .5f;
-    [SerializeField] private float groundHeight;
+    [FormerlySerializedAs("groundHeight")] [SerializeField] private float groundCheckDistance;
     [SerializeField] private LayerMask groundLayerMask;
 
     public Animator animator;
@@ -72,14 +72,17 @@ public class SimpleCharacterController : MonoBehaviour
     {
         float yVel = moveVel.y;
         inputVel = moveInput * moveSpeed;
-        if (moveInput == Vector3.zero)
-        {
-            moveVel = Vector3.SmoothDamp(moveVel, inputVel, ref curAcc, velSmoothTime, maxAcc);
-        }
-        else
-        {
-            moveVel = Vector3.SmoothDamp(moveVel, inputVel, ref curAcc, velSmoothTime, maxAcc);
-        }
+        
+        //turn off acceleration
+        // if (moveInput == Vector3.zero)
+        // {
+        //     moveVel = Vector3.SmoothDamp(moveVel, inputVel, ref curAcc, velSmoothTime, maxAcc);
+        // }
+        // else
+        // {
+        //     moveVel = Vector3.SmoothDamp(moveVel, inputVel, ref curAcc, velSmoothTime, maxAcc);
+        // }
+        moveVel = inputVel;
 
         moveVel.y = yVel;
         
@@ -99,14 +102,18 @@ public class SimpleCharacterController : MonoBehaviour
     # region  Jump and gravity
 
     private Vector3? groundPoint;
-    
+
+    Vector3 getGroundCheckEndPoint()
+    {
+        return getGroundCheckStartPoint()+ (groundCheckDistance - groundCheckRadius) * Vector3.down;
+    }
     public bool checkGrounded()
     {
-        Physics.SphereCast(transform.position +groundHeight * Vector3.up, 
+        Physics.SphereCast(getGroundCheckStartPoint(), 
             groundCheckRadius, 
             Vector3.down, 
             out var hit, 
-            groundHeight -groundCheckRadius,
+            groundCheckDistance - groundCheckRadius,
             groundLayerMask);
         
         if (hit.collider)
@@ -130,6 +137,7 @@ public class SimpleCharacterController : MonoBehaviour
 
     public void applyJumpVel()
     {
+        Debug.Log(InputManager.jumpButton.isHeld);
         if (IsGrounded
             && InputManager.jumpButton.isHeld
             // && InputManager.jumpButton.LastPressedTime.withinDuration(jumpGracePeriod)
@@ -194,6 +202,13 @@ public class SimpleCharacterController : MonoBehaviour
         knockBackBuildup = Vector3.ClampMagnitude(knockBackBuildup + knockBack, maxKnockBack);
     }
     public float testForce = 5;
+    public float groundCheckOffset = -.5f;
+
+
+    Vector3 getGroundCheckStartPoint()
+    {
+        return transform.position + groundCheckOffset * Vector3.up;
+    }
 
     void test()
     {
@@ -205,20 +220,25 @@ public class SimpleCharacterController : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        groundHeight = cc.height * .5f;
+        groundCheckDistance = cc.height * .5f;
     }
 
     private void Update()
     {
         IsGrounded = checkGrounded();
-        calcInput(out  input);
+        calcInput(out input);
         calcVelocity(input);
         calcKnockBack(out float knockbackFactor);
         calcMoveAmount(knockbackFactor, out var moveAmount);
 
+        applyMovement(moveAmount);
+        // updateRotation();
+        // animate();
+    }
+
+    void applyMovement(Vector3 moveAmount)
+    {
         cc.Move(moveAmount);
-        updateRotation();
-        animate();
     }
 
     private void updateRotation()
@@ -231,11 +251,11 @@ public class SimpleCharacterController : MonoBehaviour
 
     private void animate()
     {
-        animator.SetFloat("Speed", moveVel.magnitude / moveSpeed);
-        animator.SetBool("Grounded", IsGrounded);
-        animator.SetBool("Jump" , isJumping);
-        animator.SetBool("IsMoving" , InputManager.RawMoveInput != Vector2.zero);
-        animator.SetBool("FreeFall" , moveVel.y <0 && IsGrounded);
+        // animator.SetFloat("Speed", moveVel.magnitude / moveSpeed);
+        // animator.SetBool("Grounded", IsGrounded);
+        // animator.SetBool("Jump" , isJumping);
+        // animator.SetBool("IsMoving" , InputManager.RawMoveInput != Vector2.zero);
+        // animator.SetBool("FreeFall" , moveVel.y <0 && IsGrounded);
     }
 
     public void calcMoveAmount(float knockBackFactor, out Vector3 moveAmount)
@@ -277,8 +297,16 @@ public class SimpleCharacterController : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(groundPoint.Value, .25f);
-
         }
-        Gizmos.DrawWireSphere(transform.position + (groundCheckRadius) * Vector3.up, groundCheckRadius);
+
+        var startPoint = getGroundCheckStartPoint();
+        var endPoint = getGroundCheckEndPoint();
+        Gizmos.DrawWireSphere(startPoint, groundCheckRadius);
+        Gizmos.DrawWireSphere(endPoint, groundCheckRadius);
+        Gizmos.DrawSphere(startPoint, .125f );
+        Gizmos.DrawSphere(endPoint, .125f );
+
+        Gizmos.DrawLine(startPoint, endPoint);
+        
     }
 }
