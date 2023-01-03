@@ -1,16 +1,17 @@
 ﻿using System;
 using Core.Input;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Core.Misc.Core
 {
     public class PlayerGunController: MonoBehaviour
     {
-        [SerializeField] Gun gun;
+        [FormerlySerializedAs("gun")] [SerializeField] HealGun healGun;
 
         private void Start()
         {
-            InputManager.shootButton.addPerformedCallback(gameObject, gun.shoot);
+            InputManager.shootButton.addPerformedCallback(gameObject, healGun.shoot);
         }
     }
 }

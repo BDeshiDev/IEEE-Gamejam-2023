@@ -30,6 +30,8 @@ public class SimpleCharacterController : MonoBehaviour
     private float minJumpVelocity;
     public float jumpGracePeriod = .2f;
     [SerializeField] bool isJumping = false;
+    public int jumpLimit = 1;
+    public int remainingJumps;
     public bool GravityEnabled = true;
 
     public float maxKnockBack = 50;
@@ -137,12 +139,24 @@ public class SimpleCharacterController : MonoBehaviour
 
     public void applyJumpVel()
     {
-        if (IsGrounded
+        // the actual jump limit is refreshed whe you are grounded
+        // So you can't jump infinitely midair as that defeats any sense of challenge
+        if (IsGrounded)
+        {
+            resetJumpLimit();
+        }
+        
+        
+        if (!IsGrounded // can only jump when NOT GROUNDED
             && InputManager.jumpButton.isHeld
             // && InputManager.jumpButton.LastPressedTime.withinDuration(jumpGracePeriod)
             && !isJumping)
         {
-            handleJumpDown();
+            if (remainingJumps > 0)
+            {
+                remainingJumps -= 1;
+                handleJumpDown();   
+            }
         }
         else
         {
@@ -153,10 +167,16 @@ public class SimpleCharacterController : MonoBehaviour
         }
     }
 
+    private void resetJumpLimit()
+    {
+        remainingJumps = jumpLimit;
+    }
+
     public void handleJumpDown()
     {
         moveVel.y = (moveVel.y >= 0 ? moveVel.y : 0) + maxJumpVelocity;
         isJumping = true;
+
     }
     
     public void handleJumpUp()
@@ -220,6 +240,8 @@ public class SimpleCharacterController : MonoBehaviour
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         groundCheckDistance = cc.height * .5f;
+        
+        resetJumpLimit();
     }
 
     private void Update()
@@ -294,8 +316,12 @@ public class SimpleCharacterController : MonoBehaviour
     {
         if (groundPoint.HasValue)
         {
-            Gizmos.color = Color.red;
+            Gizmos.color = Color.yellow;
             Gizmos.DrawSphere(groundPoint.Value, .25f);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
         }
 
         var startPoint = getGroundCheckStartPoint();
