@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Combat.Pickups;
+using Unity.Mathematics;
+using UnityEngine;
 
 namespace Core.Misc.Core
 {
@@ -9,17 +11,28 @@ namespace Core.Misc.Core
         public LayerMask hitLayerMask;
 
         public GunShotTrailEffect trailEffect;
-        
+        [SerializeField] private PlayerEntity player;
         public override void shoot()
         {
-            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-            if (Physics.Raycast(ray, out var hitResults, shotDist, hitLayerMask))
+
+            if (Physics.Raycast(player.getPlayerShotDirRay(), out var hitResults, shotDist, hitLayerMask))
             {
                 trailEffect.enableTrail(shotPoint.position, hitResults.point);
             }
+            else
+            {
+                trailEffect.enableTrail(shotPoint.position, player.transform.forward * shotDist);
+
+            }
         }
-        
-        
+
+
+        public override void handleAddedToInventorySlot(ItemSlot slot)
+        {
+            player = slot.inventory.owner;
+            transform.parent = player.gunParent;
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+        }
     }
 }

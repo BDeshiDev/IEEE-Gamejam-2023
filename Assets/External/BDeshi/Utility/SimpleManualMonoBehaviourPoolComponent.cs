@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 namespace BDeshi.Utility
 {
     /// <summary>
-    /// Simple pool with normal instantiation automated.
+    /// Simple pool as a Unity component with normal instantiation automated.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class SimpleManualMonoBehaviourPoolComponent<T>: MonoBehaviour

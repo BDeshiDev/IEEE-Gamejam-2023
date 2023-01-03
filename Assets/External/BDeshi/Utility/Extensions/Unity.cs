@@ -6,7 +6,7 @@ namespace BDeshi.Utility.Extensions
 {
     public static class Unity
     {
-        public static void allignToDir(this Transform transform, Vector2 dir)
+        public static void allignToDir2D(this Transform transform, Vector2 dir)
         {
             float angle = get2dAngle(dir);
             transform.set2dRotation(angle);
