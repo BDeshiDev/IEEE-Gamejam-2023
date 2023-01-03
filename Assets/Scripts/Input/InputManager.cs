@@ -44,9 +44,11 @@ namespace Core.Input
 
         [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference jumpAction;
+        [SerializeField] private InputActionReference shootAction;
         [SerializeField] private InputActionReference lookAction;
         
         public static InputButtonSlot jumpButton = new InputButtonSlot();
+        public static InputButtonSlot shootButton = new InputButtonSlot();
         
 
 
@@ -104,6 +106,7 @@ namespace Core.Input
 
 
             jumpButton.bind(jumpAction);
+            shootButton.bind(shootAction);
             
             moveAction.action.performed += OnMovePerformed;
             moveAction.action.canceled += OnMoveCancelled;
@@ -126,7 +129,7 @@ namespace Core.Input
 
 
             jumpButton.unBind(jumpAction);
-
+            shootButton.unBind(shootAction);
             moveAction.action.performed -= OnMovePerformed;
             moveAction.action.canceled -= OnMoveCancelled;
             lookAction.action.performed -= OnLookPerformed;
@@ -138,7 +141,6 @@ namespace Core.Input
         private void OnLookPerformed(InputAction.CallbackContext obj)
         {
             lookDelta = obj.ReadValue<Vector2>();
-            Debug.Log(" l "+ LookDelta);
         }
         
         private void OnLookCancelled(InputAction.CallbackContext obj)
@@ -168,6 +170,7 @@ namespace Core.Input
         public static void PlayModeExitCleanUp()
         {
             jumpButton.cleanup();
+            shootButton.cleanup();
         }
     }
 }

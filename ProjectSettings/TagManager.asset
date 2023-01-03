@@ -16,8 +16,8 @@ TagManager:
   - 
   - 
   - 
-  - PlayerPushbox
-  - EnemyPushbox
+  - Player
+  - Enemy
   - 
   - 
   - 
@@ -29,7 +29,7 @@ TagManager:
   - 
   - 
   - Obstacle
-  - 
+  - Ground
   - 
   - 
   - 

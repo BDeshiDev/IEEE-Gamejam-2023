@@ -159,6 +159,7 @@ MonoBehaviour:
   cam: {fileID: 0}
   MouseAimActive: 0
   GamePadAimActive: 0
+  lookDelta: {x: 0, y: 0, z: 0}
   aimLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -168,6 +169,8 @@ MonoBehaviour:
   moveAction: {fileID: -1680190386980627800, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   jumpAction: {fileID: -7492817827555811903, guid: ca9f5fa95ffab41fb9a615ab714db018,
+    type: 3}
+  shootAction: {fileID: 1120369429361536294, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
   lookAction: {fileID: -5630151704836100654, guid: ca9f5fa95ffab41fb9a615ab714db018,
     type: 3}
