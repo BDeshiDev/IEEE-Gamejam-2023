@@ -137,7 +137,6 @@ public class SimpleCharacterController : MonoBehaviour
 
     public void applyJumpVel()
     {
-        Debug.Log(InputManager.jumpButton.isHeld);
         if (IsGrounded
             && InputManager.jumpButton.isHeld
             // && InputManager.jumpButton.LastPressedTime.withinDuration(jumpGracePeriod)
