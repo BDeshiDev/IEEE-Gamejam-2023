@@ -15,7 +15,11 @@ public class SimpleCharacterController : MonoBehaviour
     public Vector3 input;
     [SerializeField] private Vector3 inputVel;
     [SerializeField] Vector3 moveVel = Vector3.zero;
-    [SerializeField] private float moveSpeed = 6;
+    
+    [SerializeField] private float sprintSpeedMultiplier = 1.6f;
+    [FormerlySerializedAs("moveSpeed")] 
+    [SerializeField] private float baseMoveSpeed = 6;
+    [SerializeField] private float curMoveSpeed = 6;
     [SerializeField] private Vector3 curAcc;
     [SerializeField] private float velSmoothTime = .2f;
     [SerializeField] private float maxAcc = 50;
@@ -73,12 +77,14 @@ public class SimpleCharacterController : MonoBehaviour
             );
 
         moveInput.Normalize();
+
+        curMoveSpeed = baseMoveSpeed * (InputManager.sprintButton.isHeld ? sprintSpeedMultiplier : 1);
     }
 
     public void calcVelocity(Vector3 moveInput)
     {
         float yVel = moveVel.y;
-        inputVel = moveInput * moveSpeed;
+        inputVel = moveInput * curMoveSpeed;
         
         //turn off acceleration
         // if (moveInput == Vector3.zero)
@@ -282,7 +288,7 @@ public class SimpleCharacterController : MonoBehaviour
 
     private void animate()
     {
-        // animator.SetFloat("Speed", moveVel.magnitude / moveSpeed);
+        // animator.SetFloat("Speed", moveVel.magnitude / baseMoveSpeed);
         // animator.SetBool("Grounded", IsGrounded);
         // animator.SetBool("Jump" , isJumping);
         // animator.SetBool("IsMoving" , InputManager.RawMoveInput != Vector2.zero);

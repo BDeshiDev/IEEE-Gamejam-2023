@@ -208,6 +208,8 @@ MonoBehaviour:
     type: 3}
   use2Action: {fileID: -3954465912726334734, guid: ae07b1f33bdea1b46804658b7dacfe6c,
     type: 3}
+  sprintAction: {fileID: -8725718374526401192, guid: ae07b1f33bdea1b46804658b7dacfe6c,
+    type: 3}
   lookAction: {fileID: -5630151704836100654, guid: ae07b1f33bdea1b46804658b7dacfe6c,
     type: 3}
   itemShiftAction: {fileID: -2059399585599575641, guid: ae07b1f33bdea1b46804658b7dacfe6c,

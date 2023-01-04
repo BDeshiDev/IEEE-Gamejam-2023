@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SPrintAction",
+                    "type": "Button",
+                    "id": "6fa7427d-fb58-412d-9e38-4d13c0af09cf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -419,6 +428,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Debug1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bee06907-b18e-40b8-ae52-97af3fd72ec6",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "SPrintAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
