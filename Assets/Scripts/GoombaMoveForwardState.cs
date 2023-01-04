@@ -9,6 +9,11 @@ public class GoombaMoveForwardState: ModularState
     public override void enterState(State prev)
     {
         enemyEntity.Animator.Play(entryAnimation);
+        
+        //turn enemy into not pushable thing
+        enemyEntity.cc.enabled = true;
+        enemyEntity.collider.isTrigger = true;
+        enemyEntity.rb.isKinematic = true;
     }
 
     public override void updateState()

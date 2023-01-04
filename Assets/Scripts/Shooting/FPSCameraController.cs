@@ -20,7 +20,6 @@ namespace Core.Misc.Core
         {
             PlayerBody = GameObject.FindWithTag("Player").transform;
         }
-
         private void Update()
         {
             Vector2 mouseDelta = InputManager.Instance.lookDelta * (mouseSensitivity * Time.deltaTime);
@@ -28,6 +27,10 @@ namespace Core.Misc.Core
             xRotation = Mathf.Clamp(xRotation, -90, 90);
             transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
             PlayerBody.Rotate(Vector3.up * mouseDelta.x);
+
+
+            
         }
+
     }
 }

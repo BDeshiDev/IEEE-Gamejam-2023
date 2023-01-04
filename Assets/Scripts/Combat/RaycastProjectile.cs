@@ -40,36 +40,54 @@ namespace Combat
             }
             else
             {
+                Debug.Log("timeout projectle", gameObject);
                 handleEnd();
             }
         }
 
-
-        private bool queryCollision(float checkDistance, out RaycastHit hit)
+        private float lastMoveAmount = 0;
+        [SerializeField]private bool collidedLastFrame = false;
+        private static Collider[] colliderResultCache = new Collider[1];
+        private bool queryCollision(float checkDistance, out Vector3 hitPoint, out float hitDist, out Collider hitCollider)
         {
-            return Physics.SphereCast(transform.position,
+            if (Physics.OverlapSphereNonAlloc(transform.position, collisionRadius, colliderResultCache, hitLayer, QueryTriggerInteraction.Collide) > 0)
+            {
+                hitCollider = colliderResultCache[0];
+                hitPoint = hitCollider.ClosestPoint(transform.position);
+                hitDist = (hitPoint - transform.position).magnitude;
+                return true;
+            }
+            bool result = Physics.SphereCast(transform.position,
                 collisionRadius,
                 ShotDir,
-                out hit,
+                out var hit,
                 checkDistance,
                 hitLayer,
+                
                 QueryTriggerInteraction.Collide
                 );
+            hitPoint = hit.point;
+            hitCollider = hit.collider;
+            hitDist = hit.distance;
+            return result;
         }
-
+        
         private void move(float delta)
         {
             var moveAmount = speedCurve.Evaluate(durationTimer.Ratio) *  speed * delta;
-            if (queryCollision(moveAmount, out var hit ) && hit.collider != null)
+            lastMoveAmount = moveAmount;
+            collidedLastFrame = queryCollision(moveAmount, out var hitPoint, out var hitDist, out var hitCollider);
+            if ( collidedLastFrame && hitCollider != null)
             {
-                var d = hit.collider.GetComponent<IDamagable>();
-                Debug.Log("hit.collider = " + hit.collider);
+                var d = hitCollider.GetComponent<IDamagable>();
                 if (d != null)
                 {
                     onDamage.Invoke(d);
                 }
-                handleHit(hit.point);
-                transform.position += ShotDir * hit.distance;
+                handleHit(hitPoint);
+                moveAmount = hitDist;
+
+                transform.position += ShotDir * moveAmount;
 
             }
             else
@@ -103,9 +121,9 @@ namespace Combat
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.cyan;
-            Gizmos.DrawRay(transform.position, ShotDir * 5);
+            Gizmos.DrawRay(transform.position, -lastMoveAmount * ShotDir);
             Gizmos.DrawWireSphere(transform.position, collisionRadius);
-            Gizmos.DrawWireSphere(transform.position + ShotDir * 5, collisionRadius);
+            Gizmos.DrawWireSphere(transform.position - lastMoveAmount * ShotDir, collisionRadius);
         }
     }
 }

@@ -72,6 +72,7 @@ namespace Combat.Pickups
             {
                 obtainedItemSlots[curPickupIndex].handlePickupUsage1();
                 removePickupAtCurIndexIfEmpty();
+                onInventoryRefreshed?.Invoke(this);
             }
         }
         public void useCurrentPickup2()
@@ -81,6 +82,8 @@ namespace Combat.Pickups
                 obtainedItemSlots[curPickupIndex].handlePickupUsage2();
 
                 removePickupAtCurIndexIfEmpty();
+                onInventoryRefreshed?.Invoke(this);
+
             }
         }
 
@@ -104,7 +107,6 @@ namespace Combat.Pickups
                         curPickupIndex = Mathf.Clamp(curPickupIndex, 0,obtainedItemSlots.Count-1);
                     }
                     
-                    onInventoryRefreshed?.Invoke(this);
                 }
             }
         }

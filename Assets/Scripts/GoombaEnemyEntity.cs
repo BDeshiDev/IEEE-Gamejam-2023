@@ -1,5 +1,6 @@
 ﻿using System;
 using Combat;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -14,6 +15,8 @@ public class GoombaEnemyEntity : LivingEntity
     [SerializeField]private State goombaMoveForwardState;
 
     public CharacterController cc;
+    public BoxCollider collider;
+    public Rigidbody rb;
 
     private void Awake()
     {
@@ -26,4 +29,13 @@ public class GoombaEnemyEntity : LivingEntity
         fsm.transitionToState(deathState);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("trigger ", other.gameObject);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("trigger ", collision.gameObject);
+    }
 }

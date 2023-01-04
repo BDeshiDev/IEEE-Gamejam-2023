@@ -35,7 +35,13 @@ namespace UI
         {
             if (inventory.curPickupIndex  < 0)
             {
+                inventoryUIContainer.gameObject.SetActive(false);
                 return;
+            }
+            else
+            {
+                inventoryUIContainer.gameObject.SetActive(true);
+                
             }
             for (int i = 0; i < inventory.obtainedItemSlots.Count; i++)
             {
