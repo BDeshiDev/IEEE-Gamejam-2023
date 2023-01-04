@@ -1,4 +1,5 @@
-﻿using Combat.Pickups;
+﻿using Combat;
+using Combat.Pickups;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -12,12 +13,20 @@ namespace Core.Misc.Core
 
         public GunShotTrailEffect trailEffect;
         [SerializeField] private PlayerEntity player;
+        //this is -ve so dealing damage normally will heal targets
+        public DamageInfo damagePerHit = new DamageInfo(-20);
         public override void shoot()
         {
             var ray = player.getPlayerShotDirRay();
             if (Physics.Raycast(ray, out var hitResults, shotDist, hitLayerMask))
             {
                 trailEffect.enableTrail(shotPoint.position, hitResults.point);
+
+                var damagee = hitResults.collider.GetComponent<IDamagable>();
+                if (damagee != null)
+                {
+                    damagee.takeDamage(damagePerHit);
+                }
             }
             else
             {

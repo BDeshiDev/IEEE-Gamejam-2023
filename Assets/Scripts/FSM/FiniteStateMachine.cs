@@ -4,6 +4,7 @@ using UnityEngine;
 public class FiniteStateMachine : MonoBehaviour
 {
     [SerializeField] private State curState;
+    public State CurState => curState;
     [SerializeField] private State startingState;
     [SerializeField] private bool pausable;
     public void transitionToState(State newState)

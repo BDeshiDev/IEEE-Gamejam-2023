@@ -29,5 +29,16 @@ public class GoombaEnemyEntity : LivingEntity
         fsm.transitionToState(deathState);
     }
 
-
+    public override void takeDamage(DamageInfo damage)
+    {
+        base.takeDamage(damage);
+        if (fsm.CurState == deathState && damage.isHeal)
+        {
+            if (HealthComponent.IsFull)
+            {
+                //revive
+                fsm.transitionToState(goombaMoveForwardState);
+            }
+        }
+    }
 }
