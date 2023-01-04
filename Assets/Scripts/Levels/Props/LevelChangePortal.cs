@@ -9,11 +9,16 @@ using UnityEngine.SceneManagement;
 
 public class LevelChangePortal : MonoBehaviour
 {
-    
+    private bool hasTriggered = false;
     void handlePortalEntered()
     {
-        //assume that the portal will only be placed on levels that have leveldata objects in them
-        GameStateManager.Instance.loadLevel(SceneVarTracker.Instance.CurLevelData.getNextSceneAfterThisLevel());
+        if (!hasTriggered)
+        {
+            hasTriggered = true;
+            //assume that the portal will only be placed on levels that have leveldata objects in them
+            GameStateManager.Instance.loadLevel(SceneVarTracker.Instance.CurLevelData.getNextSceneAfterThisLevel());
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
