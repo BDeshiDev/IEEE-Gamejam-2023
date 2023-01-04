@@ -14,14 +14,14 @@ namespace Core.Misc.Core
         [SerializeField] private PlayerEntity player;
         public override void shoot()
         {
-
-            if (Physics.Raycast(player.getPlayerShotDirRay(), out var hitResults, shotDist, hitLayerMask))
+            var ray = player.getPlayerShotDirRay();
+            if (Physics.Raycast(ray, out var hitResults, shotDist, hitLayerMask))
             {
                 trailEffect.enableTrail(shotPoint.position, hitResults.point);
             }
             else
             {
-                trailEffect.enableTrail(shotPoint.position, player.transform.forward * shotDist);
+                trailEffect.enableTrail(shotPoint.position, ray.direction* shotDist);
 
             }
         }

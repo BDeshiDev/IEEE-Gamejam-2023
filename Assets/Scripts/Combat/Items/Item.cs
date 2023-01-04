@@ -9,7 +9,7 @@ namespace Combat.Pickups
         public bool consumesUponUsage2 = true;
 
         public bool shouldShowAmountInUI;
-
+        public Sprite itemIconSprite;
         public ItemSlot slot;
         public string PickUpID  {
             get

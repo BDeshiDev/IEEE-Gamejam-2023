@@ -11,7 +11,7 @@ namespace Core.Misc.Core
 
         private void Start()
         {
-            InputManager.shootButton.addPerformedCallback(gameObject, healGun.shoot);
+            InputManager.use1Button.addPerformedCallback(gameObject, healGun.shoot);
         }
     }
 }

@@ -25,6 +25,8 @@ namespace Core.Input
         public Vector3 LookDelta => lookDelta;
         public Vector3 lookDelta; 
         public static Vector3 NormalizedTopDownAimInput { get; private set; }
+
+
         public static Vector3 NormalizedTopDownAimEndPoint => normalizedTopDownAimEndPoint;
         private static Vector3 normalizedTopDownAimEndPoint;
 
@@ -44,12 +46,16 @@ namespace Core.Input
 
         [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference jumpAction;
-        [SerializeField] private InputActionReference shootAction;
+        [SerializeField] private InputActionReference use1Action;
+        [SerializeField] private InputActionReference use2Action;
         [SerializeField] private InputActionReference lookAction;
-        
+        [SerializeField] private InputActionReference itemShiftAction;
         public static InputButtonSlot jumpButton = new InputButtonSlot();
-        public static InputButtonSlot shootButton = new InputButtonSlot();
+        public static InputButtonSlot use1Button = new InputButtonSlot();
+        public static InputButtonSlot use2Button = new InputButtonSlot();
         
+        public SafeEvent<float> itemShift;
+
 
 
         // void Update()
@@ -61,6 +67,7 @@ namespace Core.Input
         {
             cam = Camera.main;
             Debug.Log(cam,cam);
+            itemShift = new SafeEvent<float>();
         }
 
         public static Vector3 convertVecCamRelative(Vector3 dir)
@@ -106,19 +113,26 @@ namespace Core.Input
 
 
             jumpButton.bind(jumpAction);
-            shootButton.bind(shootAction);
+            use1Button.bind(use1Action);
+            use2Button.bind(use2Action);
             
             moveAction.action.performed += OnMovePerformed;
             moveAction.action.canceled += OnMoveCancelled;
             lookAction.action.performed += OnLookPerformed;
             lookAction.action.canceled += OnLookCancelled;
-
+            itemShiftAction.action.performed += handleItemShiftPerformed;
 #if UNITY_EDITOR
 
             // debugButton1.bind(debugAction1);
 
 #endif
 
+        }
+
+        private void handleItemShiftPerformed(InputAction.CallbackContext obj)
+        {
+            float delta = obj.ReadValue<float>();
+            itemShift.Invoke(delta);
         }
 
 
@@ -129,7 +143,9 @@ namespace Core.Input
 
 
             jumpButton.unBind(jumpAction);
-            shootButton.unBind(shootAction);
+            use1Button.unBind(use1Action);
+            use2Button.unBind(use2Action);
+
             moveAction.action.performed -= OnMovePerformed;
             moveAction.action.canceled -= OnMoveCancelled;
             lookAction.action.performed -= OnLookPerformed;
@@ -170,7 +186,13 @@ namespace Core.Input
         public static void PlayModeExitCleanUp()
         {
             jumpButton.cleanup();
-            shootButton.cleanup();
+            use1Button.cleanup();
+            use2Button.cleanup();
+
+            if (Instance != null)
+            {
+                Instance.itemShift.clear();
+            }
         }
     }
 }

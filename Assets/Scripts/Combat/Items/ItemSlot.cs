@@ -12,17 +12,18 @@ namespace Combat.Pickups
     {
         private Stack<Item> RemainingItems = new Stack<Item>();
         public int itemCount => RemainingItems.Count;
-        [FormerlySerializedAs("pickupID")] public string itemID;
         public PlayerInventory inventory;
 
+        public string itemID;
         public bool shouldShowCountInUI;
+        public Sprite itemIconSprite;
         //unity objects do not support constructors so manual initialize function
         public void init(Item item, PlayerInventory inventory)
         {
             this.itemID = item.PickUpID;
             this.shouldShowCountInUI = item.shouldShowAmountInUI;
             this.inventory = inventory;
-            
+            this.itemIconSprite = item.itemIconSprite;
             addItem(item);
         }
 

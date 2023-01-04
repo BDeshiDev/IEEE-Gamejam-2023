@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df440bce25f91ff4d91e350c075039f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActionMap: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  inputActionMap: {fileID: -944628639613478452, guid: ae07b1f33bdea1b46804658b7dacfe6c,
     type: 3}
   AimOrigin: {fileID: 0}
   aimDir: {x: 0, y: 0, z: 0}
@@ -166,13 +166,17 @@ MonoBehaviour:
   moveInput: {x: 0, y: 0}
   applySensitivity: 1
   gamepadVel: 80
-  moveAction: {fileID: -1680190386980627800, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  moveAction: {fileID: -1680190386980627800, guid: ae07b1f33bdea1b46804658b7dacfe6c,
     type: 3}
-  jumpAction: {fileID: -7492817827555811903, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  jumpAction: {fileID: 4432961274449598723, guid: ae07b1f33bdea1b46804658b7dacfe6c,
     type: 3}
-  shootAction: {fileID: 1120369429361536294, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  use1Action: {fileID: 1120369429361536294, guid: ae07b1f33bdea1b46804658b7dacfe6c,
     type: 3}
-  lookAction: {fileID: -5630151704836100654, guid: ca9f5fa95ffab41fb9a615ab714db018,
+  use2Action: {fileID: -3954465912726334734, guid: ae07b1f33bdea1b46804658b7dacfe6c,
+    type: 3}
+  lookAction: {fileID: -5630151704836100654, guid: ae07b1f33bdea1b46804658b7dacfe6c,
+    type: 3}
+  itemShiftAction: {fileID: -2059399585599575641, guid: ae07b1f33bdea1b46804658b7dacfe6c,
     type: 3}
 --- !u!4 &871858675
 Transform:

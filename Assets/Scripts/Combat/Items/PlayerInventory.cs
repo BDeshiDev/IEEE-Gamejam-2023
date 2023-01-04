@@ -23,6 +23,9 @@ namespace Combat.Pickups
                 if (obtainedItemSlots[i].itemID.Equals(item.PickUpID))
                 {
                     obtainedItemSlots[i].addItem(item);
+                    
+                    curPickupIndex = i;
+                    
                     onInventoryRefreshed?.Invoke(this);
                     return;
                 }
@@ -31,6 +34,8 @@ namespace Combat.Pickups
             var newSlot = gameObject.AddComponent<ItemSlot>();
             newSlot.init(item, this);
             obtainedItemSlots.Add(newSlot);
+
+            curPickupIndex = obtainedItemSlots.Count - 1;
             onInventoryRefreshed?.Invoke(this);
         }
 
@@ -40,7 +45,9 @@ namespace Combat.Pickups
             {
                 return;
             }
-            curPickupIndex = (curPickupIndex + (shiftRight ? 1 : -1)) % obtainedItemSlots.Count;
+
+            curPickupIndex = (curPickupIndex + (shiftRight ? 1 : -1) + obtainedItemSlots.Count) % obtainedItemSlots.Count;
+            onInventoryRefreshed?.Invoke(this);
         }
         /// <summary>
         /// Will entirely remove item from inventory
@@ -59,20 +66,47 @@ namespace Combat.Pickups
             onInventoryRefreshed?.Invoke(this);
         }
 
-        void useCurrentPickup1()
+        public void useCurrentPickup1()
         {
             if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
             {
                 obtainedItemSlots[curPickupIndex].handlePickupUsage1();
+                removePickupAtCurIndexIfEmpty();
             }
         }
-        void useCurrentPickup2()
+        public void useCurrentPickup2()
         {
             if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
             {
                 obtainedItemSlots[curPickupIndex].handlePickupUsage2();
+
+                removePickupAtCurIndexIfEmpty();
             }
         }
-        
+
+        void removePickupAtCurIndexIfEmpty()
+        {
+            if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
+            {
+                if (obtainedItemSlots[curPickupIndex].itemCount <= 0)
+                {
+                    var removed = obtainedItemSlots[curPickupIndex];
+                    obtainedItemSlots.RemoveAt(curPickupIndex);
+                    
+                    Destroy(removed);
+
+                    if (obtainedItemSlots.Count <= 0)
+                    {
+                        curPickupIndex = -1;
+                    }
+                    else
+                    {
+                        curPickupIndex = Mathf.Clamp(curPickupIndex, 0,obtainedItemSlots.Count-1);
+                    }
+                    
+                    onInventoryRefreshed?.Invoke(this);
+                }
+            }
+        }
     }
 }

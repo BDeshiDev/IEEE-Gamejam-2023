@@ -33,10 +33,14 @@ namespace UI
 
         public void refreshUI(PlayerInventory inventory)
         {
-            
+            Debug.Log("refresh" + inventory.curPickupIndex);
+            if (inventory.curPickupIndex  < 0)
+            {
+                return;
+            }
             for (int i = 0; i < inventory.obtainedItemSlots.Count; i++)
             {
-                var indexBasedOnPickupSelectionOrder = (inventory.curPickupIndex + i) % inventory.obtainedItemSlots.Count;
+                var indexBasedOnPickupSelectionOrder = (inventory.curPickupIndex + i + inventory.obtainedItemSlots.Count) % inventory.obtainedItemSlots.Count;
                 var pickupInSelectionOrder = inventory.obtainedItemSlots[indexBasedOnPickupSelectionOrder];
                 if (i >= activePickupViews.Count)
                 {
@@ -44,6 +48,7 @@ namespace UI
                     activePickupViews.Add(newView);
                 }
                 activePickupViews[i].refreshUI(pickupInSelectionOrder);
+                activePickupViews[i].setIconActiveState(i == 0);
             }
             //reverse order loop to remove extra activePickupViews
             for (int i =  activePickupViews.Count -1; i >= inventory.obtainedItemSlots.Count; i--)

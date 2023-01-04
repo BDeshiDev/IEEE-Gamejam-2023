@@ -7,8 +7,8 @@ namespace Combat.Pickups
         public Item item;
         public override void handlePickup(PlayerEntity player)
         {
-            Debug.Log("pickup", gameObject);
             player.inventory.addItem(item);
+            gameObject.SetActive(false);
         }
 
     }
