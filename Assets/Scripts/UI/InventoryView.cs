@@ -33,7 +33,6 @@ namespace UI
 
         public void refreshUI(PlayerInventory inventory)
         {
-            Debug.Log("refresh" + inventory.curPickupIndex);
             if (inventory.curPickupIndex  < 0)
             {
                 return;

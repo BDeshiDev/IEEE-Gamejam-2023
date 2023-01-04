@@ -16,11 +16,10 @@ namespace Combat
         [SerializeField] private float speed = 5;
         [SerializeField] private float angularSpeed = 0;
         public Vector3 ShotDir;
-        public DamageInfo damage;
         public FiniteTimer durationTimer = new FiniteTimer(0,1);
         public AnimationCurve speedCurve = AnimationCurve.EaseInOut(0,1,0,0);
         public LayerMask hitLayer;
-        public UnityEvent onHit;
+        public UnityEvent<IDamagable> onHit;
         public void initialize(Vector3 spawnPos, Vector3 dir)
         {
             transform.position = spawnPos;
@@ -62,8 +61,7 @@ namespace Combat
             if (queryCollision(moveAmount, out var hit ) && hit.collider != null)
             {
                 var d = hit.collider.GetComponent<IDamagable>();
-                d.takeDamage(damage);
-                handleHit(hit.point);
+                handleHit(hit.point, d);
                 transform.position += ShotDir * hit.distance;
             }
             else
@@ -73,10 +71,9 @@ namespace Combat
             }
         }
 
-        protected void handleHit(Vector2 point)
+        protected void handleHit(Vector2 point, IDamagable d)
         {
-            onHit.Invoke();
-
+            onHit.Invoke(d);
             /*var particles = GameplayPoolManager.Instance.particlePool
                 .get(hitParticlesPrefab);
             particles.transform.position = point;
@@ -96,9 +93,5 @@ namespace Combat
         }
 
 
-        public void takeDamage(DamageInfo damage)
-        {
-            handleHit(transform.position);
-        }
     }
 }
