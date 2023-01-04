@@ -14,34 +14,13 @@ namespace Core.Input
     public class InputManager : MonoBehaviourSingletonPersistent<InputManager>
     {
         [SerializeField] private InputActionAsset inputActionMap;
-        public Transform AimOrigin;
-        [SerializeField] private  Vector3 aimDir; 
-        public static Vector3 AimDir => Instance.aimDir;
-        public static bool IsAimActive => Instance.aimDir != Vector3.zero;
-        [SerializeField] private Camera cam;
-
-        public bool MouseAimActive = false;
-        public bool GamePadAimActive = false;
         public Vector3 LookDelta => lookDelta;
         public Vector3 lookDelta; 
-        public static Vector3 NormalizedTopDownAimInput { get; private set; }
-
-
-        public static Vector3 NormalizedTopDownAimEndPoint => normalizedTopDownAimEndPoint;
-        private static Vector3 normalizedTopDownAimEndPoint;
-
-        [SerializeField] private LayerMask aimLayer;
-
         [SerializeField]private Vector2 moveInput;
         public static Vector2 RawMoveInput => Instance.moveInput;
         public static Vector3 NormalizedTopDownMoveInput { get; private set; }
         public static bool IsMoveInputActive { get; private set; } = false;
 
-
-        public bool applySensitivity = true;
-        public float gamepadVel = 80;
-        private float dotFactor = 3;
-        private Vector2 gamepadVal = Vector2.zero;
 
 
         [SerializeField] private InputActionReference moveAction;
@@ -62,50 +41,17 @@ namespace Core.Input
 
 
 
-        // void Update()
-        // {
-        //     updateAim();
-        // }
-
         protected override void initialize()
         {
-            cam = Camera.main;
             itemShift = new SafeEvent<float>();
         }
 
-        public static Vector3 convertVecCamRelative(Vector3 dir)
+        public static Vector3 convertVecCamRelative(Camera cam, Vector3 dir)
         {
-            return Quaternion.AngleAxis(Instance.cam.transform.rotation.eulerAngles.y, Vector3.up) * dir;
-        }
-
-        public static float convertVecToAngleCamRelative(Vector3 dir){
-           return Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + Instance.cam.transform.eulerAngles.y;
+            return Quaternion.AngleAxis(cam.transform.rotation.eulerAngles.y, Vector3.up) * dir;
         }
 
 
-        private void AimAlongPerformed(InputAction.CallbackContext obj)
-        {
-            GamePadAimActive = true;
-            MouseAimActive = false;
-
-            gamepadVal = Vector2.zero;
-        }
-        private void AimAlongCancelled(InputAction.CallbackContext obj)
-        {
-            GamePadAimActive = false;
-        }
-
-        private void OnAimAtPerformed(InputAction.CallbackContext obj)
-        {
-            MouseAimActive = true;
-            GamePadAimActive = false;
-        }
-
-        void OnAimAtCancelled(InputAction.CallbackContext c)
-        {
-            MouseAimActive = false;
-        }
-        
 
         void OnEnable()
         {
@@ -187,12 +133,6 @@ namespace Core.Input
             IsMoveInputActive = false;
         }
 
-        private void OnDrawGizmosSelected()
-        {
-            if(AimOrigin)
-                Gizmos.DrawRay(AimOrigin.position, aimDir);
-        }
-        
         public static void PlayModeExitCleanUp()
         {
             jumpButton.cleanup();

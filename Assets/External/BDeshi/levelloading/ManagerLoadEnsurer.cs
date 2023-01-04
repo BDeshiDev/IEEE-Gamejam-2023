@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using FSM.GameState;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 /*
@@ -15,10 +17,14 @@ namespace BDeshi.levelloading
     public class ManagerLoadEnsurer : MonoBehaviour
     {
         public static bool loadedManager = false;
+        //can't  direcly call the manager fsm so keep an accessible
+
         public string managerSceneName = "ManagerScene";
 
+        public UnityEvent preManagerSceneCallback;
         private void Awake()
         {
+            Debug.Log("loadedManager = " + loadedManager);
             ensureLoad();
         }
 
@@ -27,10 +33,12 @@ namespace BDeshi.levelloading
             if (!loadedManager)
             {
                 loadedManager = true;
+                preManagerSceneCallback.Invoke();
+                // GameStateManager.initialStateID = GameStateManager.gameplayStateID;
+                Debug.Log("GameStateManager.initialStateID = " + GameStateManager.initialStateID);
                 SceneManager.LoadScene(managerSceneName, LoadSceneMode.Additive);
             }
         }
-
 
     }
 }

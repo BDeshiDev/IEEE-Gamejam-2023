@@ -29,13 +29,5 @@ public class GoombaEnemyEntity : LivingEntity
         fsm.transitionToState(deathState);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("trigger ", other.gameObject);
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("trigger ", collision.gameObject);
-    }
 }

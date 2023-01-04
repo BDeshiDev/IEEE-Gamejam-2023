@@ -20,7 +20,6 @@ namespace Combat.Pickups
             // but we've initialized it to a -ve value
             // so this turns out to just deal damage in the end
             damagee.takeDamage(new DamageInfo(-healAmount));
-            
             handleUsage();
         }
 

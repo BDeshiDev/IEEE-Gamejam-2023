@@ -6,7 +6,7 @@ namespace BDeshi.Utility
         where T : Component
     {
         public static T Instance { get; private set; }
-        protected bool willGetDestroyed = false;
+        protected bool willGetDestroyedAsDuplicate = false;
         protected virtual void Awake()
         {
             if (Instance == null)
@@ -18,7 +18,7 @@ namespace BDeshi.Utility
             }
             else
             {
-                willGetDestroyed = true;
+                willGetDestroyedAsDuplicate = true;
                 Destroy(gameObject);
             }
         }

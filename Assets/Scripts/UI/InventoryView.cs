@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using BDeshi.Utility;
 using Combat.Pickups;
+using Core.Misc;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UI
 {
@@ -14,14 +16,18 @@ namespace UI
         public List<PickupView> activePickupViews;
         public PlayerInventory inventory;
         
-        private void Start()
+        private void Awake()
         {
             pickUpViewPool = new SimpleManualMonoBehaviourPool<PickupView>(
                 pickUpViewPrefab, 3, inventoryUIContainer
                 );
-
-            inventory = GameObject.FindWithTag("Player").GetComponentInChildren<PlayerInventory>();
-
+        }
+        
+        public void init()
+        {
+            inventory = SceneVarTracker.Instance.Player.inventory;
+            // as the source of the event is destroyed in scene change,
+            // we don't really need to unsub for this  when a new scene is about to be loaded
             inventory.onInventoryRefreshed += refreshUI;
         }
 

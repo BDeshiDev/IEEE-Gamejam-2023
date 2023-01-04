@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using BDeshi.Input;
 using BDeshi.Utility.Extensions;
 using Core.Input;
+using Core.Misc;
+using FSM.GameState;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -65,7 +67,10 @@ public class SimpleCharacterController : MonoBehaviour
 
     public void calcInput(out Vector3 moveInput)
     {
-        moveInput = InputManager.convertVecCamRelative(InputManager.RawMoveInput.toTopDown());
+        moveInput = InputManager.convertVecCamRelative(
+            SceneVarTracker.Instance.Camera,
+            InputManager.RawMoveInput.toTopDown()
+            );
 
         moveInput.Normalize();
     }
@@ -239,6 +244,7 @@ public class SimpleCharacterController : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        
         groundCheckDistance = cc.height * .5f;
         
         resetJumpLimit();
@@ -246,6 +252,10 @@ public class SimpleCharacterController : MonoBehaviour
 
     private void Update()
     {
+        if (GameStateManager.Instance.IsPaused)
+        {
+            return;
+        }
         IsGrounded = checkGrounded();
         calcInput(out input);
         calcVelocity(input);

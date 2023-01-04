@@ -1,15 +1,16 @@
-﻿using UnityEngine;
+﻿using FSM.GameState;
+using UnityEngine;
 
 public class FiniteStateMachine : MonoBehaviour
 {
     [SerializeField] private State curState;
     [SerializeField] private State startingState;
-
+    [SerializeField] private bool pausable;
     public void transitionToState(State newState)
     {
         if (newState != curState)
         {
-            Debug.Log("newState = " + newState);
+            Debug.Log("curState "+ curState + " -> " + newState,gameObject);
 
             if (newState != null)
             {
@@ -24,6 +25,14 @@ public class FiniteStateMachine : MonoBehaviour
                                  
         }
     }
+    /// <summary>
+    /// Trnasition to the transitions success state without checking the conditions 
+    /// </summary>
+    /// <param name="transition"></param>
+    public void forceTakeTransition(Transition transition)
+    {
+        transitionToState(transition.successState);
+    }
 
     private void Start()
     {
@@ -32,7 +41,15 @@ public class FiniteStateMachine : MonoBehaviour
 
     private void Update()
     {
-        curState.updateState();
-        transitionToState(curState.getNextState());
+        if (pausable && GameStateManager.Instance.IsPaused)
+        {
+            return;
+        }
+        if (curState != null)
+        {
+            curState.updateState();
+            transitionToState(curState.getNextState());
+        }
+
     }
 }

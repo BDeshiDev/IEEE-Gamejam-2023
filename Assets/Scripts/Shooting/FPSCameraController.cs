@@ -1,5 +1,6 @@
 ﻿using System;
 using Core.Input;
+using FSM.GameState;
 using UnityEngine;
 
 namespace Core.Misc.Core
@@ -9,11 +10,20 @@ namespace Core.Misc.Core
         [SerializeField]private float xRotation;
         private Transform PlayerBody;
         public float mouseSensitivity = 5;
+        
+        
 
-        private void Start()
+        private void OnEnable()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            
+        }
+
+        private void OnDisable()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
 
         private void Awake()
@@ -22,6 +32,7 @@ namespace Core.Misc.Core
         }
         private void Update()
         {
+
             Vector2 mouseDelta = InputManager.Instance.lookDelta * (mouseSensitivity * Time.deltaTime);
             xRotation -= mouseDelta.y;
             xRotation = Mathf.Clamp(xRotation, -90, 90);

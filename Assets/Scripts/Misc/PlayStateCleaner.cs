@@ -26,9 +26,15 @@ namespace Core.Misc
             {
                 ManagerLoadEnsurer.loadedManager = false;
                 InputManager.PlayModeExitCleanUp();
+                PlayerEntity.PlayModeExitCleanUp();
+                SceneVarTracker.PlayModeExitCleanup();
             }
             else if (playModeState == PlayModeStateChange.ExitingEditMode)
             {
+                ManagerLoadEnsurer.loadedManager = false;
+
+                SceneVarTracker.PlayModeEnterCleanup();
+
             }
         }
     }

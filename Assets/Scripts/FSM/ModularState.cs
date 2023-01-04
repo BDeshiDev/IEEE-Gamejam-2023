@@ -14,7 +14,7 @@ public abstract class ModularState : State
     {
         foreach (var transition in transitions)
         {
-            if (transition.condition())
+            if (transition.evaluate())
             {
                 return transition.successState;
             }
@@ -23,8 +23,11 @@ public abstract class ModularState : State
         return this;
     }
 
-    public void addTransitionTo(State successState, Func<bool> condition)
+    public Transition addTransitionTo(State successState, Func<bool> condition = null)
     {
-        transitions.Add(new Transition(condition, successState));
+        var newTransition = new Transition(successState, condition);
+        transitions.Add(newTransition);
+        return newTransition;
     }
+    
 }

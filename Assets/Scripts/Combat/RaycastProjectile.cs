@@ -79,6 +79,7 @@ namespace Combat
             collidedLastFrame = queryCollision(moveAmount, out var hitPoint, out var hitDist, out var hitCollider);
             if ( collidedLastFrame && hitCollider != null)
             {
+                Debug.Log("hitCollider = " + hitCollider);
                 var d = hitCollider.GetComponent<IDamagable>();
                 if (d != null)
                 {

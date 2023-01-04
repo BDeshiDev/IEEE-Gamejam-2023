@@ -1,5 +1,6 @@
 using System;
 using Combat;
+using Core.Misc;
 using UI.Components;
 using UnityEngine;
 
@@ -8,17 +9,29 @@ namespace UI.HUD
     public class PlayerHUD: MonoBehaviour
     {
         [SerializeField] private ProgressBar healthViewController;
-
+        [SerializeField] private InventoryView inventoryView;
         private void Start()
         {
-            var healthComponent =  GameObject.FindWithTag("Player").GetComponent<PlayerEntity>().HealthComponent;
-            Debug.Log("healthComponent = " + healthComponent, healthComponent);
-            init(healthComponent);
+            init();
+            SceneVarTracker.Instance.onSceneVarsFetched += init;
         }
 
-        protected void init(HealthComponent playerHealthComponent)
+        private void OnDestroy()
         {
-            healthViewController.init(playerHealthComponent);
+            if (SceneVarTracker.Instance != null)
+            {
+                SceneVarTracker.Instance.onSceneVarsFetched -= init;
+            }
+        }
+
+
+
+        protected void init()
+        {
+            var healthComponent =  SceneVarTracker.Instance.Player.HealthComponent;
+            healthViewController.init(healthComponent);
+            
+            inventoryView.init();
         }
         public virtual void enableHUD()
         {
