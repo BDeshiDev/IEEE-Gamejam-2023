@@ -14,6 +14,8 @@ namespace Core.Misc
     /// </summary>
     public class SceneVarTracker: MonoBehaviourLazySingleton<SceneVarTracker>
     {
+        public static readonly string PlayerTag = "Player";
+
         /// <summary>
         /// Can be null for scenes that do not have the player
         /// </summary>
@@ -81,7 +83,7 @@ namespace Core.Misc
 
         private void refetchSceneVars()
         {
-            player = findAndGetComponent<PlayerEntity>("Player");
+            player = findAndGetComponent<PlayerEntity>(PlayerTag);
             camera = Camera.main;
             curLevelData = findAndGetComponent<LevelData>("LevelData");
             
