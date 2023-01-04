@@ -59,22 +59,41 @@ namespace FSM.GameState
         }
         
         /// <summary>
+        /// Reload current active scene. In most cases, this means reloading the level
         /// Scene loading is not synchronous
         /// There is a one frame delay
         /// Do not assume you will get access to the scene vars immediately
-        /// Send a callback if needed
-        /// This will also send the CallbackBeforeActiveChange event
+        /// pass a callback if you need run anything immediately after loading
+        /// This will also send the CallbackBeforeActiveSceneChanges event
         /// </summary>
         public void reloadLevel(Action callback = null)
         {
-            CallbackBeforeActiveChange?.Invoke();
+            CallbackBeforeActiveSceneChanges?.Invoke();
             if (callback != null)
             {
                 SceneVarTracker.Instance.queueCallbackForSceneReload(callback);
             }
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        
+        /// <summary>
+        /// Load arbitrary level 
+        /// Scene loading is not synchronous
+        /// There is a one frame delay
+        /// Do not assume you will get access to the scene vars immediately
+        /// pass a callback if you need run anything immediately after loading
+        /// This will also send the CallbackBeforeActiveSceneChanges event
+        /// </summary>
+        public void loadLevel(string sceneName, Action callback = null)
+        {
+            CallbackBeforeActiveSceneChanges?.Invoke();
+            if (callback != null)
+            {
+                SceneVarTracker.Instance.queueCallbackForSceneReload(callback);
+            }
+            SceneManager.LoadScene(sceneName);
+        }
 
-        public event Action CallbackBeforeActiveChange;
+        public event Action CallbackBeforeActiveSceneChanges;
     }
 }

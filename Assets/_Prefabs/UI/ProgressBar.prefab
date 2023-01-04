@@ -237,7 +237,7 @@ GameObject:
   - component: {fileID: 7572797755462163390}
   - component: {fileID: 7349706823372704023}
   m_Layer: 0
-  m_Name: HealthBar
+  m_Name: ProgressBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
