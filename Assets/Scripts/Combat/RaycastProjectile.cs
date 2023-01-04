@@ -1,4 +1,5 @@
-﻿using BDeshi.Utility;
+﻿using System;
+using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,12 +20,12 @@ namespace Combat
         public FiniteTimer durationTimer = new FiniteTimer(0,1);
         public AnimationCurve speedCurve = AnimationCurve.EaseInOut(0,1,0,0);
         public LayerMask hitLayer;
-        public UnityEvent<IDamagable> onHit;
+        [FormerlySerializedAs("onHit")] public UnityEvent<IDamagable> onDamage;
         public void initialize(Vector3 spawnPos, Vector3 dir)
         {
             transform.position = spawnPos;
             ShotDir = dir;
-            transform.allignToDir2D(dir);
+            transform.lookAlongTopDown(dir);
 
             durationTimer.reset();
         }
@@ -48,10 +49,11 @@ namespace Combat
         {
             return Physics.SphereCast(transform.position,
                 collisionRadius,
-                (Vector2)ShotDir,
+                ShotDir,
                 out hit,
                 checkDistance,
-                hitLayer
+                hitLayer,
+                QueryTriggerInteraction.Collide
                 );
         }
 
@@ -61,8 +63,14 @@ namespace Combat
             if (queryCollision(moveAmount, out var hit ) && hit.collider != null)
             {
                 var d = hit.collider.GetComponent<IDamagable>();
-                handleHit(hit.point, d);
+                Debug.Log("hit.collider = " + hit.collider);
+                if (d != null)
+                {
+                    onDamage.Invoke(d);
+                }
+                handleHit(hit.point);
                 transform.position += ShotDir * hit.distance;
+
             }
             else
             {
@@ -71,9 +79,9 @@ namespace Combat
             }
         }
 
-        protected void handleHit(Vector2 point, IDamagable d)
+        protected void handleHit(Vector3 point)
         {
-            onHit.Invoke(d);
+            
             /*var particles = GameplayPoolManager.Instance.particlePool
                 .get(hitParticlesPrefab);
             particles.transform.position = point;
@@ -92,6 +100,12 @@ namespace Combat
             
         }
 
-
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawRay(transform.position, ShotDir * 5);
+            Gizmos.DrawWireSphere(transform.position, collisionRadius);
+            Gizmos.DrawWireSphere(transform.position + ShotDir * 5, collisionRadius);
+        }
     }
 }

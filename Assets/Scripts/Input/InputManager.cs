@@ -50,10 +50,14 @@ namespace Core.Input
         [SerializeField] private InputActionReference use2Action;
         [SerializeField] private InputActionReference lookAction;
         [SerializeField] private InputActionReference itemShiftAction;
+        [SerializeField] private InputActionReference debugAction1;
+
         public static InputButtonSlot jumpButton = new InputButtonSlot();
         public static InputButtonSlot use1Button = new InputButtonSlot();
         public static InputButtonSlot use2Button = new InputButtonSlot();
-        
+
+        public static InputButtonSlot debugButton1 = new InputButtonSlot();
+
         public SafeEvent<float> itemShift;
 
 
@@ -66,7 +70,6 @@ namespace Core.Input
         protected override void initialize()
         {
             cam = Camera.main;
-            Debug.Log(cam,cam);
             itemShift = new SafeEvent<float>();
         }
 
@@ -123,7 +126,7 @@ namespace Core.Input
             itemShiftAction.action.performed += handleItemShiftPerformed;
 #if UNITY_EDITOR
 
-            // debugButton1.bind(debugAction1);
+            debugButton1.bind(debugAction1);
 
 #endif
 
@@ -145,6 +148,13 @@ namespace Core.Input
             jumpButton.unBind(jumpAction);
             use1Button.unBind(use1Action);
             use2Button.unBind(use2Action);
+            
+            
+#if UNITY_EDITOR
+
+            debugButton1.unBind(debugAction1);
+
+#endif
 
             moveAction.action.performed -= OnMovePerformed;
             moveAction.action.canceled -= OnMoveCancelled;
@@ -188,7 +198,11 @@ namespace Core.Input
             jumpButton.cleanup();
             use1Button.cleanup();
             use2Button.cleanup();
+#if UNITY_EDITOR
 
+            debugButton1.cleanup();
+
+#endif
             if (Instance != null)
             {
                 Instance.itemShift.clear();

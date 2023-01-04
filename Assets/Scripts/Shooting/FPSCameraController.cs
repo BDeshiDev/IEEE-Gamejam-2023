@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Misc.Core
 {
-    public class FPSCamerraController:MonoBehaviour
+    public class FPSCameraController:MonoBehaviour
     {
         [SerializeField]private float xRotation;
         private Transform PlayerBody;
@@ -13,6 +13,7 @@ namespace Core.Misc.Core
         private void Start()
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         private void Awake()

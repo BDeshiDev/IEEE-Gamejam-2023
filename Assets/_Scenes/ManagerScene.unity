@@ -178,6 +178,8 @@ MonoBehaviour:
     type: 3}
   itemShiftAction: {fileID: -2059399585599575641, guid: ae07b1f33bdea1b46804658b7dacfe6c,
     type: 3}
+  debugAction1: {fileID: -1142023436569054042, guid: ae07b1f33bdea1b46804658b7dacfe6c,
+    type: 3}
 --- !u!4 &871858675
 Transform:
   m_ObjectHideFlags: 0

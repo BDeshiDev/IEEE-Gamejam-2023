@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Debug1",
+                    "type": "Button",
+                    "id": "52d52d7c-7bf9-469f-8497-b998ed6ae631",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -399,6 +408,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Use2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e34ebc8-4199-4062-b93c-3a34677f3a4b",
+                    "path": "<Keyboard>/f4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
