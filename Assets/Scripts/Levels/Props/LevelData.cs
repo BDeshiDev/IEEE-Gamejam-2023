@@ -6,7 +6,7 @@ public class LevelData : MonoBehaviour
     [SerializeField] private string nextLevelNameOverride;
     public static string generateLevelSceneNameFromLevelNo(int levelNo)
     {
-        return "level_" + levelNo;
+        return "level " + levelNo;
     }
 
     public string getNextSceneAfterThisLevel()
