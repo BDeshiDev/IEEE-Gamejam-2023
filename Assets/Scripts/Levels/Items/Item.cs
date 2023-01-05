@@ -1,17 +1,21 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Combat.Pickups
 {
-    public  abstract class Item : MonoBehaviour
+    public abstract class Item : MonoBehaviour
     {
         public bool consumesUponUsage1 = true;
         public bool consumesUponUsage2 = true;
 
         public bool shouldShowAmountInUI;
         public Sprite itemIconSprite;
+        [FormerlySerializedAs("ItemCOlor")] public Color ItemColor = Color.green;
         public ItemSlot slot;
-        public string PickUpID  {
+
+        public string PickUpID
+        {
             get
             {
                 if (pickUpID == null)
@@ -22,7 +26,9 @@ namespace Combat.Pickups
                 return pickUpID;
             }
         }
+
         string pickUpID;
+
         private string getPickUpID()
         {
             // we want to give each item type a different ID
@@ -30,16 +36,20 @@ namespace Combat.Pickups
             // So this works
             return this.GetType().Name;
         }
-        
+
         /// <summary>
         /// lmd usage
         /// </summary>
         public abstract void use1();
+
         /// <summary>
         /// RMB usage
         /// </summary>
         public abstract void use2();
 
-        public abstract void handleAddedToInventorySlot(ItemSlot slot);
+        public virtual void handleAddedToInventorySlot(ItemSlot slot)
+        {
+            this.slot = slot;
+        }
     }
 }

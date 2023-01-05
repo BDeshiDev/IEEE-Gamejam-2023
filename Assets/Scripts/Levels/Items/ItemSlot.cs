@@ -17,6 +17,7 @@ namespace Combat.Pickups
         public string itemID;
         public bool shouldShowCountInUI;
         public Sprite itemIconSprite;
+        public Color itemColor;
         //unity objects do not support constructors so manual initialize function
         public void init(Item item, PlayerInventory inventory)
         {
@@ -24,6 +25,7 @@ namespace Combat.Pickups
             this.shouldShowCountInUI = item.shouldShowAmountInUI;
             this.inventory = inventory;
             this.itemIconSprite = item.itemIconSprite;
+            this.itemColor = item.ItemColor;
             addItem(item);
         }
 

@@ -102,6 +102,8 @@ MonoBehaviour:
   consumesUponUsage1: 1
   consumesUponUsage2: 1
   shouldShowAmountInUI: 0
+  itemIconSprite: {fileID: 0}
+  ItemCOlor: {r: 1, g: 0.97766113, b: 0, a: 1}
   slot: {fileID: 0}
   shotPoint: {fileID: 7896547058128687245}
   shotDist: 9999
@@ -110,6 +112,12 @@ MonoBehaviour:
     m_Bits: 12584960
   trailEffect: {fileID: 7896547058742917960}
   player: {fileID: 0}
+  damagePerHit:
+    healthDamage: -20
+    damageKnockbackDir: {x: 0, y: 0, z: 0}
+    knockbackMagitude: 0
+    resetJump: 0
+    damageType: 0
 --- !u!114 &7896547057787642867
 MonoBehaviour:
   m_ObjectHideFlags: 0

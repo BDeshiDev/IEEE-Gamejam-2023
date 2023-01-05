@@ -226,7 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955f9f0e50c34d543bb45dff7bd2a4bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 2847327904834554357}
+  icon: {fileID: 2847327904834554357}
+  background: {fileID: 2847327905668392268}
   countText: {fileID: 2847327903694480669}
   inactiveIndicator: {fileID: 4138590666623227205}
   rect: {fileID: 2847327904025278540}
@@ -244,7 +245,7 @@ GameObject:
   - component: {fileID: 2847327904834554356}
   - component: {fileID: 2847327904834554357}
   m_Layer: 0
-  m_Name: PickupUI (1)
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,7 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -320,7 +321,7 @@ GameObject:
   - component: {fileID: 2847327905668392271}
   - component: {fileID: 2847327905668392268}
   m_Layer: 0
-  m_Name: PickupUI (1)
+  m_Name: BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

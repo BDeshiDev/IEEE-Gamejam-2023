@@ -99,18 +99,22 @@ MonoBehaviour:
   consumesUponUsage1: 1
   consumesUponUsage2: 1
   shouldShowAmountInUI: 0
-  itemIconSprite: {fileID: 0}
+  itemIconSprite: {fileID: 21300000, guid: 1113db72e88f4f747850b40a3b7b0872, type: 3}
+  ItemColor: {r: 1, g: 0.021099018, b: 0, a: 1}
   slot: {fileID: 0}
   explosionRadius: 4
   damageMask:
     serializedVersion: 2
     m_Bits: 1024
   explosionDamage:
-    healthDamage: 0
+    healthDamage: -100
     damageKnockbackDir: {x: 0, y: 0, z: 0}
     knockbackMagitude: 10
     resetJump: 1
     damageType: 1
+  active: 0
   activeTimer:
     timer: 0
     maxValue: 3
+  minVerticalBoost: 5
+  thrower: {fileID: 0}

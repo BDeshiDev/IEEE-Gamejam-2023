@@ -38,6 +38,7 @@ namespace Core.Misc.Core
 
         public override void handleAddedToInventorySlot(ItemSlot slot)
         {
+            base.handleAddedToInventorySlot(slot);
             player = slot.inventory.owner;
             transform.parent = player.gunParent;
             transform.localPosition = Vector3.zero;

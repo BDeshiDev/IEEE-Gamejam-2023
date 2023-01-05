@@ -14,6 +14,7 @@ namespace Combat.Pickups
         public float minVerticalBoost = 5;
 
         private bool hasExploded = false;
+        public ProjectileThrower thrower;
         private void Update()
         {
             if (active)
@@ -80,17 +81,16 @@ namespace Combat.Pickups
 
         public override void use1()
         {
-            
+            //explode in player hands
+            transform.position = slot.inventory.owner.transform.position;
+            explode();
         }
 
         public override void use2()
         {
-            
+            thrower.throwProjectile(slot.inventory.owner);
         }
 
-        public override void handleAddedToInventorySlot(ItemSlot slot)
-        {
-            
-        }
+
     }
 }

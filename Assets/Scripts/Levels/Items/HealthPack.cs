@@ -7,8 +7,8 @@ namespace Combat.Pickups
     public class HealthPack: Item
     {
         public int healAmount = -100;
-        public RaycastProjectile healthPackProjectile;
-        public LayerMask healthPackHitLayer;
+
+        public ProjectileThrower thrower;
         void handleUsage()
         {
             Destroy(gameObject);
@@ -28,26 +28,17 @@ namespace Combat.Pickups
             useOn(slot.inventory.owner);
         }
 
-        public Vector3 getShotDir()
-        {
-            var ray = slot.inventory.owner.getPlayerShotDirRay();
-            if(Physics.Raycast(ray, out var hitResults, Mathf.Infinity, healthPackHitLayer))
-            {
-                return hitResults.point - slot.inventory.owner.transform.position;
-            }
-            return slot.inventory.owner.transform.forward;
-        }
+
 
         public override void use2()
         {
-            var proj = Instantiate(healthPackProjectile);
-            proj.initialize(slot.inventory.owner.transform.position,getShotDir());
+            thrower.throwProjectile(slot.inventory.owner);
         }
 
 
         public override void handleAddedToInventorySlot(ItemSlot slot)
         {
-            this.slot = slot;
+            base.handleAddedToInventorySlot(slot);
             this.gameObject.SetActive(false);
         }
     }

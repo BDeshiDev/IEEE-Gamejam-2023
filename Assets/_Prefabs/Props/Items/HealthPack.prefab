@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7094696579418231196}
   - component: {fileID: 7094696579418231195}
   - component: {fileID: 4423294668883868936}
+  - component: {fileID: -8871534123651506705}
   m_Layer: 0
   m_Name: HealthPack
   m_TagString: Untagged
@@ -107,7 +108,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 7094696579418231194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bcb3c298ee84c04b7f2fccfe2e14695, type: 3}
+  m_Script: {fileID: 11500000, guid: eb5121ecd6e04d9c8be917d89705003a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  consumesUponUsage1: 1
+  consumesUponUsage2: 1
+  shouldShowAmountInUI: 0
+  itemIconSprite: {fileID: 21300000, guid: f354cc93a706b9449b2f442e734b308d, type: 3}
+  ItemColor: {r: 0, g: 1, b: 0, a: 1}
+  slot: {fileID: 0}
   healAmount: -100
+  thrower: {fileID: -8871534123651506705}
+--- !u!114 &-8871534123651506705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7094696579418231194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5bb38f49d644b38aa9748562e268ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPackProjectilePrefab: {fileID: 7011961195974723603, guid: cdabda8fe46af9547a0a4b9903d571a1,
+    type: 3}

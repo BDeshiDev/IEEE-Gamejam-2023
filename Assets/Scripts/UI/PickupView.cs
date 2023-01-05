@@ -10,7 +10,8 @@ using UnityEngine.UI;
 /// </summary>
 public class PickupView : MonoBehaviour
 {
-    public Image image;
+    public Image icon;
+    public Image background;
     public TextMeshProUGUI countText;
     
     public GameObject inactiveIndicator;
@@ -29,7 +30,8 @@ public class PickupView : MonoBehaviour
             countText.gameObject.SetActive(false);
         }
 
-        image.sprite = pickupslot.itemIconSprite;
+        icon.sprite = pickupslot.itemIconSprite;
+        background.color = pickupslot.itemColor;
     }
 
     public void setIconActiveState(bool shouldBeActive)
