@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core.Misc;
 using UnityEngine;
 
@@ -12,7 +13,8 @@ namespace Combat
         public float minDamageInterval = .8f;
         public float pushBackForce = 8;
         public float pushThroughForce = 20;
-        
+        public float pushThroughTeleportOffset;
+
 
         public void handleEntry(Transform target)
         {
@@ -30,6 +32,12 @@ namespace Combat
             else//If entering from behind, allow pass through
             {
                 Debug.Log("pushthrough");
+                var cc = target.GetComponent<SimpleCharacterController>();
+                if (cc != null)
+                {
+                    pushThroughTeleportOffset = 1f;
+                    cc.teleportTo(transform.position + damage.damageKnockbackDir * pushThroughTeleportOffset);
+                }
                 applyKnockback(target, pushThroughForce, damage.damageKnockbackDir);
             }
         }
@@ -55,13 +63,16 @@ namespace Combat
         }
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("OnTriggerEnter pass = " , other);
+            Debug.Log("trigger  " + other.gameObject);
+
             if (other.gameObject.CompareTag(SceneVarTracker.PlayerTag))
             {
                 handleEntry(other.transform);
             }
         }
-        
+
+
+
         //we don't use this because the player could exit and then fall back quickly
         // private void OnTriggerExit(Collider other)
         // {
