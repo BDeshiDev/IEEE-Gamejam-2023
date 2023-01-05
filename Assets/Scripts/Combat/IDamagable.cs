@@ -4,8 +4,8 @@ namespace Combat
 {
     public interface IDamagable
     {
-        GameObject gameObject { get; }
-        Transform transform { get; }
+        GameObject getGameObject();
+        Transform getTransform();
         public void takeDamage(DamageInfo damage);
     }
 

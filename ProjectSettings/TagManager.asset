@@ -16,7 +16,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - PlayerTrigger
   - Player
   - Enemy
   - Portal
@@ -32,7 +32,7 @@ TagManager:
   - Obstacle
   - Ground
   - Spike
-  - 
+  - NoPassWall
   - 
   - 
   - 

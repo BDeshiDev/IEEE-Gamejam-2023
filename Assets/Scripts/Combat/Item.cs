@@ -67,7 +67,7 @@
 //     //              }
 //     //          }
 //     //         
-//     //          var newSlot = gameObject.AddComponent<ItemSlot>();
+//     //          var newSlot = getGameObject.AddComponent<ItemSlot>();
 //     //          newSlot.amountRemaining = item.useAmountAdded;
 //     //          items.Add(newSlot);
 //     //      }

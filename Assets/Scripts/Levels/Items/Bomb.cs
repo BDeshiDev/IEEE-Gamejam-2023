@@ -48,7 +48,7 @@ namespace Combat.Pickups
                 if (d != null)
                 {
                     var damageForTarget = explosionDamage;
-                    var dirToTarget = d.transform.position - transform.position;
+                    var dirToTarget = d.getTransform().position - transform.position;
                     if (dirToTarget == Vector3.zero)
                     {
                         dirToTarget = Vector3.up;//handle explosion in player hands where dist = zero
@@ -57,12 +57,9 @@ namespace Combat.Pickups
                     dirToTarget /= explosionFactor; //normalize
 
                     //square falloff based on dist
-                    Debug.Log("explosionFactor = " + explosionFactor);
                     explosionFactor /= explosionRadius;
-                    Debug.Log("explosionFactor = " + explosionFactor + " " +  ( Mathf.Clamp01(explosionFactor)));
                     explosionFactor =  1- Mathf.Clamp01(explosionFactor);//close = more knockback
                     explosionFactor *= explosionFactor;
-                    Debug.Log("explosionFactor = " + explosionFactor);
                     damageForTarget.knockbackMagitude *= explosionFactor;
                     
                     
@@ -75,7 +72,6 @@ namespace Combat.Pickups
                         Mathf.Min(damageForTarget.damageKnockbackDir.y, minVerticalBoost);
                     damageForTarget.damageKnockbackDir = damageForTarget.damageKnockbackDir.normalized;
 
-                    Debug.Log("explosionFactor "  +  explosionFactor + " damageForTarget = " + damageForTarget, d.gameObject);
                     d.takeDamage(damageForTarget);
                 }
             }

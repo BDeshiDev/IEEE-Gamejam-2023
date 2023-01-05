@@ -36,6 +36,8 @@ public class SimpleCharacterController : MonoBehaviour
     private float maxJumpVelocity;
     private float minJumpVelocity;
     [SerializeField] Vector3 maxVelocityInEachAxis = Vector3.one * 40;
+    [SerializeField] Vector3 minVelocityInEachAxis;
+
     public float jumpGracePeriod = .2f;
 
     
@@ -96,7 +98,7 @@ public class SimpleCharacterController : MonoBehaviour
         // moveVel += boost;
         // addKnockBack(boost);
         boostBuildUp += boost;
-        clampVector(boostBuildUp, maxBoostMagnitudePerAxis);
+        clampVector(ref boostBuildUp, maxBoostMagnitudePerAxis);
 
         boostGravityImmunityTimer.reset();
         
@@ -107,11 +109,23 @@ public class SimpleCharacterController : MonoBehaviour
     /// Ex: boost walls and spikes
     /// They should coexists as long as the axes are diff
     /// </summary>
-    void clampVector(Vector3 boostBuildUp, Vector3 maxPerAxis)
+    void clampVector(ref Vector3 vec, Vector3 maxPerAxis)
     {
-        boostBuildUp.x = Mathf.Sign(boostBuildUp.x) * Mathf.Min(Mathf.Abs(boostBuildUp.x), maxPerAxis.x);
-        boostBuildUp.y = Mathf.Sign(boostBuildUp.y) * Mathf.Min(Mathf.Abs(boostBuildUp.y), maxPerAxis.y);
-        boostBuildUp.z = Mathf.Sign(boostBuildUp.z) * Mathf.Min(Mathf.Abs(boostBuildUp.z), maxPerAxis.z);
+        vec.x = Mathf.Sign(vec.x) * Mathf.Min(Mathf.Abs(vec.x), maxPerAxis.x);
+        vec.y = Mathf.Sign(vec.y) * Mathf.Min(Mathf.Abs(vec.y), maxPerAxis.y);
+        vec.z = Mathf.Sign(vec.z) * Mathf.Min(Mathf.Abs(vec.z), maxPerAxis.z);
+    }
+    
+    /// <summary>
+    /// We can have boosts in different directions
+    /// Ex: boost walls and spikes
+    /// They should coexists as long as the axes are diff
+    /// </summary>
+    void clampVector(ref Vector3 vec, Vector3 maxPerAxis, Vector3 minPerAxis)
+    {
+        vec.x = Mathf.Clamp(vec.x, minPerAxis.x, maxPerAxis.x);
+        vec.y = Mathf.Clamp(vec.y, minPerAxis.y, maxPerAxis.y);
+        vec.z = Mathf.Clamp(vec.z, minPerAxis.z, maxPerAxis.z);
     }
 
     public void calcVelocity(Vector3 moveInput)
@@ -161,25 +175,36 @@ public class SimpleCharacterController : MonoBehaviour
     {
         return getGroundCheckStartPoint()+ (groundCheckDistance - groundCheckRadius) * Vector3.down;
     }
+
+    private Collider[] groundCheckCache = new Collider[1];
     public bool checkGrounded()
     {
-        Physics.SphereCast(getGroundCheckStartPoint(), 
-            groundCheckRadius, 
-            Vector3.down, 
-            out var hit, 
-            groundCheckDistance - groundCheckRadius,
-            groundLayerMask);
-        
-        if (hit.collider)
+        var startPoint = getGroundCheckStartPoint();
+        if (Physics.OverlapSphereNonAlloc(startPoint, groundCheckRadius,groundCheckCache, groundLayerMask) > 0)
         {
-            groundPoint = hit.point;
+            //this doesn't update the ground point yet
+            return true;
         }
         else
         {
-            groundPoint = null;
-        }
+            Physics.SphereCast(getGroundCheckStartPoint(), 
+                groundCheckRadius, 
+                Vector3.down, 
+                out var hit, 
+                groundCheckDistance - groundCheckRadius,
+                groundLayerMask);
+        
+            if (hit.collider)
+            {
+                groundPoint = hit.point;
+            }
+            else
+            {
+                groundPoint = null;
+            }
 
-        return hit.collider != null;
+            return hit.collider != null;
+        }
     }
 
     public void recalcJumpAndGravity()
@@ -260,6 +285,12 @@ public class SimpleCharacterController : MonoBehaviour
             return;
         moveVel.y +=  gravity * Time.deltaTime;
     }
+
+
+    public void resetFall()
+    {
+        moveVel.y = Mathf.Max(moveVel.y, 0);
+    }
     
     #endregion
     #region Knockback
@@ -310,7 +341,6 @@ public class SimpleCharacterController : MonoBehaviour
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         
-        groundCheckDistance = cc.height * .5f;
         
         resetJumpLimit();
     }
@@ -325,7 +355,7 @@ public class SimpleCharacterController : MonoBehaviour
         calcInput(out input);
         calcVelocity(input);
         calcKnockBack(out float knockbackFactor);
-        clampVector(moveVel, maxVelocityInEachAxis);
+        clampVector(ref moveVel, maxVelocityInEachAxis, minVelocityInEachAxis);
 
         calcMoveAmount(knockbackFactor, out var moveAmount);
 
@@ -391,7 +421,7 @@ public class SimpleCharacterController : MonoBehaviour
         {
             if (IsGrounded)
             {
-                boostBuildUp.y = 0;
+                boostBuildUp.y = Mathf.Max(0, boostBuildUp.y);
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Combat
         public Vector3 damageKnockbackDir;
         public float knockbackMagitude;
         public bool resetJump;
+        public bool resetGravity;
 
         public DamageCategory damageType;
         
@@ -25,6 +26,7 @@ namespace Combat
             this.damageKnockbackDir = Vector3.zero;
             this.knockbackMagitude = 0;
             this.resetJump = false;
+            this.resetGravity = false;
             damageType = DamageCategory.Shot;
         }
 

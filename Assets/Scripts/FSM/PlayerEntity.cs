@@ -52,5 +52,10 @@ public class PlayerEntity : LivingEntity
         {
             cc.resetJumpLimit();
         }
+
+        if (damage.resetGravity)
+        {
+            cc.applyGravity();
+        }
     }
 }

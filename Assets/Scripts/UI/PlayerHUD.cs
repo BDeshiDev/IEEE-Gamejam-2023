@@ -36,13 +36,13 @@ namespace UI.HUD
         public virtual void enableHUD()
         {
             gameObject.SetActive(true);
-            // healthViewController.gameObject.SetActive(false);
+            // healthViewController.getGameObject.SetActive(false);
         }
         
         public virtual void disableHUD()
         {
             gameObject.SetActive(false);
-            // healthViewController.gameObject.SetActive(true);
+            // healthViewController.getGameObject.SetActive(true);
         }
     }
 }

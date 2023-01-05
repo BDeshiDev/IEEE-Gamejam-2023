@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 4232410471990910811}
   - component: {fileID: 4232410471990910631}
   - component: {fileID: 4232410471990910630}
-  m_Layer: 24
+  m_Layer: 25
   m_Name: BoostWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,6 +289,7 @@ MonoBehaviour:
     damageKnockbackDir: {x: 1, y: 0, z: 0}
     knockbackMagitude: 0
     resetJump: 0
+    damageType: 0
   minDamageInterval: 0
   pushBackForce: 4
   pushThroughForce: 12

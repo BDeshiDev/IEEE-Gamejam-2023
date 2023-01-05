@@ -9,6 +9,16 @@ public class LivingEntity : MonoBehaviour, IDamagable
 
     public event Action EntityDied;
 
+    public GameObject getGameObject()
+    {
+        return gameObject;
+    }
+
+    public Transform getTransform()
+    {
+        return transform;
+    }
+
     public virtual void takeDamage(DamageInfo damage)
     {
         healthComponent.modifyAmount(-damage.healthDamage);
