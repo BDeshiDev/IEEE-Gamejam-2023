@@ -19,6 +19,11 @@ public class LivingEntity : MonoBehaviour, IDamagable
         return transform;
     }
 
+    public void forceKill()
+    {
+        healthComponent.forceEmpty();
+    }
+
     public virtual void takeDamage(DamageInfo damage)
     {
         healthComponent.modifyAmount(-damage.healthDamage);

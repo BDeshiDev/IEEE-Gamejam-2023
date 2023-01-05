@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3090269514819608579}
   - component: {fileID: -6684636335208194528}
+  - component: {fileID: 7451641525076554043}
   m_Layer: 0
   m_Name: LevelData
   m_TagString: LevelData
@@ -46,3 +47,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNo: 1
   nextLevelNameOverride: 
+  killHeight: -15
+--- !u!114 &7451641525076554043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4545169215425791194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6ea8e272fd4701bddaf93ddab5e477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

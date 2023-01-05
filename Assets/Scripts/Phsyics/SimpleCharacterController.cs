@@ -249,6 +249,7 @@ public class SimpleCharacterController : MonoBehaviour
     public void handleJumpDown()
     {
         moveVel.y = (moveVel.y >= 0 ? moveVel.y : 0) + maxJumpVelocity;
+        
         isJumping = true;
     }
     

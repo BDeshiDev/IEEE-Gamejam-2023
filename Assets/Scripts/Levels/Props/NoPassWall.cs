@@ -9,32 +9,38 @@ namespace Combat
     public class NoPassWall: MonoBehaviour
     {
         public DamageInfo damage;
-
+        public Transform pushCenter;
         public Dictionary<IDamagable, float> timeLastDamagedMap =new Dictionary<IDamagable, float>();
         public float minDamageInterval = .8f;
         public float pushBackForce = 8;
         public float pushThroughForce = 20;
         public float pushThroughTeleportOffset;
 
+        public Vector3 lastTargetEntryPos;
 
         public void handleEntry(Transform target, IDamagable d)
         {
-            var entryDir = transform.position - target.position;
+            lastTargetEntryPos = target.position;
+            
+            var entryDir = pushCenter.position- target.position;
             var dist = entryDir.magnitude;
             var entryDirUnnormalized = entryDir;
             entryDir.Normalize();
             
             // if entering from front, always push back, dotprod with damageDir < 0
             // front = side with do not pass text 
-            if (Vector2.Dot(entryDir, getPushThroughDir()) < 0)
+            var dotProd = Vector3.Dot(entryDir, getPushThroughDir());
+            Debug.Log(Vector3.Angle(entryDir, getPushThroughDir()));
+            if (dotProd < 0)
             {
-            //no pushback allows player to use these as platforms
-                // Debug.Log("pushback");
+                
+                //no pushback allows player to use these as platforms
+                Debug.Log(dotProd + "pushback" + entryDir);
                 // applyKnockback(target, pushBackForce, -entryDir);
             }
             else//If entering from behind, allow pass through
             {
-                Debug.Log("pushthrough");
+                Debug.Log( dotProd + " pushthrough " + entryDir, gameObject);
                 
                 teleportTargetToOtherSide(target, entryDirUnnormalized);
 
@@ -73,7 +79,7 @@ namespace Combat
                                          (Vector3.Dot(entryDirUnnormalized, getPushThroughDir()) +
                                           pushThroughTeleportOffset
                                          );
-                cc.teleportTo(transform.position + teleportAmount);
+                cc.teleportTo(target.position + teleportAmount);
             }
         }
 
@@ -109,7 +115,7 @@ namespace Combat
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("trigger  " + other.gameObject);
+            Debug.Log("trigger  " + other.gameObject, gameObject);
             var d = other.GetComponent<IDamagable>();
             if (d != null)
             {
@@ -144,6 +150,10 @@ namespace Combat
             
             Gizmos.DrawRay(transform.position, getPushThroughDir() * 5);
             Gizmos.DrawSphere(transform.position + getPushThroughDir() * 2 , .25f);
+            
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(lastTargetEntryPos, .25f);
+            Gizmos.DrawLine(lastTargetEntryPos, pushCenter.position);
         }
     }
 }
