@@ -34,7 +34,7 @@ namespace Combat
 
         public override string ToString()
         {
-            return $"healthDamage: {healthDamage}" ;
+            return $"healthDamage: {healthDamage} knockbackMagitude: {knockbackMagitude} damageKnockbackDir: {damageKnockbackDir}" ;
         }
     }
     public enum DamageCategory
