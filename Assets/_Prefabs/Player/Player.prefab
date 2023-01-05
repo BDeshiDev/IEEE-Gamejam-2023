@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1375112045
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1375112046}
+  - component: {fileID: 1375112047}
+  - component: {fileID: 1375112048}
+  m_Layer: 9
+  m_Name: PLayerTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1375112046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375112045}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 770369672525054826}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1375112047
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375112045}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.75
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1375112048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375112045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9007d1a300994b0cb16b8190b0cbb838, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  log: 1
 --- !u!1 &770369672525054833
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,6 +97,7 @@ Transform:
   m_Children:
   - {fileID: 4654397619296561542}
   - {fileID: 770369673591620021}
+  - {fileID: 1375112046}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -105,12 +166,11 @@ MonoBehaviour:
   input: {x: 0, y: 0, z: 0}
   inputVel: {x: 0, y: 0, z: 0}
   moveVel: {x: 0, y: 0, z: 0}
-  sprintSpeedMultiplier: 1.8
-  baseMoveSpeed: 6
+  sprintSpeedMultiplier: 1
+  baseMoveSpeed: 9
   curMoveSpeed: 6
-  curAcc: {x: 0, y: 0, z: 0}
-  velSmoothTime: 0.0016
-  maxAcc: 5000
+  maxVelocityInEachAxis: {x: 15, y: 15, z: 15}
+  minVelocityInEachAxis: {x: -15, y: -50, z: -15}
   rotationSpeed: 300
   IsGrounded: 0
   gravity: -27.777777
@@ -122,77 +182,20 @@ MonoBehaviour:
   jumpLimit: 1
   remainingJumps: 0
   GravityEnabled: 1
-  maxKnockBack: 50
-  minKnockBack: 0.025
-  knockBackBuildup: {x: 0, y: 0, z: 0}
-  knockBackDecayCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 4.366577
-      outSlope: 4.366577
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.029166667
-    - serializedVersion: 3
-      time: 0.27070013
-      value: 0.8126951
-      inSlope: 0.8578094
-      outSlope: 0.8578094
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.15401487
-    - serializedVersion: 3
-      time: 1
-      value: 1.0023575
-      inSlope: 0.23024857
-      outSlope: 0.23024857
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.3781297
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  knockBackControlRecoveryCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 1
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 1
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxKnockBackDecay: 500
-  knockbackDecayVel: {x: 0, y: 0, z: 0}
-  knockBackSmoothTime: 0.3
+  boostBuildUp: {x: 0, y: 0, z: 0}
+  maxBoostMagnitudePerAxis: {x: 20, y: 20, z: 20}
+  boostDecay: 2
+  minBoostThreshold: 0.15
+  boostGravityImmunityTimer:
+    timer: 0
+    maxValue: 0.3
   groundCheckRadius: 0.5
-  groundCheckDistance: 0.65
+  groundCheckDistance: 0.7
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 8388608
-  animator: {fileID: 0}
-  testForce: 5
+    m_Bits: 41943040
   groundCheckOffset: -0.42
+  inputCancelBoostFactor: 10
 --- !u!143 &770369672525054827
 CharacterController:
   m_ObjectHideFlags: 0
@@ -350,7 +353,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
