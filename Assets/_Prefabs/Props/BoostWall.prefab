@@ -354,12 +354,14 @@ MonoBehaviour:
     knockbackMagitude: 0
     resetJump: 1
     resetGravity: 1
+    resetBoost: 1
     damageType: 0
   pushCenter: {fileID: 4232410471147933411}
   minDamageInterval: 0
   pushBackForce: 4
   pushThroughForce: 12
   pushThroughTeleportOffset: 0
+  lastTargetEntryPos: {x: 0, y: 0, z: 0}
 --- !u!65 &8812740447460064023
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -371,5 +373,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.36, y: 1, z: 1}
-  m_Center: {x: -0.18, y: 0, z: 0}
+  m_Size: {x: 1.7, y: 1, z: 1}
+  m_Center: {x: -0.55, y: 0, z: 0}

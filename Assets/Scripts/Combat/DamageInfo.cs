@@ -16,7 +16,7 @@ namespace Combat
         public float knockbackMagitude;
         public bool resetJump;
         public bool resetGravity;
-
+        public bool resetBoost;
         public DamageCategory damageType;
         
         public bool isHeal => healthDamage < 0;
@@ -26,6 +26,7 @@ namespace Combat
             this.damageKnockbackDir = Vector3.zero;
             this.knockbackMagitude = 0;
             this.resetJump = false;
+            this.resetBoost = false;
             this.resetGravity = false;
             damageType = DamageCategory.Shot;
         }

@@ -80,6 +80,10 @@ public class SimpleCharacterController : MonoBehaviour
         curMoveSpeed = baseMoveSpeed * (InputManager.sprintButton.isHeld ? sprintSpeedMultiplier : 1);
     }
 
+    public void clearBoost()
+    {
+        boostBuildUp = Vector3.zero;
+    }
     public void addBoost(Vector3 boost)
     {
         // moveVel += boost;
@@ -276,6 +280,7 @@ public class SimpleCharacterController : MonoBehaviour
     #region Knockback
 
     public float groundCheckOffset = -.5f;
+    [SerializeField]private int inputCancelBoostFactor = 10;
 
 
     Vector3 getGroundCheckStartPoint()
@@ -351,8 +356,8 @@ public class SimpleCharacterController : MonoBehaviour
         {
             float dotWithInputVel = Vector3.Dot(input, boostBuildUp);
 
-            
-            boostBuildUp -= boostBuildUp.normalized * (boostDecay * (dotWithInputVel < 0? 4:1) * Time.deltaTime);
+
+            boostBuildUp -= boostBuildUp.normalized * (boostDecay * (dotWithInputVel < 0? inputCancelBoostFactor:1) * Time.deltaTime);
         }
         else
         {

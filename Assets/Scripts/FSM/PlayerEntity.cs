@@ -43,7 +43,10 @@ public class PlayerEntity : LivingEntity
     public override void takeDamage(DamageInfo damage)
     {
         base.takeDamage(damage);
-        
+        if (damage.resetBoost)
+        {
+            cc.clearBoost();
+        }
         if (Mathf.Abs(damage.knockbackMagitude) > 0)
         {
             

@@ -20,7 +20,7 @@ namespace Combat
 
         private void Update()
         {
-            if (levelData.KillHeight >= player.transform.position.y)
+            if (levelData.KillHeight >= player.transform.position.y && !player.HealthComponent.IsEmpty)
             {
                 Debug.Log("player killed for being too short. Just like real life");
                 player.forceKill();
