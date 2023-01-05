@@ -30,12 +30,11 @@ namespace Combat
             // if entering from front, always push back, dotprod with damageDir < 0
             // front = side with do not pass text 
             var dotProd = Vector3.Dot(entryDir, getPushThroughDir());
-            Debug.Log(Vector3.Angle(entryDir, getPushThroughDir()));
             if (dotProd < 0)
             {
                 
                 //no pushback allows player to use these as platforms
-                Debug.Log(dotProd + "pushback" + entryDir);
+                // Debug.Log(dotProd + "pushback" + entryDir);
                 // applyKnockback(target, pushBackForce, -entryDir);
             }
             else//If entering from behind, allow pass through
