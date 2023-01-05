@@ -3,6 +3,7 @@ using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace Combat
@@ -16,11 +17,23 @@ namespace Combat
         
         [SerializeField] private float speed = 5;
         [SerializeField] private float angularSpeed = 0;
+        [SerializeField] private bool affectedByGravity;
+        [SerializeField] private float gravity = 27.77778f;
         public Vector3 ShotDir;
         public FiniteTimer durationTimer = new FiniteTimer(0,1);
         public AnimationCurve speedCurve = AnimationCurve.EaseInOut(0,1,0,0);
         public LayerMask hitLayer;
-        [FormerlySerializedAs("onHit")] public UnityEvent<IDamagable> onDamage;
+        public UnityEvent<IDamagable> onDamage;
+        /// <summary>
+        ///  CAN TRIGGER ON SAME THING onDamage was called on
+        /// </summary>
+        public UnityEvent onHit;
+        public UnityEvent onTimeout;
+        
+        private float lastMoveAmount = 0;
+        [SerializeField]private bool collidedLastFrame = false;
+        private static Collider[] colliderResultCache = new Collider[1];
+        
         public void initialize(Vector3 spawnPos, Vector3 dir)
         {
             transform.position = spawnPos;
@@ -40,15 +53,20 @@ namespace Combat
             }
             else
             {
-                Debug.Log("timeout projectle", gameObject);
-                handleEnd();
+                handleTimeout();
             }
         }
 
-        private float lastMoveAmount = 0;
-        [SerializeField]private bool collidedLastFrame = false;
-        private static Collider[] colliderResultCache = new Collider[1];
-        private bool queryCollision(float checkDistance, out Vector3 hitPoint, out float hitDist, out Collider hitCollider)
+        private void handleTimeout()
+        {
+            Debug.Log("timeout projectle", gameObject);
+
+            onTimeout.Invoke();
+            handleEnd();
+        }
+
+
+        private bool queryCollision(Vector3 moveVec,float checkDistance,  out Vector3 hitPoint, out float hitDist, out Collider hitCollider)
         {
             if (Physics.OverlapSphereNonAlloc(transform.position, collisionRadius, colliderResultCache, hitLayer, QueryTriggerInteraction.Collide) > 0)
             {
@@ -59,7 +77,7 @@ namespace Combat
             }
             bool result = Physics.SphereCast(transform.position,
                 collisionRadius,
-                ShotDir,
+                moveVec,
                 out var hit,
                 checkDistance,
                 hitLayer,
@@ -74,9 +92,19 @@ namespace Combat
         
         private void move(float delta)
         {
-            var moveAmount = speedCurve.Evaluate(durationTimer.Ratio) *  speed * delta;
-            lastMoveAmount = moveAmount;
-            collidedLastFrame = queryCollision(moveAmount, out var hitPoint, out var hitDist, out var hitCollider);
+            Vector3 moveVec = speedCurve.Evaluate(durationTimer.Ratio) *  speed * delta * ShotDir;
+
+            if (affectedByGravity)
+            {
+                moveVec += Vector3.down * (gravity * Time.deltaTime);
+            }
+
+            float moveAmount = moveVec.magnitude;
+            Vector3 moveDir = moveVec / moveAmount;
+            
+            collidedLastFrame = queryCollision(moveDir, moveAmount, 
+                out var hitPoint, out var hitDist, out var hitCollider);
+            
             if ( collidedLastFrame && hitCollider != null)
             {
                 Debug.Log("hitCollider = " + hitCollider);
@@ -86,14 +114,14 @@ namespace Combat
                     onDamage.Invoke(d);
                 }
                 handleHit(hitPoint);
-                moveAmount = hitDist;
+                moveVec = hitDist * moveDir;
 
-                transform.position += ShotDir * moveAmount;
+                transform.position +=  moveVec;
 
             }
             else
             {
-                transform.position += ShotDir * moveAmount;
+                transform.position += moveVec;
 
             }
         }
@@ -107,6 +135,8 @@ namespace Combat
             particles.transform.right = -transform.right;*/
             
             handleEnd();
+
+            onHit.Invoke();
         }
 
         public void handleEnd()
@@ -119,12 +149,6 @@ namespace Combat
             
         }
 
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawRay(transform.position, -lastMoveAmount * ShotDir);
-            Gizmos.DrawWireSphere(transform.position, collisionRadius);
-            Gizmos.DrawWireSphere(transform.position - lastMoveAmount * ShotDir, collisionRadius);
-        }
+
     }
 }

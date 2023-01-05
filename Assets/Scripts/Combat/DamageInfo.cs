@@ -15,6 +15,9 @@ namespace Combat
         public Vector3 damageKnockbackDir;
         public float knockbackMagitude;
         public bool resetJump;
+
+        public DamageCategory damageType;
+        
         public bool isHeal => healthDamage < 0;
         public DamageInfo(int healthDamage)
         {
@@ -22,6 +25,7 @@ namespace Combat
             this.damageKnockbackDir = Vector3.zero;
             this.knockbackMagitude = 0;
             this.resetJump = false;
+            damageType = DamageCategory.Shot;
         }
 
         
@@ -32,5 +36,10 @@ namespace Combat
         {
             return $"healthDamage: {healthDamage}" ;
         }
+    }
+    public enum DamageCategory
+    {
+            Shot,
+            Explosive//we want to use bombs to repair walls, we don't want gunshots to be able to do that so diff damagetype
     }
 }

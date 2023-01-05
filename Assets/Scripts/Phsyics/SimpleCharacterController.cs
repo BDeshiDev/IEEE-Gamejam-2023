@@ -61,7 +61,7 @@ public class SimpleCharacterController : MonoBehaviour
     public float knockBackSmoothTime = .6f;
     
     [FormerlySerializedAs("boostAmount")] public Vector3 boostBuildUp;
-    [FormerlySerializedAs("maxBoostMagnitudeInAxis")] [FormerlySerializedAs("maxBoostMagnitude")] public Vector3 maxBoostMagnitudePerAxis =Vector3.one* 20; 
+    public Vector3 maxBoostMagnitudePerAxis =Vector3.one* 20; 
     public float boostDecay = -2f;
     public float minBoostThreshold = .15f;
     public FiniteTimer boostGravityImmunityTimer = new FiniteTimer(0, .6f);
