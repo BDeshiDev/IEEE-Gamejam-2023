@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Combat
 {
@@ -11,6 +12,8 @@ namespace Combat
     public class DamageInfo
     {
         public int healthDamage;
+        public Vector3 damageKnockbackDir;
+        public float knockbackMagitude;
         public bool isHeal => healthDamage < 0;
         public DamageInfo(int healthDamage)
         {

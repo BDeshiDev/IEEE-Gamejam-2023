@@ -227,6 +227,7 @@ MonoBehaviour:
   inventory: {fileID: 770369673591620020}
   gunParent: {fileID: 770369672963076725}
   camController: {fileID: 770369673419705430}
+  cc: {fileID: 770369672525054838}
 --- !u!114 &770369672525054825
 MonoBehaviour:
   m_ObjectHideFlags: 0

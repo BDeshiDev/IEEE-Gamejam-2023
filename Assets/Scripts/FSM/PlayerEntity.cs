@@ -13,6 +13,7 @@ public class PlayerEntity : LivingEntity
     public PlayerInventory inventory;
     public Transform gunParent;
     public FPSCameraController camController;
+    public SimpleCharacterController cc;
 
     /// <summary>
     /// static event for any player death
@@ -37,5 +38,14 @@ public class PlayerEntity : LivingEntity
     public static void PlayModeExitCleanUp()
     {
         playerDied.clear();
+    }
+
+    public override void takeDamage(DamageInfo damage)
+    {
+        base.takeDamage(damage);
+        if (Mathf.Abs(damage.knockbackMagitude) > 0)
+        {
+            cc.addSpeedBoost(damage.damageKnockbackDir * damage.knockbackMagitude);
+        }
     }
 }

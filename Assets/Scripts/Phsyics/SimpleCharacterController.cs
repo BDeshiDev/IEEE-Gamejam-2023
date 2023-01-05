@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using BDeshi.Input;
+using BDeshi.Utility;
 using BDeshi.Utility.Extensions;
 using Core.Input;
 using Core.Misc;
@@ -35,6 +36,13 @@ public class SimpleCharacterController : MonoBehaviour
     private float maxJumpVelocity;
     private float minJumpVelocity;
     public float jumpGracePeriod = .2f;
+
+    public Vector3 boostAmount;
+    public float maxBoostMagnitude = 20;
+    public float boostDecay = -2f;
+    public float minBoostThreshold = .15f;
+    public FiniteTimer boostGravityImmunityTimer = new FiniteTimer(0, .6f);
+    
     [SerializeField] bool isJumping = false;
     public int jumpLimit = 1;
     public int remainingJumps;
@@ -81,6 +89,19 @@ public class SimpleCharacterController : MonoBehaviour
         curMoveSpeed = baseMoveSpeed * (InputManager.sprintButton.isHeld ? sprintSpeedMultiplier : 1);
     }
 
+    public void addSpeedBoost(Vector3 boost)
+    {
+        // moveVel += boost;
+        // addKnockBack(boost);
+        boostAmount += boost;
+        var boostMagnitude = boostAmount.magnitude;
+        if (boostMagnitude > maxBoostMagnitude)
+        {
+            boostAmount = boostAmount / boostMagnitude * maxBoostMagnitude;
+        }
+        boostGravityImmunityTimer.reset();
+    }
+
     public void calcVelocity(Vector3 moveInput)
     {
         float yVel = moveVel.y;
@@ -101,7 +122,15 @@ public class SimpleCharacterController : MonoBehaviour
         
         if (IsGrounded)
         {
-            moveVel.y = Mathf.Max(moveVel.y, 0);
+            if (knockBackBuildup.y > 0)
+            {
+                moveVel.y = Mathf.Min(moveVel.y, knockBackBuildup.y );
+            }
+            else
+            {
+                moveVel.y = Mathf.Max(moveVel.y, 0);
+
+            }
         }
         
 
@@ -156,26 +185,44 @@ public class SimpleCharacterController : MonoBehaviour
         {
             resetJumpLimit();
         }
-        
-        
-        if (!IsGrounded // can only jump when NOT GROUNDED
-            && InputManager.jumpButton.isHeld
-            // && InputManager.jumpButton.LastPressedTime.withinDuration(jumpGracePeriod)
-            && !isJumping)
+
+        if (!isJumping)
         {
-            if (remainingJumps > 0)
+            if (!IsGrounded // can only jump when NOT GROUNDED
+                && InputManager.jumpButton.isHeld)
+                // && InputManager.jumpButton.LastPressedTime.withinDuration(jumpGracePeriod))
             {
-                remainingJumps -= 1;
-                handleJumpDown();   
+                if (remainingJumps > 0)
+                {
+                    remainingJumps -= 1;
+                    handleJumpDown();   
+                }
             }
-        }
-        else
+        }else
         {
             if (!InputManager.jumpButton.isHeld)
             {
                 handleJumpUp();
             }
         }
+        // if (!IsGrounded // can only jump when NOT GROUNDED
+        //     && InputManager.jumpButton.isHeld
+        //     // && InputManager.jumpButton.LastPressedTime.withinDuration(jumpGracePeriod)
+        //     && !isJumping)
+        // {
+        //     if (remainingJumps > 0)
+        //     {
+        //         remainingJumps -= 1;
+        //         handleJumpDown();   
+        //     }
+        // }
+        // else
+        // {
+        //     if (!InputManager.jumpButton.isHeld)
+        //     {
+        //         handleJumpUp();
+        //     }
+        // }
     }
 
     private void resetJumpLimit()
@@ -187,7 +234,6 @@ public class SimpleCharacterController : MonoBehaviour
     {
         moveVel.y = (moveVel.y >= 0 ? moveVel.y : 0) + maxJumpVelocity;
         isJumping = true;
-
     }
     
     public void handleJumpUp()
@@ -230,6 +276,7 @@ public class SimpleCharacterController : MonoBehaviour
     public void addKnockBack(Vector3 knockBack)
     {
         knockBackBuildup = Vector3.ClampMagnitude(knockBackBuildup + knockBack, maxKnockBack);
+        Debug.Log("knockBackBuildup = " + knockBackBuildup);
     }
     public float testForce = 5;
     public float groundCheckOffset = -.5f;
@@ -239,10 +286,10 @@ public class SimpleCharacterController : MonoBehaviour
     {
         return transform.position + groundCheckOffset * Vector3.up;
     }
-
+    [ContextMenu("test knockback")]
     void test()
     {
-        addKnockBack(testForce * Vector3.forward * -1);
+        addKnockBack(testForce * Vector3.up);
     }
     #endregion
 
@@ -256,6 +303,7 @@ public class SimpleCharacterController : MonoBehaviour
         resetJumpLimit();
     }
 
+    public float _knockbackFactor; 
     private void Update()
     {
         if (GameStateManager.Instance.IsPaused)
@@ -266,6 +314,7 @@ public class SimpleCharacterController : MonoBehaviour
         calcInput(out input);
         calcVelocity(input);
         calcKnockBack(out float knockbackFactor);
+        _knockbackFactor = knockbackFactor;
         calcMoveAmount(knockbackFactor, out var moveAmount);
 
         applyMovement(moveAmount);
@@ -295,13 +344,38 @@ public class SimpleCharacterController : MonoBehaviour
         // animator.SetBool("FreeFall" , moveVel.y <0 && IsGrounded);
     }
 
+
     public void calcMoveAmount(float knockBackFactor, out Vector3 moveAmount)
     {
         var actualMoveVel = moveVel;
         actualMoveVel.y = 0;
         actualMoveVel = actualMoveVel * (1-knockBackControlRecoveryCurve.Evaluate(knockBackFactor)) + knockBackBuildup;
         actualMoveVel.y = moveVel.y;
+
+        actualMoveVel += boostAmount;
+        
+        if (boostAmount.magnitude > minBoostThreshold)
+        {
+            boostAmount -= boostAmount.normalized * (boostDecay * Time.deltaTime);
+
+        }
+        else
+        {
+            boostAmount = Vector3.zero;
+        }
+        boostGravityImmunityTimer.safeUpdateTimer(Time.deltaTime);
+        if (boostGravityImmunityTimer.isComplete)
+        {
+            if (IsGrounded)
+            {
+                boostAmount.y = 0;
+            }
+        }
+
+
+        
         moveAmount = actualMoveVel * Time.deltaTime;
+
     }
 
     public void teleportTo(Vector3 pos)
