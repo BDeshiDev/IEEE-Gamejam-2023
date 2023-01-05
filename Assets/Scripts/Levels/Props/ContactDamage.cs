@@ -13,6 +13,7 @@ namespace Combat
         private void OnTriggerEnter(Collider other)
         {
             var d = other.GetComponent<IDamagable>();
+            Debug.Log("contact d = " + d, gameObject);
             if (d != null)
             {
                 if (timeLastDamagedMap.TryGetValue(d, out var timeLastDamage))
@@ -25,6 +26,9 @@ namespace Combat
 
                 timeLastDamagedMap[d] = Time.time;
                 d.takeDamage(damage);
+                
+                Debug.Log("contact damage d = " + d + " " + damage, gameObject);
+
             }
         }
         

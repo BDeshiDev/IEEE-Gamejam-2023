@@ -8,7 +8,7 @@ namespace Combat
     public class DamagableDecorator: MonoBehaviour, IDamagable
     {
         private IDamagable decoratee;
-
+        public bool log = true;
         private void Awake()
         {
             decoratee = transform.parent.GetComponent<IDamagable>();
@@ -26,6 +26,10 @@ namespace Combat
 
         public void takeDamage(DamageInfo damage)
         {
+            if (log)
+            {
+                Debug.Log("forward to " , decoratee.getGameObject());
+            }
             decoratee.takeDamage(damage);
         }
     }

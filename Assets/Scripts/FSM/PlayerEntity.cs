@@ -43,9 +43,11 @@ public class PlayerEntity : LivingEntity
     public override void takeDamage(DamageInfo damage)
     {
         base.takeDamage(damage);
+        
         if (Mathf.Abs(damage.knockbackMagitude) > 0)
         {
-            cc.addSpeedBoost(damage.damageKnockbackDir * damage.knockbackMagitude);
+            
+            cc.addBoost(damage.damageKnockbackDir * damage.knockbackMagitude);
         }
 
         if (damage.resetJump)

@@ -26,20 +26,20 @@ namespace Combat
             
             // if entering from front, always push back, dotprod with damageDir < 0
             // front = side with do not pass text 
+            if (Vector2.Dot(entryDir, getPushThroughDir()) < 0)
+            {
             //no pushback allows player to use these as platforms
-            // if (Vector2.Dot(entryDir, getPushThroughDir()) < 0)
-            // {
-            //     Debug.Log("pushback");
-            //     applyKnockback(target, pushBackForce, -entryDir);
-            // }
-            // else//If entering from behind, allow pass through
-            // {
+                // Debug.Log("pushback");
+                // applyKnockback(target, pushBackForce, -entryDir);
+            }
+            else//If entering from behind, allow pass through
+            {
                 Debug.Log("pushthrough");
                 
                 teleportTargetToOtherSide(target, entryDirUnnormalized);
 
                 applyKnockback(d, pushThroughForce, getPushThroughDir());
-            // }
+            }
         }
 
         // void handleEntry(Transform target, IDamagable damagable)

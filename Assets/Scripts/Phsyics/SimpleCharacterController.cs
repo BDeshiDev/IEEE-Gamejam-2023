@@ -17,26 +17,27 @@ public class SimpleCharacterController : MonoBehaviour
     [SerializeField] private Vector3 inputVel;
     [SerializeField] Vector3 moveVel = Vector3.zero;
     
+    [Header("movement")]
     [SerializeField] private float sprintSpeedMultiplier = 1.6f;
     [FormerlySerializedAs("moveSpeed")] 
     [SerializeField] private float baseMoveSpeed = 6;
     [SerializeField] private float curMoveSpeed = 6;
-    [SerializeField] private Vector3 curAcc;
-    [SerializeField] private float velSmoothTime = .2f;
-    [SerializeField] private float maxAcc = 50;
-
+    [SerializeField] Vector3 maxVelocityInEachAxis = Vector3.one * 40;
+    [SerializeField] Vector3 minVelocityInEachAxis;
+    
     [SerializeField] private float rotationSpeed = 60;
     
     [SerializeField] private bool IsGrounded;
-
+    [Header("gravity/jump")]
     [SerializeField] private float gravity = -15.15f;
     [SerializeField] private float maxJumpHeight = 5;
     [SerializeField] private float minJumpHeight = 2;
     [SerializeField] private float timeToJumpApex = .6f;
     private float maxJumpVelocity;
     private float minJumpVelocity;
-    [SerializeField] Vector3 maxVelocityInEachAxis = Vector3.one * 40;
-    [SerializeField] Vector3 minVelocityInEachAxis;
+    
+    
+
 
     public float jumpGracePeriod = .2f;
 
@@ -46,33 +47,19 @@ public class SimpleCharacterController : MonoBehaviour
     [SerializeField] int remainingJumps;
     public bool GravityEnabled = true;
 
-    public float maxKnockBack = 50;
-    public float minKnockBack = .025f;
-    public Vector3 knockBackBuildup;
-    /// <summary>
-    /// Sampled at t = 0 at knockBackBuildup = 0(not that it will go lower than minKnockBack)
-    /// Sampled at t = 1 at knockBackBuildup = maxKnockBack;
-    /// </summary>
-    public AnimationCurve knockBackDecayCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    public AnimationCurve knockBackControlRecoveryCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    public float maxKnockBackDecay = 5;
-    public Vector3 knockbackDecayVel = Vector3.zero;
-    /// <summary>
-    /// Time it takes to go from maxKnockBack to 0
-    /// </summary>
-    public float knockBackSmoothTime = .6f;
-    
-    [FormerlySerializedAs("boostAmount")] public Vector3 boostBuildUp;
+    [Header("boosting")]
+    public Vector3 boostBuildUp;
     public Vector3 maxBoostMagnitudePerAxis =Vector3.one* 20; 
     public float boostDecay = -2f;
     public float minBoostThreshold = .15f;
     public FiniteTimer boostGravityImmunityTimer = new FiniteTimer(0, .6f);
     
+    [Header("groundcheck")]
     public float groundCheckRadius = .5f;
     [FormerlySerializedAs("groundHeight")] [SerializeField] private float groundCheckDistance;
     [SerializeField] private LayerMask groundLayerMask;
 
-    public Animator animator;
+    // public Animator animator;
 
     private void OnValidate()
     {
@@ -93,10 +80,11 @@ public class SimpleCharacterController : MonoBehaviour
         curMoveSpeed = baseMoveSpeed * (InputManager.sprintButton.isHeld ? sprintSpeedMultiplier : 1);
     }
 
-    public void addSpeedBoost(Vector3 boost)
+    public void addBoost(Vector3 boost)
     {
         // moveVel += boost;
         // addKnockBack(boost);
+        Debug.Log("add boost " + boost);
         boostBuildUp += boost;
         clampVector(ref boostBuildUp, maxBoostMagnitudePerAxis);
 
@@ -148,17 +136,8 @@ public class SimpleCharacterController : MonoBehaviour
         
         if (IsGrounded)
         {
-            if (knockBackBuildup.y > 0)
-            {
-                moveVel.y = Mathf.Min(moveVel.y, knockBackBuildup.y );
-            }
-            else
-            {
-                moveVel.y = Mathf.Max(moveVel.y, 0);
-
-            }
+            moveVel.y = Mathf.Max(0, moveVel.y);
         }
-        
 
         applyJumpVel();
         applyGravity();
@@ -295,33 +274,6 @@ public class SimpleCharacterController : MonoBehaviour
     #endregion
     #region Knockback
 
-    public void calcKnockBack(out float knockbackFactor)
-    {
-        float knockBackMagnitude = knockBackBuildup.magnitude;
-        
-        if (knockBackMagnitude < minKnockBack)
-        {
-            knockBackBuildup = Vector3.zero;
-            knockbackFactor = 0;
-            knockbackDecayVel = Vector3.zero;
-        }
-        else
-        {
-            knockBackBuildup = Vector3.SmoothDamp(knockBackBuildup, Vector3.zero,
-                ref knockbackDecayVel,
-                knockBackSmoothTime,
-                knockBackDecayCurve.Evaluate(knockBackBuildup.magnitude / maxKnockBack) * maxKnockBackDecay);
-        }
-
-        knockbackFactor = knockBackBuildup.magnitude / maxKnockBack;
-    }
-
-    public void addKnockBack(Vector3 knockBack)
-    {
-        knockBackBuildup = Vector3.ClampMagnitude(knockBackBuildup + knockBack, maxKnockBack);
-        Debug.Log("knockBackBuildup = " + knockBackBuildup);
-    }
-    public float testForce = 5;
     public float groundCheckOffset = -.5f;
 
 
@@ -329,19 +281,12 @@ public class SimpleCharacterController : MonoBehaviour
     {
         return transform.position + groundCheckOffset * Vector3.up;
     }
-    [ContextMenu("test knockback")]
-    void test()
-    {
-        addKnockBack(testForce * Vector3.up);
-    }
+ 
     #endregion
 
     private void Awake()
     {
         cc = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
-        
-        
         resetJumpLimit();
     }
 
@@ -354,10 +299,7 @@ public class SimpleCharacterController : MonoBehaviour
         IsGrounded = checkGrounded();
         calcInput(out input);
         calcVelocity(input);
-        calcKnockBack(out float knockbackFactor);
-        clampVector(ref moveVel, maxVelocityInEachAxis, minVelocityInEachAxis);
-
-        calcMoveAmount(knockbackFactor, out var moveAmount);
+        calcMoveAmount(out var moveAmount);
 
         applyMovement(moveAmount);
         // updateRotation();
@@ -387,19 +329,18 @@ public class SimpleCharacterController : MonoBehaviour
     }
 
 
-    public void calcMoveAmount(float knockBackFactor, out Vector3 moveAmount)
+    
+
+    public void calcMoveAmount( out Vector3 moveAmount)
     {
         var actualMoveVel = moveVel;
-        actualMoveVel.y = 0;
-        actualMoveVel = actualMoveVel * (1-knockBackControlRecoveryCurve.Evaluate(knockBackFactor)) + knockBackBuildup;
-        actualMoveVel.y = moveVel.y;
-
+        
         actualMoveVel += boostBuildUp;
         updateBoost();
+        clampVector(ref actualMoveVel, maxVelocityInEachAxis, minVelocityInEachAxis);
 
-
+        
         moveAmount = actualMoveVel * Time.deltaTime;
-
     }
 
     private void updateBoost()
@@ -421,7 +362,7 @@ public class SimpleCharacterController : MonoBehaviour
         {
             if (IsGrounded)
             {
-                boostBuildUp.y = Mathf.Max(0, boostBuildUp.y);
+                boostBuildUp.y = Mathf.Min(0, boostBuildUp.y);
             }
         }
     }
@@ -436,7 +377,6 @@ public class SimpleCharacterController : MonoBehaviour
     public void stop()
     {
         moveVel = Vector3.zero;
-        knockBackBuildup = Vector3.zero;
     }
     
 
