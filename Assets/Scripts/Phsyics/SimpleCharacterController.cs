@@ -38,7 +38,7 @@ public class SimpleCharacterController : MonoBehaviour
     public float jumpGracePeriod = .2f;
 
     public Vector3 boostAmount;
-    public float maxBoostMagnitude = 20;
+    [FormerlySerializedAs("maxBoostMagnitude")] public float maxBoostMagnitudeInAxis = 20;
     public float boostDecay = -2f;
     public float minBoostThreshold = .15f;
     public FiniteTimer boostGravityImmunityTimer = new FiniteTimer(0, .6f);
@@ -94,13 +94,24 @@ public class SimpleCharacterController : MonoBehaviour
         // moveVel += boost;
         // addKnockBack(boost);
         boostAmount += boost;
-        var boostMagnitude = boostAmount.magnitude;
-        if (boostMagnitude > maxBoostMagnitude)
-        {
-            boostAmount = boostAmount / boostMagnitude * maxBoostMagnitude;
-        }
+
+
+        clampBoostAmount();
         boostGravityImmunityTimer.reset();
     }
+    /// <summary>
+    /// We can have boosts in different directions
+    /// Ex: boost walls and spikes
+    /// They should coexists as long as the axes are diff
+    /// </summary>
+    void clampBoostAmount()
+    {
+        boostAmount.x = Mathf.Sign(boostAmount.x) * Mathf.Min(Mathf.Abs(boostAmount.x), maxBoostMagnitudeInAxis);
+        boostAmount.y = Mathf.Sign(boostAmount.y) * Mathf.Min(Mathf.Abs(boostAmount.y), maxBoostMagnitudeInAxis);
+        boostAmount.z = Mathf.Sign(boostAmount.z) * Mathf.Min(Mathf.Abs(boostAmount.z), maxBoostMagnitudeInAxis);
+    }
+    
+    
 
     public void calcVelocity(Vector3 moveInput)
     {

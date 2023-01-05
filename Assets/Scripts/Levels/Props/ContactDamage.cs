@@ -33,5 +33,14 @@ namespace Combat
         // {
         //     
         // }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.cyan;
+
+            
+            Gizmos.DrawRay(transform.position, damage.damageKnockbackDir * 5);
+            Gizmos.DrawSphere(transform.position + damage.damageKnockbackDir * 2 , .25f);
+        }
     }
 }
