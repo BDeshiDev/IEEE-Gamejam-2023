@@ -35,17 +35,13 @@ public class SimpleCharacterController : MonoBehaviour
     [SerializeField] private float timeToJumpApex = .6f;
     private float maxJumpVelocity;
     private float minJumpVelocity;
+    [SerializeField] Vector3 maxVelocityInEachAxis = Vector3.one * 40;
     public float jumpGracePeriod = .2f;
 
-    public Vector3 boostAmount;
-    [FormerlySerializedAs("maxBoostMagnitude")] public float maxBoostMagnitudeInAxis = 20;
-    public float boostDecay = -2f;
-    public float minBoostThreshold = .15f;
-    public FiniteTimer boostGravityImmunityTimer = new FiniteTimer(0, .6f);
     
     [SerializeField] bool isJumping = false;
     public int jumpLimit = 1;
-    public int remainingJumps;
+    [SerializeField] int remainingJumps;
     public bool GravityEnabled = true;
 
     public float maxKnockBack = 50;
@@ -63,7 +59,13 @@ public class SimpleCharacterController : MonoBehaviour
     /// Time it takes to go from maxKnockBack to 0
     /// </summary>
     public float knockBackSmoothTime = .6f;
-
+    
+    [FormerlySerializedAs("boostAmount")] public Vector3 boostBuildUp;
+    [FormerlySerializedAs("maxBoostMagnitudeInAxis")] [FormerlySerializedAs("maxBoostMagnitude")] public Vector3 maxBoostMagnitudePerAxis =Vector3.one* 20; 
+    public float boostDecay = -2f;
+    public float minBoostThreshold = .15f;
+    public FiniteTimer boostGravityImmunityTimer = new FiniteTimer(0, .6f);
+    
     public float groundCheckRadius = .5f;
     [FormerlySerializedAs("groundHeight")] [SerializeField] private float groundCheckDistance;
     [SerializeField] private LayerMask groundLayerMask;
@@ -93,25 +95,24 @@ public class SimpleCharacterController : MonoBehaviour
     {
         // moveVel += boost;
         // addKnockBack(boost);
-        boostAmount += boost;
+        boostBuildUp += boost;
+        clampVector(boostBuildUp, maxBoostMagnitudePerAxis);
 
-
-        clampBoostAmount();
         boostGravityImmunityTimer.reset();
+        
     }
+ 
     /// <summary>
     /// We can have boosts in different directions
     /// Ex: boost walls and spikes
     /// They should coexists as long as the axes are diff
     /// </summary>
-    void clampBoostAmount()
+    void clampVector(Vector3 boostBuildUp, Vector3 maxPerAxis)
     {
-        boostAmount.x = Mathf.Sign(boostAmount.x) * Mathf.Min(Mathf.Abs(boostAmount.x), maxBoostMagnitudeInAxis);
-        boostAmount.y = Mathf.Sign(boostAmount.y) * Mathf.Min(Mathf.Abs(boostAmount.y), maxBoostMagnitudeInAxis);
-        boostAmount.z = Mathf.Sign(boostAmount.z) * Mathf.Min(Mathf.Abs(boostAmount.z), maxBoostMagnitudeInAxis);
+        boostBuildUp.x = Mathf.Sign(boostBuildUp.x) * Mathf.Min(Mathf.Abs(boostBuildUp.x), maxPerAxis.x);
+        boostBuildUp.y = Mathf.Sign(boostBuildUp.y) * Mathf.Min(Mathf.Abs(boostBuildUp.y), maxPerAxis.y);
+        boostBuildUp.z = Mathf.Sign(boostBuildUp.z) * Mathf.Min(Mathf.Abs(boostBuildUp.z), maxPerAxis.z);
     }
-    
-    
 
     public void calcVelocity(Vector3 moveInput)
     {
@@ -236,7 +237,7 @@ public class SimpleCharacterController : MonoBehaviour
         // }
     }
 
-    private void resetJumpLimit()
+    public void resetJumpLimit()
     {
         remainingJumps = jumpLimit;
     }
@@ -314,7 +315,6 @@ public class SimpleCharacterController : MonoBehaviour
         resetJumpLimit();
     }
 
-    public float _knockbackFactor; 
     private void Update()
     {
         if (GameStateManager.Instance.IsPaused)
@@ -325,7 +325,8 @@ public class SimpleCharacterController : MonoBehaviour
         calcInput(out input);
         calcVelocity(input);
         calcKnockBack(out float knockbackFactor);
-        _knockbackFactor = knockbackFactor;
+        clampVector(moveVel, maxVelocityInEachAxis);
+
         calcMoveAmount(knockbackFactor, out var moveAmount);
 
         applyMovement(moveAmount);
@@ -363,30 +364,36 @@ public class SimpleCharacterController : MonoBehaviour
         actualMoveVel = actualMoveVel * (1-knockBackControlRecoveryCurve.Evaluate(knockBackFactor)) + knockBackBuildup;
         actualMoveVel.y = moveVel.y;
 
-        actualMoveVel += boostAmount;
-        
-        if (boostAmount.magnitude > minBoostThreshold)
-        {
-            boostAmount -= boostAmount.normalized * (boostDecay * Time.deltaTime);
+        actualMoveVel += boostBuildUp;
+        updateBoost();
 
+
+        moveAmount = actualMoveVel * Time.deltaTime;
+
+    }
+
+    private void updateBoost()
+    {
+        
+        if (boostBuildUp.magnitude > minBoostThreshold)
+        {
+            float dotWithInputVel = Vector3.Dot(input, boostBuildUp);
+
+            
+            boostBuildUp -= boostBuildUp.normalized * (boostDecay * (dotWithInputVel < 0? 4:1) * Time.deltaTime);
         }
         else
         {
-            boostAmount = Vector3.zero;
+            boostBuildUp = Vector3.zero;
         }
         boostGravityImmunityTimer.safeUpdateTimer(Time.deltaTime);
         if (boostGravityImmunityTimer.isComplete)
         {
             if (IsGrounded)
             {
-                boostAmount.y = 0;
+                boostBuildUp.y = 0;
             }
         }
-
-
-        
-        moveAmount = actualMoveVel * Time.deltaTime;
-
     }
 
     public void teleportTo(Vector3 pos)

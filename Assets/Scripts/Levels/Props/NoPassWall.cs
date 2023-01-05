@@ -20,6 +20,7 @@ namespace Combat
         {
             var entryDir = transform.position - target.position;
             var dist = entryDir.magnitude;
+            var entryDirUnnormalized = entryDir;
             entryDir.Normalize();
             
             // if entering from front, always push back, dotprod with damageDir < 0
@@ -32,13 +33,45 @@ namespace Combat
             else//If entering from behind, allow pass through
             {
                 Debug.Log("pushthrough");
-                var cc = target.GetComponent<SimpleCharacterController>();
-                if (cc != null)
-                {
-                    pushThroughTeleportOffset = 1f;
-                    cc.teleportTo(transform.position + damage.damageKnockbackDir * pushThroughTeleportOffset);
-                }
+                
+                teleportTargetToOtherSide(target, entryDirUnnormalized);
+
                 applyKnockback(target, pushThroughForce, damage.damageKnockbackDir);
+            }
+        }
+
+        void handleEntry(Transform target, IDamagable damagable)
+        {
+            var entryDir = transform.position - target.position;
+            var entryDirUnnormalized = entryDir;
+            entryDir.Normalize();
+            
+            // if entering from front, always push back, dotprod with damageDir < 0
+            // front = side with do not pass text 
+            if (Vector2.Dot(entryDir, damage.damageKnockbackDir) < 0)
+            {
+                applyDamageTo(damagable, pushBackForce, -entryDir);
+            }
+            else//If entering from behind, allow pass through
+            {
+                
+                teleportTargetToOtherSide(target, entryDirUnnormalized);
+
+                applyDamageTo(damagable, pushThroughForce, damage.damageKnockbackDir);
+            }
+        }
+
+        private void teleportTargetToOtherSide(Transform target, Vector3 entryDirUnnormalized)
+        {
+            var cc = target.GetComponent<SimpleCharacterController>();
+            if (cc != null)
+            {
+                pushThroughTeleportOffset = 1f;
+                Vector3 teleportAmount = damage.damageKnockbackDir *
+                                         (Vector3.Dot(entryDirUnnormalized, damage.damageKnockbackDir) +
+                                          pushThroughTeleportOffset
+                                         );
+                cc.teleportTo(transform.position + teleportAmount);
             }
         }
 
@@ -56,11 +89,27 @@ namespace Combat
                     }
                 }
 
-                damage.knockbackMagitude = knockBackAmount;
-                timeLastDamagedMap[d] = Time.time;
-                d.takeDamage(damage);
+                applyDamageTo(d, knockBackAmount,  dir);
             }
         }
+        
+        /// <summary>
+        /// deadl damage and update map
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="knockBackAmount"></param>
+        /// <param name="dir"></param>
+        private void applyDamageTo(IDamagable d, float knockBackAmount,  Vector3 dir)
+        {
+            //preserve the damage fields values by applying changes to a copy by value
+            var damageToApply = damage;
+            damageToApply.damageKnockbackDir = dir;
+            damageToApply.knockbackMagitude = knockBackAmount;
+            
+            timeLastDamagedMap[d] = Time.time;
+            d.takeDamage(damageToApply);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             Debug.Log("trigger  " + other.gameObject);
@@ -71,13 +120,20 @@ namespace Combat
             }
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.gameObject.CompareTag(SceneVarTracker.PlayerTag))
+            {
+                var d = other.GetComponent<IDamagable>();
+                if (d != null && timeLastDamagedMap.ContainsKey(d))
+                {
+                    Debug.Log("d, d.gameObject = " + d, d.gameObject);
+                    timeLastDamagedMap.Remove(d);
+                }
+            }
+        }
 
-
-        //we don't use this because the player could exit and then fall back quickly
-        // private void OnTriggerExit(Collider other)
-        // {
-        //     
-        // }
+    
 
         private void OnDrawGizmosSelected()
         {

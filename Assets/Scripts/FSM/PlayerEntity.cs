@@ -47,5 +47,10 @@ public class PlayerEntity : LivingEntity
         {
             cc.addSpeedBoost(damage.damageKnockbackDir * damage.knockbackMagitude);
         }
+
+        if (damage.resetJump)
+        {
+            cc.resetJumpLimit();
+        }
     }
 }
