@@ -11,15 +11,15 @@ public class GoombaMoveForwardState: ModularState
         enemyEntity.Animator.Play(entryAnimation);
         
         //turn enemy into not pushable thing
-        enemyEntity.cc.enabled = true;
+        // enemyEntity.cc.enabled = true;
         enemyEntity.collider.isTrigger = true;
-        enemyEntity.rb.isKinematic = true;
+        // enemyEntity.rb.isKinematic = true;
     }
 
     public override void updateState()
     {
-        enemyEntity.cc.Move(moveSpeed * Time.deltaTime * enemyEntity.transform.forward);
-        
+        // enemyEntity.cc.Move();
+        enemyEntity.transform.position += moveSpeed * Time.deltaTime * enemyEntity.transform.forward;
         
         if (bumper.checkCollision())
         {

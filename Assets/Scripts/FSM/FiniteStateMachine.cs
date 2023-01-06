@@ -1,4 +1,6 @@
-﻿using FSM.GameState;
+﻿using System;
+using Combat;
+using FSM.GameState;
 using UnityEngine;
 
 public class FiniteStateMachine : MonoBehaviour
@@ -39,6 +41,7 @@ public class FiniteStateMachine : MonoBehaviour
     {
         transitionToState(startingState);
     }
+
 
     private void Update()
     {

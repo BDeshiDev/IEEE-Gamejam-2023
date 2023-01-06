@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7896547057787642869}
   - component: {fileID: 7896547057787642870}
   - component: {fileID: 7896547057787642868}
-  - component: {fileID: 7896547057787642867}
   m_Layer: 0
   m_Name: HealGun
   m_TagString: Untagged
@@ -99,11 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d7aba35e8124eabb40cf38555f68de1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  consumesUponUsage1: 1
-  consumesUponUsage2: 1
+  consumesUponUsage1: 0
+  consumesUponUsage2: 0
   shouldShowAmountInUI: 0
   itemIconSprite: {fileID: 0}
-  ItemCOlor: {r: 1, g: 0.97766113, b: 0, a: 1}
+  ItemColor: {r: 1, g: 0.97766113, b: 0, a: 1}
   slot: {fileID: 0}
   shotPoint: {fileID: 7896547058128687245}
   shotDist: 9999
@@ -117,20 +116,9 @@ MonoBehaviour:
     damageKnockbackDir: {x: 0, y: 0, z: 0}
     knockbackMagitude: 0
     resetJump: 0
+    resetGravity: 0
+    resetBoost: 0
     damageType: 0
---- !u!114 &7896547057787642867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7896547057787642857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c61b932edefc4cec979194629cf40eb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healGun: {fileID: 7896547057787642868}
 --- !u!1 &7896547058128687246
 GameObject:
   m_ObjectHideFlags: 0

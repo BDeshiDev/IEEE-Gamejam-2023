@@ -26,6 +26,9 @@ namespace Core.Misc.Core
                 if (damagee != null)
                 {
                     damagee.takeDamage(damagePerHit);
+                    var damageText = SpawnManager.Instance.gunDamagePool.getItem();
+                    damageText.transform.position = hitResults.point;
+                    damageText.text.text = $"+{damagePerHit.healthDamage}";
                 }
             }
             else
