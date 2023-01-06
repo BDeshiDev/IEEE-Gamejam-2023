@@ -17,22 +17,22 @@ namespace Combat.Pickups
         public void useOn(IDamagable damagee)
         {
             // -ve damage is healing
-            // but we've initialized it to a -ve value
-            // so this turns out to just deal damage in the end
+            // but we've initialized it to a +ve value
+            // so this turns out to just deal normal damage in the end
             damagee.takeDamage(healDamage);
             handleUsage();
         }
 
         public override void use1()
         {
-            useOn(slot.inventory.owner);
+            thrower.throwProjectile(slot.inventory.owner);
         }
 
 
 
         public override void use2()
         {
-            thrower.throwProjectile(slot.inventory.owner);
+            useOn(slot.inventory.owner);
         }
 
 

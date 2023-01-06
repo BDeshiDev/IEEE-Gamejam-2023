@@ -125,8 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6337a62011f64c7ebffc6e70ddd0d9e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionRadius: 1
-  speed: 3
+  collisionRadius: 0.5
+  speed: 50
   angularSpeed: 0
   affectedByGravity: 0
   gravity: 27.77778

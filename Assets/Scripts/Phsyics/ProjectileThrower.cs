@@ -11,9 +11,9 @@ namespace Combat
             var ray = player.getPlayerShotDirRay();
             if(Physics.Raycast(ray, out var hitResults, Mathf.Infinity, healthPackProjectilePrefab.hitLayer))
             {
-                return hitResults.point - player.transform.position;
+                return (hitResults.point - player.transform.position).normalized;
             }
-            return player.transform.forward;
+            return ray.direction;
         }
         
         public void throwProjectile(PlayerEntity player)

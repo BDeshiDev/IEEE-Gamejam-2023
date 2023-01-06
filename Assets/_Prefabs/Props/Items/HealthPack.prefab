@@ -113,7 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   consumesUponUsage1: 1
   consumesUponUsage2: 1
-  shouldShowAmountInUI: 0
+  shouldShowAmountInUI: 1
   itemIconSprite: {fileID: 21300000, guid: f354cc93a706b9449b2f442e734b308d, type: 3}
   ItemColor: {r: 0, g: 1, b: 0, a: 1}
   slot: {fileID: 0}

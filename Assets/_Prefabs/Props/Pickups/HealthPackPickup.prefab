@@ -45,7 +45,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3.16
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5887969733822187747
 MonoBehaviour:
@@ -85,7 +85,7 @@ PrefabInstance:
     - target: {fileID: 7094696579418231198, guid: c4700cd141662ac4f96237e1c4162f8d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.38
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7094696579418231198, guid: c4700cd141662ac4f96237e1c4162f8d,
         type: 3}

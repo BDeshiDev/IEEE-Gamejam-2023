@@ -101,6 +101,7 @@ MonoBehaviour:
   consumesUponUsage2: 1
   shouldShowAmountInUI: 0
   itemIconSprite: {fileID: 0}
+  ItemColor: {r: 0, g: 1, b: 0, a: 1}
   slot: {fileID: 0}
   explosionRadius: 4
   damageMask:
@@ -111,12 +112,16 @@ MonoBehaviour:
     damageKnockbackDir: {x: 0, y: 0, z: 0}
     knockbackMagitude: 10
     resetJump: 1
+    resetGravity: 0
+    resetBoost: 0
+    overrideDamageImmunity: 0
     damageType: 1
   active: 0
   activeTimer:
     timer: 0
     maxValue: 3
   minVerticalBoost: 5
+  thrower: {fileID: 0}
 --- !u!114 &8857739821891796109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionRadius: 1
-  speed: 5
+  speed: 50
   angularSpeed: 0
   affectedByGravity: 1
   gravity: 27.77778

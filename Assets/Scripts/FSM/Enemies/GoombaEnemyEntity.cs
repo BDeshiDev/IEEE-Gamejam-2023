@@ -18,13 +18,15 @@ public class GoombaEnemyEntity : LivingEntity
     [SerializeField] private FiniteTimer contactDamageTImer = new FiniteTimer(0, 1.2f);
     public CharacterController cc;
     public BoxCollider collider;
+
+    public bool startAsDead = false;
     // public Rigidbody rb;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         var d = other.GetComponent<IDamagable>();
@@ -32,6 +34,15 @@ public class GoombaEnemyEntity : LivingEntity
         {
             Debug.Log("d " + d);
             d.takeDamage(contactDamage);
+        }
+    }
+
+    private void Update()
+    {
+        if (startAsDead)
+        {
+            startAsDead = false;
+            forceKill();
         }
     }
 
