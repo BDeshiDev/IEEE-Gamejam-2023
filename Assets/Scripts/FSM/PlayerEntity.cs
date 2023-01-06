@@ -14,7 +14,7 @@ public class PlayerEntity : LivingEntity
     public Transform gunParent;
     public FPSCameraController camController;
     public SimpleCharacterController cc;
-
+    public FiniteTimer damageImmunityTimer = new FiniteTimer(0, .25f);
     /// <summary>
     /// static event for any player death
     /// So that it works across scenes
@@ -42,7 +42,15 @@ public class PlayerEntity : LivingEntity
 
     public override void takeDamage(DamageInfo damage)
     {
-        base.takeDamage(damage);
+
+        if (damageImmunityTimer.isComplete || damage.overrideDamageImmunity)
+        {
+            if (!damage.overrideDamageImmunity)
+            {
+                damageImmunityTimer.reset();
+            }
+            base.takeDamage(damage);
+        }
         if (damage.resetBoost)
         {
             cc.clearBoost();
@@ -60,7 +68,12 @@ public class PlayerEntity : LivingEntity
 
         if (damage.resetGravity)
         {
-            cc.applyGravity();
+            cc.resetFall();
         }
+    }
+
+    private void Update()
+    {
+        damageImmunityTimer.safeUpdateTimer(Time.deltaTime);
     }
 }

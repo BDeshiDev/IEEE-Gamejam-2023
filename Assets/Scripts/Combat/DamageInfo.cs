@@ -17,7 +17,15 @@ namespace Combat
         public bool resetJump;
         public bool resetGravity;
         public bool resetBoost;
+        /// <summary>
+        /// Override damage immunity of the target
+        /// Used to ensure that something that is guaranteed to kill acutally kills regardless of invunlerability
+        /// Like health hazard health packs
+        /// And healing of any form
+        /// </summary>
+        public bool overrideDamageImmunity;
         public DamageCategory damageType;
+        
         
         public bool isHeal => healthDamage < 0;
         public DamageInfo(int healthDamage)
@@ -28,6 +36,7 @@ namespace Combat
             this.resetJump = false;
             this.resetBoost = false;
             this.resetGravity = false;
+            this.overrideDamageImmunity = false;
             damageType = DamageCategory.Shot;
         }
 

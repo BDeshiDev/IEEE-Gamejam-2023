@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8151005665904203775}
   - component: {fileID: 8151005665904203774}
   - component: {fileID: 8151005665904203773}
+  - component: {fileID: 7046249663934426586}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -111,10 +112,27 @@ MonoBehaviour:
     damageKnockbackDir: {x: 0, y: 0, z: 0}
     knockbackMagitude: 10
     resetJump: 1
+    resetGravity: 1
+    resetBoost: 0
+    overrideDamageImmunity: 1
     damageType: 1
   active: 0
   activeTimer:
     timer: 0
     maxValue: 3
   minVerticalBoost: 5
-  thrower: {fileID: 0}
+  thrower: {fileID: 7046249663934426586}
+--- !u!114 &7046249663934426586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8151005665904203768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5bb38f49d644b38aa9748562e268ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPackProjectilePrefab: {fileID: 8857739821891796109, guid: 635a0a28c7ca0cf41bb95bd565681168,
+    type: 3}

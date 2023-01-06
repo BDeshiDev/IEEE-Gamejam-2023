@@ -118,6 +118,7 @@ MonoBehaviour:
     resetJump: 0
     resetGravity: 0
     resetBoost: 0
+    overrideDamageImmunity: 1
     damageType: 0
 --- !u!1 &7896547058128687246
 GameObject:

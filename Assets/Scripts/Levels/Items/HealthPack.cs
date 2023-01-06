@@ -6,7 +6,7 @@ namespace Combat.Pickups
 {
     public class HealthPack: Item
     {
-        public int healAmount = -100;
+        public DamageInfo healDamage= new DamageInfo(-100);
 
         public ProjectileThrower thrower;
         void handleUsage()
@@ -19,7 +19,7 @@ namespace Combat.Pickups
             // -ve damage is healing
             // but we've initialized it to a -ve value
             // so this turns out to just deal damage in the end
-            damagee.takeDamage(new DamageInfo(-healAmount));
+            damagee.takeDamage(healDamage);
             handleUsage();
         }
 

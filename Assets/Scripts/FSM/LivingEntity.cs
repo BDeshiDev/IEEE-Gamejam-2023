@@ -23,7 +23,10 @@ public class LivingEntity : MonoBehaviour, IDamagable
     {
         healthComponent.forceEmpty();
     }
-
+    /// <summary>
+    /// base version only applies damage to health comp
+    /// </summary>
+    /// <param name="damage"></param>
     public virtual void takeDamage(DamageInfo damage)
     {
         healthComponent.modifyAmount(-damage.healthDamage);

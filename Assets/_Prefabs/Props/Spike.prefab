@@ -101,10 +101,12 @@ MonoBehaviour:
     healthDamage: 10
     damageKnockbackDir: {x: 0, y: 1, z: 0}
     knockbackMagitude: 20
-    resetJump: 0
+    resetJump: 1
     resetGravity: 1
+    resetBoost: 0
+    overrideDamageImmunity: 0
     damageType: 0
-  minDamageInterval: 0.2
+  minDamageInterval: 0.1
 --- !u!65 &4319344292531242001
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -116,5 +118,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.536, y: 2, z: 0.47375757}
+  m_Size: {x: 1.536, y: 1.6, z: 0.47375757}
   m_Center: {x: 0, y: 0, z: 0.25}
