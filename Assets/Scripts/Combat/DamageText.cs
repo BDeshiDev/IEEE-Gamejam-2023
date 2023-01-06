@@ -1,5 +1,6 @@
 ﻿using System;
 using BDeshi.Utility;
+using Core.Misc;
 using TMPro;
 using UnityEngine;
 
@@ -25,6 +26,8 @@ namespace Combat
                 transform.position += moveUpBaseSpeed * moveUpCurve.Evaluate(durationTimer.Ratio) * Time.deltaTime * Vector3.up;
                 text.color = new Color(text.color.r, text.color.g ,text.color.b,1 - durationTimer.Ratio) ;
             }
+            
+            transform.forward = SceneVarTracker.Instance.Camera.transform.forward;
         }
 
         public void initialize()

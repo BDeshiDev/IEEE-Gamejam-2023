@@ -28,7 +28,7 @@ namespace Core.Misc.Core
                     damagee.takeDamage(damagePerHit);
                     var damageText = SpawnManager.Instance.gunDamagePool.getItem();
                     damageText.transform.position = hitResults.point;
-                    damageText.text.text = $"+{damagePerHit.healthDamage}";
+                    damageText.text.text = $"+{-damagePerHit.healthDamage}";
                 }
             }
             else
