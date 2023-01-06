@@ -1,4 +1,6 @@
-﻿public class GoombaDeadState: ModularState
+﻿using UnityEngine;
+
+public class GoombaDeadState: ModularState
 {
     public GoombaEnemyEntity enemyEntity;
     private string entryAnimation;
@@ -11,6 +13,7 @@
         
         enemyEntity.collider.isTrigger = false;
         // enemyEntity.rb.isKinematic = false;
+
     }
 
     public override void updateState()

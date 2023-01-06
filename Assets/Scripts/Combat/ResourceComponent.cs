@@ -71,6 +71,7 @@ namespace Combat
         /// <param name="changeAmount">USE -VE IF IT'S DAMAGE </param>
         public virtual void modifyAmount(float changeAmount)
         {
+            Debug.Log("changeAmount = " + changeAmount);
             if(changeAmount < 0)
             {
                 if (cur <= Mathf.Abs(changeAmount))

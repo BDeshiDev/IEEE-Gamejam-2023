@@ -6,7 +6,7 @@ namespace Combat.Pickups
 {
     public class HealthPack: Item
     {
-        public DamageInfo healDamage= new DamageInfo(-100);
+        public DamageInfo healDamage= new DamageInfo(100);
 
         public ProjectileThrower thrower;
         void handleUsage()

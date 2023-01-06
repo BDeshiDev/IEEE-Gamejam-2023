@@ -118,7 +118,7 @@ MonoBehaviour:
   ItemColor: {r: 0, g: 1, b: 0, a: 1}
   slot: {fileID: 0}
   healDamage:
-    healthDamage: -100
+    healthDamage: 100
     damageKnockbackDir: {x: 0, y: 0, z: 0}
     knockbackMagitude: 0
     resetJump: 0

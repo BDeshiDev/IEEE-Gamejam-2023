@@ -130,7 +130,7 @@ MonoBehaviour:
   size: {x: 1, y: 1, z: 0.3}
   collisionLayerMask:
     serializedVersion: 2
-    m_Bits: 4194304
+    m_Bits: 12582912
 --- !u!1 &3816167902838119514
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,9 +500,20 @@ MonoBehaviour:
   fsm: {fileID: 3816167903625303024}
   deathState: {fileID: 3816167903208207621}
   goombaMoveForwardState: {fileID: 3816167904142218971}
+  contactDamage:
+    healthDamage: 25
+    damageKnockbackDir: {x: 0, y: 0, z: 0}
+    knockbackMagitude: 0
+    resetJump: 0
+    resetGravity: 0
+    resetBoost: 0
+    overrideDamageImmunity: 0
+    damageType: 0
+  contactDamageTImer:
+    timer: 0
+    maxValue: 1.2
   cc: {fileID: 3816167903625303030}
   collider: {fileID: 3816167903625303016}
-  rb: {fileID: 3816167903625303022}
 --- !u!114 &3816167903625303029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,6 +528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max: 100
   cur: 0
+  shouldFullyRestore: 1
 --- !u!143 &3816167903625303030
 CharacterController:
   m_ObjectHideFlags: 0

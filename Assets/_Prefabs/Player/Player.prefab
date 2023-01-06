@@ -193,7 +193,7 @@ MonoBehaviour:
   groundCheckDistance: 0.7
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 41943040
+    m_Bits: 41945088
   groundCheckOffset: -0.42
   inputCancelBoostFactor: 10
 --- !u!143 &770369672525054827
@@ -231,6 +231,9 @@ MonoBehaviour:
   gunParent: {fileID: 770369672963076725}
   camController: {fileID: 770369673419705430}
   cc: {fileID: 770369672525054838}
+  damageImmunityTimer:
+    timer: 0
+    maxValue: 0.25
 --- !u!114 &770369672525054825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   max: 100
   cur: 0
+  shouldFullyRestore: 1
 --- !u!54 &6551327258147889433
 Rigidbody:
   m_ObjectHideFlags: 0

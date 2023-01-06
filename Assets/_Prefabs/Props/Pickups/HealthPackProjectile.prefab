@@ -103,7 +103,15 @@ MonoBehaviour:
   itemIconSprite: {fileID: 21300000, guid: f354cc93a706b9449b2f442e734b308d, type: 3}
   ItemColor: {r: 0, g: 1, b: 0, a: 1}
   slot: {fileID: 0}
-  healAmount: -100
+  healDamage:
+    healthDamage: 100
+    damageKnockbackDir: {x: 0, y: 0, z: 0}
+    knockbackMagitude: 0
+    resetJump: 0
+    resetGravity: 0
+    resetBoost: 0
+    overrideDamageImmunity: 0
+    damageType: 0
   thrower: {fileID: 0}
 --- !u!114 &7011961195974723603
 MonoBehaviour:

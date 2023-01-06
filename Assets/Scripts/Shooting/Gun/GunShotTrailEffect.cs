@@ -36,7 +36,7 @@ public class GunShotTrailEffect : MonoBehaviour
         if (!trailTimer.isComplete)
         {
             trailTimer.updateTimer(Time.deltaTime);
-            liner.startColor = liner.endColor = Color.Lerp(baseColor, new Color(baseColor.r, baseColor.g, baseColor.b,0),  trailTimer.Ratio);
+            // liner.startColor = liner.endColor = Color.Lerp(baseColor, new Color(baseColor.r, baseColor.g, baseColor.b,0),  trailTimer.Ratio);
 
             if (trailTimer.isComplete)
             {

@@ -107,7 +107,6 @@ namespace Combat
             
             if ( collidedLastFrame && hitCollider != null)
             {
-                Debug.Log("hitCollider = " + hitCollider);
                 var d = hitCollider.GetComponent<IDamagable>();
                 if (d != null)
                 {

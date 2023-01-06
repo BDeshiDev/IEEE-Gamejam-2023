@@ -1,10 +1,17 @@
-﻿namespace Combat
+﻿using UnityEngine;
+
+namespace Combat
 {
     public class HealthComponent : ResourceComponent
     {
+        [SerializeField] bool shouldFullyRestore = true;
         private void Start()
         {
-            fullyRestore();
+            if (shouldFullyRestore)
+            {
+                fullyRestore();
+                
+            }
         }
     }
 }
