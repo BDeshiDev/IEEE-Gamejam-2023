@@ -48,3 +48,8 @@ MonoBehaviour:
     type: 3}
   gunShotParticlePrefab: {fileID: 9070420309390695803, guid: 2e741bc91805fd84592a99f61da0d488,
     type: 3}
+  healParticlePrefab: {fileID: 3723222370813845441, guid: f2f4787c088ba614eb60871c21a3d922,
+    type: 3}
+  healProjectileHitParticlePrefab: {fileID: 6814936451951267622, guid: 2eab18a3b76d87d489e07b5226669892,
+    type: 3}
+  bombParticlePrefab: {fileID: 0}

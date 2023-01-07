@@ -27,7 +27,7 @@ namespace Combat
         /// <summary>
         ///  CAN TRIGGER ON SAME THING onDamage was called on
         /// </summary>
-        public UnityEvent onHit;
+        public UnityEvent<Vector3> onHit;
         public UnityEvent onTimeout;
         
         private float lastMoveAmount = 0;
@@ -135,7 +135,7 @@ namespace Combat
             
             handleEnd();
 
-            onHit.Invoke();
+            onHit.Invoke(point);
         }
 
         public void handleEnd()

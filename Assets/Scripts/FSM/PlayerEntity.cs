@@ -12,6 +12,7 @@ public class PlayerEntity : LivingEntity
     //will add player specific behaviour here if needed
     public PlayerInventory inventory;
     public Transform gunParent;
+    public Transform firstPersonParticlesParent;
     public FPSCameraController camController;
     public SimpleCharacterController cc;
     public FiniteTimer damageImmunityTimer = new FiniteTimer(0, .25f);
@@ -20,7 +21,6 @@ public class PlayerEntity : LivingEntity
     /// So that it works across scenes
     /// </summary>
     public static SafeEvent<PlayerEntity> playerDied = new SafeEvent<PlayerEntity>();
-    
     
     public Ray getPlayerShotDirRay()
     {

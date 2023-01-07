@@ -112,6 +112,7 @@ MonoBehaviour:
     resetBoost: 0
     overrideDamageImmunity: 0
     damageType: 0
+  checkForPlayerDeath: 0
   thrower: {fileID: 0}
 --- !u!114 &7011961195974723603
 MonoBehaviour:
@@ -178,7 +179,19 @@ MonoBehaviour:
         m_CallState: 2
   onHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7421541119588127211}
+        m_TargetAssemblyTypeName: Combat.Pickups.HealthPack, Assembly-CSharp
+        m_MethodName: handleHit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onTimeout:
     m_PersistentCalls:
       m_Calls: []

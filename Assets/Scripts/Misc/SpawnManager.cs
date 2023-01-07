@@ -9,14 +9,24 @@ namespace Core.Misc
     /// </summary>
     public class SpawnManager : MonoBehaviourSingletonPersistent<SpawnManager>
     {
-        public DamageText gunDamagePrefab;
+        [SerializeField] DamageText gunDamagePrefab;
         public AutoMonobehaviourPool<DamageText> gunDamagePool { get; private set; }
-        public PoolableParticleSystem gunShotParticlePrefab;
+        [SerializeField]PoolableParticleSystem gunShotParticlePrefab;
+        [SerializeField]PoolableParticleSystem healParticlePrefab;
+        [SerializeField]PoolableParticleSystem healProjectileHitParticlePrefab;
+        [SerializeField]PoolableParticleSystem bombParticlePrefab;
         public AutoMonobehaviourPool<PoolableParticleSystem> gunShotParticlePool { get; private set; }
+        public AutoMonobehaviourPool<PoolableParticleSystem> healParticlePool { get; private set; }
+        public AutoMonobehaviourPool<PoolableParticleSystem> healProjectileHitParticlePool { get; private set; }
+        public AutoMonobehaviourPool<PoolableParticleSystem> bombParticlePool { get; private set; }
         protected override void initialize()
         {
-            gunDamagePool = new AutoMonobehaviourPool<DamageText>(gunDamagePrefab,3);
-            gunShotParticlePool = new AutoMonobehaviourPool<PoolableParticleSystem>(gunShotParticlePrefab,3);
+            // alot of levels don't have any of these so initialize to 0
+            gunDamagePool = new AutoMonobehaviourPool<DamageText>(gunDamagePrefab,0,transform);
+            gunShotParticlePool = new AutoMonobehaviourPool<PoolableParticleSystem>(gunShotParticlePrefab,0,transform);
+            healParticlePool = new AutoMonobehaviourPool<PoolableParticleSystem>(healParticlePrefab,0,transform);
+            healProjectileHitParticlePool = new AutoMonobehaviourPool<PoolableParticleSystem>(healProjectileHitParticlePrefab,0,transform);
+            bombParticlePool = new AutoMonobehaviourPool<PoolableParticleSystem>(bombParticlePrefab,0,transform);
         }
     }
 }
