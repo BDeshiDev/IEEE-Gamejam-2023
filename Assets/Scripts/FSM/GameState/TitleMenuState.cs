@@ -1,4 +1,5 @@
-﻿using UnityEngine.SceneManagement;
+﻿using Sound;
+using UnityEngine.SceneManagement;
 
 namespace FSM.GameState
 {
@@ -11,6 +12,8 @@ namespace FSM.GameState
                 GameStateManager.Instance.loadScene("TitleScene");
 
             }
+            
+            BGMManager.Instance.stopPlaying();
         }
 
         public override void updateState()

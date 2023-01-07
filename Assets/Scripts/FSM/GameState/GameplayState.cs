@@ -1,6 +1,7 @@
 ﻿using System;
 using Core.Input;
 using Core.Misc;
+using Sound;
 using UnityEngine;
 
 namespace FSM.GameState
@@ -37,6 +38,8 @@ namespace FSM.GameState
             }
             
             cursor.SetActive(true);
+            
+            BGMManager.Instance.playBGM();
         }
 
         void doSceneVariableInitialization()
