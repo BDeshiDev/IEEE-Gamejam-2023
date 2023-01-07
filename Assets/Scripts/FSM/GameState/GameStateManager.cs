@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using BDeshi.Utility;
 using Core.Misc;
 using UnityEngine;
@@ -20,7 +21,8 @@ namespace FSM.GameState
         public static readonly string pauseMenuStateID = "pauseMenuState";
         public static readonly string gameOverStateID = "gameOverState";
         public static readonly string titleScreenStateID = "titleScreenState";
-
+        public GameObject fadeToBlack;
+        
         public bool IsPaused { get; private set; }
 
         /// <summary>
@@ -92,6 +94,14 @@ namespace FSM.GameState
                 SceneVarTracker.Instance.queueCallbackForSceneReload(callback);
             }
             SceneManager.LoadScene(sceneName);
+            StartCoroutine(dofadeToBlack());
+        }
+
+        IEnumerator dofadeToBlack()
+        {
+            fadeToBlack.SetActive(true);
+            yield return null;//wait one frame
+            fadeToBlack.SetActive(false);
         }
 
         public event Action CallbackBeforeActiveSceneChanges;
