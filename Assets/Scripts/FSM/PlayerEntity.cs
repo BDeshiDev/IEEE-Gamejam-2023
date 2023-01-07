@@ -13,6 +13,7 @@ public class PlayerEntity : LivingEntity
     public PlayerInventory inventory;
     public Transform gunParent;
     public Transform firstPersonParticlesParent;
+    public Transform bombSpawnParent;
     public FPSCameraController camController;
     public SimpleCharacterController cc;
     public FiniteTimer damageImmunityTimer = new FiniteTimer(0, .25f);

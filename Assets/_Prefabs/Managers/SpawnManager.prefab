@@ -52,4 +52,5 @@ MonoBehaviour:
     type: 3}
   healProjectileHitParticlePrefab: {fileID: 6814936451951267622, guid: 2eab18a3b76d87d489e07b5226669892,
     type: 3}
-  bombParticlePrefab: {fileID: 0}
+  bombParticlePrefab: {fileID: 3454046547435062633, guid: 2b7e3a9d2ba408644a14c6b9f84f1205,
+    type: 3}
