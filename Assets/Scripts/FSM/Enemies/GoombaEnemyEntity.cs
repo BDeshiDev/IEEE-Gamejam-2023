@@ -45,11 +45,6 @@ public class GoombaEnemyEntity : LivingEntity
         Material[] materials = renderer.materials;
         materials[3] = mat;
         renderer.materials = materials;
-        Debug.Log(mat + " " + renderer.materials[3]);
-        foreach (var m in renderer.materials)
-        {
-            Debug.Log("m = " + m);
-        }
     }
 
 
