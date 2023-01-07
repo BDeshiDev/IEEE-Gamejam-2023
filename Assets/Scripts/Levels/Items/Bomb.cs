@@ -101,6 +101,14 @@ namespace Combat.Pickups
             // thrower.throwProjectile(slot.inventory.owner);
         }
 
+        public override void handleItemMadeActiveSlot()
+        {
+            
+        }
 
+        public override void handleItemRemovedFromActiveSlot()
+        {
+            
+        }
     }
 }

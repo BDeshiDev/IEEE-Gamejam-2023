@@ -76,5 +76,15 @@ namespace Combat.Pickups
         {
             this.slot = slot;
         }
+        
+        /// <summary>
+        /// called when player selects this item as active
+        /// </summary>
+        public abstract void handleItemMadeActiveSlot();
+        
+        /// <summary>
+        /// called when player  this item is no longer the active item
+        /// </summary>
+        public abstract void handleItemRemovedFromActiveSlot();
     }
 }

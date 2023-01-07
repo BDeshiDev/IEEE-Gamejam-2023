@@ -55,6 +55,16 @@ namespace Combat.Pickups
             base.handleAddedToInventorySlot(slot);
             this.gameObject.SetActive(false);
         }
+
+        public override void handleItemMadeActiveSlot()
+        {
+            
+        }
+
+        public override void handleItemRemovedFromActiveSlot()
+        {
+            
+        }
     }
 }
 
