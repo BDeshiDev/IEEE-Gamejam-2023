@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5887969733822187744}
   - component: {fileID: 5887969733822187745}
   - component: {fileID: 5887969733822187747}
+  - component: {fileID: -8455841134873964249}
   m_Layer: 0
   m_Name: HealthPackPickup
   m_TagString: Untagged
@@ -59,8 +60,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41efdca3a87c4021b6ce1e0a75cb4443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupSFXSource: {fileID: 0}
   item: {fileID: 8684780957690952263}
+--- !u!114 &-8455841134873964249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887969733822187758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a9a8db506d40dba2e717183dc2b4fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinSpeed: 100
 --- !u!1001 &5036213318605162319
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2160,6 +2160,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9106130166760628727, guid: 5e8df1290605f6646b920d1b3d73cb37,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e8df1290605f6646b920d1b3d73cb37,
         type: 3}
       propertyPath: m_RootOrder
@@ -2219,6 +2224,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: arm_w_camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5e8df1290605f6646b920d1b3d73cb37,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e8df1290605f6646b920d1b3d73cb37, type: 3}
@@ -3166,6 +3176,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Arm
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 436f5cb3d6ccd5245b8f90b6a125b00f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3196138216412401344, guid: 436f5cb3d6ccd5245b8f90b6a125b00f,
         type: 3}
