@@ -22,7 +22,7 @@ namespace FSM.GameState
         public static readonly string gameOverStateID = "gameOverState";
         public static readonly string titleScreenStateID = "titleScreenState";
         public GameObject fadeToBlack;
-        
+        public DamageFlash damageFlash;
         public bool IsPaused { get; private set; }
 
         /// <summary>

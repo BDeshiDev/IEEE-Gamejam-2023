@@ -5,6 +5,7 @@ using BDeshi.Utility;
 using Combat;
 using Combat.Pickups;
 using Core.Misc.Core;
+using FSM.GameState;
 using UnityEngine;
 
 public class PlayerEntity : LivingEntity
@@ -51,6 +52,11 @@ public class PlayerEntity : LivingEntity
                 damageImmunityTimer.reset();
             }
             base.takeDamage(damage);
+
+            if (damage.healthDamage > 0)
+            {
+                GameStateManager.Instance.damageFlash.doFlash();
+            }
         }
         if (damage.resetBoost)
         {
