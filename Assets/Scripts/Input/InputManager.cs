@@ -14,87 +14,48 @@ namespace Core.Input
     public class InputManager : MonoBehaviourSingletonPersistent<InputManager>
     {
         [SerializeField] private InputActionAsset inputActionMap;
-        public Transform AimOrigin;
-        [SerializeField] private  Vector3 aimDir; 
-        public static Vector3 AimDir => Instance.aimDir;
-        public static bool IsAimActive => Instance.aimDir != Vector3.zero;
-        [SerializeField] private Camera cam;
-
-        public bool MouseAimActive = false;
-        public bool GamePadAimActive = false;
-        public static Vector3 LookDelta { get; private set; }
-        public static Vector3 NormalizedTopDownAimInput { get; private set; }
-        public static Vector3 NormalizedTopDownAimEndPoint => normalizedTopDownAimEndPoint;
-        private static Vector3 normalizedTopDownAimEndPoint;
-
-        [SerializeField] private LayerMask aimLayer;
-
+        public Vector3 LookDelta => lookDelta;
+        public Vector3 lookDelta; 
         [SerializeField]private Vector2 moveInput;
         public static Vector2 RawMoveInput => Instance.moveInput;
         public static Vector3 NormalizedTopDownMoveInput { get; private set; }
         public static bool IsMoveInputActive { get; private set; } = false;
 
 
-        public bool applySensitivity = true;
-        public float gamepadVel = 80;
-        private float dotFactor = 3;
-        private Vector2 gamepadVal = Vector2.zero;
-
 
         [SerializeField] private InputActionReference moveAction;
         [SerializeField] private InputActionReference jumpAction;
+        [SerializeField] private InputActionReference use1Action;
+        [SerializeField] private InputActionReference use2Action;
+        [SerializeField] private InputActionReference sprintAction;
         [SerializeField] private InputActionReference lookAction;
-        
-        public static InputButtonSlot tabCycleRightButton = new InputButtonSlot();
-        public static InputButtonSlot tabCycleLeftButton = new InputButtonSlot();        
+        [SerializeField] private InputActionReference itemShiftAction;
+        [SerializeField] private InputActionReference pauseMenuAction;
+        [SerializeField] private InputActionReference debugAction1;
+
         public static InputButtonSlot jumpButton = new InputButtonSlot();
-        
+        public static InputButtonSlot use1Button = new InputButtonSlot();
+        public static InputButtonSlot use2Button = new InputButtonSlot();
+        public static InputButtonSlot sprintButton = new InputButtonSlot();
+        public static InputButtonSlot pauseButton = new InputButtonSlot();
+
+        public static InputButtonSlot debugButton1 = new InputButtonSlot();
+
+        public SafeEvent<float> itemShift;
 
 
-        // void Update()
-        // {
-        //     updateAim();
-        // }
 
         protected override void initialize()
         {
-            cam = Camera.main;
-            Debug.Log(cam,cam);
+            itemShift = new SafeEvent<float>();
         }
 
-        public static Vector3 convertVecCamRelative(Vector3 dir)
+        public static Vector3 convertVecCamRelative(Camera cam, Vector3 dir)
         {
-            return Quaternion.AngleAxis(Instance.cam.transform.rotation.eulerAngles.y, Vector3.up) * dir;
-        }
-
-        public static float convertVecToAngleCamRelative(Vector3 dir){
-           return Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + Instance.cam.transform.eulerAngles.y;
+            return Quaternion.AngleAxis(cam.transform.rotation.eulerAngles.y, Vector3.up) * dir;
         }
 
 
-        private void AimAlongPerformed(InputAction.CallbackContext obj)
-        {
-            GamePadAimActive = true;
-            MouseAimActive = false;
-
-            gamepadVal = Vector2.zero;
-        }
-        private void AimAlongCancelled(InputAction.CallbackContext obj)
-        {
-            GamePadAimActive = false;
-        }
-
-        private void OnAimAtPerformed(InputAction.CallbackContext obj)
-        {
-            MouseAimActive = true;
-            GamePadAimActive = false;
-        }
-
-        void OnAimAtCancelled(InputAction.CallbackContext c)
-        {
-            MouseAimActive = false;
-        }
-        
 
         void OnEnable()
         {
@@ -105,18 +66,28 @@ namespace Core.Input
 
 
             jumpButton.bind(jumpAction);
+            use1Button.bind(use1Action);
+            use2Button.bind(use2Action);
+            sprintButton.bind(sprintAction);
+            pauseButton.bind(pauseMenuAction);
             
             moveAction.action.performed += OnMovePerformed;
             moveAction.action.canceled += OnMoveCancelled;
             lookAction.action.performed += OnLookPerformed;
             lookAction.action.canceled += OnLookCancelled;
-
+            itemShiftAction.action.performed += handleItemShiftPerformed;
 #if UNITY_EDITOR
 
-            // debugButton1.bind(debugAction1);
+            debugButton1.bind(debugAction1);
 
 #endif
 
+        }
+
+        private void handleItemShiftPerformed(InputAction.CallbackContext obj)
+        {
+            float delta = obj.ReadValue<float>();
+            itemShift.Invoke(delta);
         }
 
 
@@ -127,6 +98,15 @@ namespace Core.Input
 
 
             jumpButton.unBind(jumpAction);
+            use1Button.unBind(use1Action);
+            use2Button.unBind(use2Action);
+            sprintButton.unBind(sprintAction);
+            pauseButton.unBind(pauseMenuAction);
+#if UNITY_EDITOR
+
+            debugButton1.unBind(debugAction1);
+
+#endif
 
             moveAction.action.performed -= OnMovePerformed;
             moveAction.action.canceled -= OnMoveCancelled;
@@ -138,14 +118,12 @@ namespace Core.Input
 
         private void OnLookPerformed(InputAction.CallbackContext obj)
         {
-            LookDelta = obj.ReadValue<Vector2>();
-            Debug.Log(" l "+ LookDelta);
-
+            lookDelta = obj.ReadValue<Vector2>();
         }
         
         private void OnLookCancelled(InputAction.CallbackContext obj)
         {
-            LookDelta = Vector3.zero;
+            lookDelta = Vector3.zero;
         }
 
         private void OnMovePerformed(InputAction.CallbackContext obj)
@@ -161,10 +139,22 @@ namespace Core.Input
             IsMoveInputActive = false;
         }
 
-        private void OnDrawGizmosSelected()
+        public static void PlayModeExitCleanUp()
         {
-            if(AimOrigin)
-                Gizmos.DrawRay(AimOrigin.position, aimDir);
+            jumpButton.cleanup();
+            use1Button.cleanup();
+            use2Button.cleanup();
+            sprintButton.cleanup();
+            pauseButton.cleanup();
+#if UNITY_EDITOR
+
+            debugButton1.cleanup();
+
+#endif
+            if (Instance != null)
+            {
+                Instance.itemShift.clear();
+            }
         }
     }
 }

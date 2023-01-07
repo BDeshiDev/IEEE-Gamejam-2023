@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
+  - LevelData
   layers:
   - Default
   - TransparentFX
@@ -15,12 +16,12 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - PlayerPushbox
-  - EnemyPushbox
-  - 
-  - 
-  - 
+  - PlayerTrigger
+  - Player
+  - Enemy
+  - Portal
+  - PressableSwitch
+  - SwitchTrigger
   - 
   - 
   - 
@@ -29,9 +30,9 @@ TagManager:
   - 
   - 
   - Obstacle
-  - 
-  - 
-  - 
+  - Ground
+  - Spike
+  - NoPassWall
   - 
   - 
   - 

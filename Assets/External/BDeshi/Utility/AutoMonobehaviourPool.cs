@@ -110,12 +110,19 @@ namespace BDeshi.Utility
     
     public interface AutoPoolable<T>
     {
+        /// <summary>
+        /// Called after pooled object is taken out of pool
+        /// </summary>
         void initialize();
         /// <summary>
-        /// Do cleanup before returning to pool
+        /// Used by pooler to make all pooled objects return to pool
+        /// Theo object should do emergency cleanup  
         /// SHOULD NOT INVOKE NormalReturnCallback
         /// </summary>
         void handleForceReturn();
+        /// <summary>
+        /// The object calls this when the object itself is ready to be pooled back
+        /// </summary>
         event Action<T> NormalReturnCallback;
     }
 }
