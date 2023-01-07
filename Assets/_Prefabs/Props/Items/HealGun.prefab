@@ -52,7 +52,7 @@ MonoBehaviour:
   consumesUponUsage2: 0
   shouldShowAmountInUI: 0
   itemIconSprite: {fileID: 0}
-  ItemColor: {r: 1, g: 0.97766113, b: 0, a: 1}
+  ItemColor: {r: 1, g: 0.7330102, b: 0, a: 1}
   slot: {fileID: 0}
   shotPoint: {fileID: 7896547058128687245}
   shotDist: 9999

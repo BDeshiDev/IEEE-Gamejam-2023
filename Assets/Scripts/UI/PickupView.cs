@@ -22,12 +22,11 @@ public class PickupView : MonoBehaviour
     {
         if (pickupslot.shouldShowCountInUI)
         {
-            countText.gameObject.SetActive(true);
             countText.text = "x" + pickupslot.itemCount;
         }
         else
         {
-            countText.gameObject.SetActive(false);
+            countText.text = "∞";
         }
 
         icon.sprite = pickupslot.itemIconSprite;

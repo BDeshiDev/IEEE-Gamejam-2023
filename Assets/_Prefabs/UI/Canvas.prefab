@@ -2518,8 +2518,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7341099558042062678}
-  - component: {fileID: 7341099558042062672}
   - component: {fileID: 7341099558042062679}
+  - component: {fileID: 908597700063464925}
   m_Layer: 0
   m_Name: inventoryUIContainer
   m_TagString: Untagged
@@ -2547,32 +2547,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7341099558042062672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7341099558042062677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 8
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &7341099558042062679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2587,6 +2561,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &908597700063464925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7341099558042062677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 2
+  m_Spacing: -100
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &7341099558280758430
 GameObject:
   m_ObjectHideFlags: 0
@@ -2840,7 +2840,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 198.4312}
+  m_SizeDelta: {x: 150, y: 180}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &7439770800947762804
 GameObject:
@@ -3179,17 +3179,17 @@ PrefabInstance:
     - target: {fileID: 2229848545632249745, guid: eb085d1d61dde35479d414009f05b2fa,
         type: 3}
       propertyPath: m_Color.b
-      value: 0.25998163
+      value: 0.17218205
       objectReference: {fileID: 0}
     - target: {fileID: 2229848545632249745, guid: eb085d1d61dde35479d414009f05b2fa,
         type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.8301887
       objectReference: {fileID: 0}
     - target: {fileID: 2229848545632249745, guid: eb085d1d61dde35479d414009f05b2fa,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.14489143
       objectReference: {fileID: 0}
     - target: {fileID: 4980872939826666472, guid: eb085d1d61dde35479d414009f05b2fa,
         type: 3}

@@ -6,10 +6,12 @@ public class GoombaMoveForwardState: ModularState
     public GoombaEnemyEntity enemyEntity;
     public Bumper bumper;
     public string entryAnimation;
+    public Material aliveMaterial;
+
     public override void enterState(State prev)
     {
-        enemyEntity.Animator.Play(entryAnimation);
-        
+        enemyEntity.setFaceMat(aliveMaterial);
+
         //turn enemy into not pushable thing
         // enemyEntity.cc.enabled = true;
         enemyEntity.collider.isTrigger = true;

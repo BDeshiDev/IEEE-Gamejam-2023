@@ -10,22 +10,16 @@ using UnityEngine;
 public class GoombaEnemyEntity : LivingEntity
 {
     [SerializeField]private FiniteStateMachine fsm;
-    private Animator animator;
-    public Animator Animator => animator;
-    [SerializeField]private State deathState;
-    [SerializeField]private State goombaMoveForwardState;
+    [SerializeField] private State deathState;
+    [SerializeField] private State goombaMoveForwardState;
     [SerializeField] private DamageInfo contactDamage;
     [SerializeField] private FiniteTimer contactDamageTImer = new FiniteTimer(0, 1.2f);
     public CharacterController cc;
     public BoxCollider collider;
-
+    [SerializeField]private MeshRenderer renderer;
     public bool startAsDead = false;
     // public Rigidbody rb;
 
-    private void Awake()
-    {
-        animator = GetComponent<Animator>();
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -43,6 +37,18 @@ public class GoombaEnemyEntity : LivingEntity
         {
             startAsDead = false;
             forceKill();
+        }
+    }
+
+    public void setFaceMat(Material mat)
+    {
+        Material[] materials = renderer.materials;
+        materials[3] = mat;
+        renderer.materials = materials;
+        Debug.Log(mat + " " + renderer.materials[3]);
+        foreach (var m in renderer.materials)
+        {
+            Debug.Log("m = " + m);
         }
     }
 

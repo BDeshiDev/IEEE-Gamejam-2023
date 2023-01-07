@@ -101,7 +101,7 @@ MonoBehaviour:
   consumesUponUsage1: 1
   consumesUponUsage2: 1
   shouldShowAmountInUI: 1
-  itemIconSprite: {fileID: 21300000, guid: 1113db72e88f4f747850b40a3b7b0872, type: 3}
+  itemIconSprite: {fileID: 21300000, guid: c1c8f4197cf387643a1df8b340e85567, type: 3}
   ItemColor: {r: 1, g: 0.021099018, b: 0, a: 1}
   slot: {fileID: 0}
   explosionRadius: 4
