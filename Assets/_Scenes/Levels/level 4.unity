@@ -5091,6 +5091,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelText (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8686646002026852664, guid: ee483d088e2c2fe44913fb02e4f711eb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8686646002026852665, guid: ee483d088e2c2fe44913fb02e4f711eb,
         type: 3}
       propertyPath: m_text

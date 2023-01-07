@@ -126,6 +126,7 @@ MonoBehaviour:
     resetBoost: 0
     overrideDamageImmunity: 1
     damageType: 0
+  checkForPlayerDeath: 0
   thrower: {fileID: -8871534123651506705}
 --- !u!114 &-8871534123651506705
 MonoBehaviour:

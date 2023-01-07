@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41efdca3a87c4021b6ce1e0a75cb4443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSFXSource: {fileID: 0}
   item: {fileID: 5553954448630284022}
 --- !u!1001 &2343481023152020738
 PrefabInstance:

@@ -1,11 +1,16 @@
 ﻿using System;
+using Sound;
 using UnityEngine;
 
 namespace Combat.Pickups
 {
     public abstract class Pickup : MonoBehaviour
     {
-        public abstract void handlePickup(PlayerEntity player);
+        public virtual void handlePickup(PlayerEntity player)
+        {
+            SFXManager.Instance.play(SFXManager.Instance.pickupSFXPlayer);
+
+        }
 
         public event Action<Pickup> onPickedup;
 

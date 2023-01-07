@@ -49,7 +49,6 @@ namespace Combat.Pickups
                             RemainingItems.Pop();
                         }
 
-                        Debug.Log("use 1 ");
 
                         item.use1();
                     }
@@ -63,7 +62,6 @@ namespace Combat.Pickups
                             RemainingItems.Pop();
                         }
 
-                        Debug.Log("use 2 ");
                         item.use2();
                     }
                 }

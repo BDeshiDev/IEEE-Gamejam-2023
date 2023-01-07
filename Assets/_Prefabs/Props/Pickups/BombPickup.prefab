@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41efdca3a87c4021b6ce1e0a75cb4443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSFXSource: {fileID: 0}
   item: {fileID: 3041244360539894422}
 --- !u!135 &8507355257167632252
 SphereCollider:

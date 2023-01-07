@@ -6,7 +6,7 @@ namespace FSM.GameState
     public class GameOverState : ModularState
     {
         public GameObject gameOverMenu;
-
+        public AudioSource gameoverSFX;
         private void Start()
         {
             PlayerEntity.playerDied.add(gameObject, handlePlayerDeath);
@@ -21,6 +21,7 @@ namespace FSM.GameState
         {
             gameOverMenu.SetActive(true);
             GameStateManager.Instance.togglePause(true);
+            gameoverSFX.Play();
         }
 
 

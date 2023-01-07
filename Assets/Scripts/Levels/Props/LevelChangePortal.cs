@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Core.Input;
 using Core.Misc;
 using FSM.GameState;
+using Sound;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,7 @@ public class LevelChangePortal : MonoBehaviour
         if (!hasTriggered)
         {
             hasTriggered = true;
+            SFXManager.Instance.play(SFXManager.Instance.levelCompleteSFX);
             //assume that the portal will only be placed on levels that have leveldata objects in them
             GameStateManager.Instance.loadScene(SceneVarTracker.Instance.CurLevelData.getNextSceneAfterThisLevel());
         }
@@ -33,7 +35,7 @@ public class LevelChangePortal : MonoBehaviour
     /// </summary>
     private void handleDebugCalled()
     {
-        if (debugLevelChangeThreshold-- < 0)
+        if (--debugLevelChangeThreshold <= 0)
         {
             handlePortalEntered();
         }

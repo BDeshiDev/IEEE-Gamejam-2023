@@ -58,7 +58,7 @@ namespace Tutorial
         public void spawnExtraHealthPickups()
         {
             extraHealthPackContainer.SetActive(true);
-            healthPackChuckText.SetActive(false);
+            // healthPackChuckText.SetActive(false);
         }
     }
 }

@@ -15,6 +15,8 @@ namespace Core.Misc.Core
         [SerializeField] private PlayerEntity player;
         //this is -ve so dealing damage normally will heal targets
         public DamageInfo damagePerHit = new DamageInfo(-20);
+
+        [SerializeField]private AudioSource gunAudioSource;
         public override void shoot()
         {
             var ray = player.getPlayerShotDirRay();
@@ -36,6 +38,8 @@ namespace Core.Misc.Core
                 trailEffect.enableTrail(shotPoint.position, ray.direction* shotDist);
 
             }
+            
+            gunAudioSource.Play();
         }
 
 
