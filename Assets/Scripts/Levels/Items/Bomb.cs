@@ -89,10 +89,11 @@ namespace Combat.Pickups
             transform.position = slot.inventory.owner.transform.position;
             explode();
         }
-
+        
+        //there are no levels in game where we actually want this
         public override void use2()
         {
-            thrower.throwProjectile(slot.inventory.owner);
+            // thrower.throwProjectile(slot.inventory.owner);
         }
 
 

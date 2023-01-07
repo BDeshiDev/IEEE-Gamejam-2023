@@ -1,12 +1,13 @@
 ﻿using System;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using Core.Misc;
 using UnityEngine;
 
 namespace Combat
 {
-    public class NoPassWall: MonoBehaviour
+    public class NoPassWall: MonoBehaviour, IDamagable
     {
         public DamageInfo damage;
         public Transform pushCenter;
@@ -153,6 +154,34 @@ namespace Combat
             Gizmos.color = Color.yellow;
             Gizmos.DrawSphere(lastTargetEntryPos, .25f);
             Gizmos.DrawLine(lastTargetEntryPos, pushCenter.position);
+        }
+
+        public GameObject getGameObject()
+        {
+            return gameObject;
+        }
+
+        public Transform getTransform()
+        {
+            return transform;
+        }
+
+        public void kill()
+        {
+            //to destroy the text sibling object we need to destroy the parent
+            Destroy(transform.parent.gameObject);
+        }
+        /// <summary>
+        /// The doors are alive. Kill them.
+        /// </summary>
+        /// <param name="damage"></param>
+        public void takeDamage(DamageInfo damage)
+        {
+            Debug.Log(damage,gameObject);
+            if (damage.healthDamage > 0)
+            {
+                kill();
+            }
         }
     }
 }

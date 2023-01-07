@@ -160,7 +160,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   hitLayer:
     serializedVersion: 2
-    m_Bits: 12584960
+    m_Bits: 46139392
   onDamage:
     m_PersistentCalls:
       m_Calls:
