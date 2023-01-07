@@ -42,19 +42,30 @@ namespace Combat.Pickups
                 
                 if (usage1)
                 {
-                    if (item.consumesUponUsage1)
+                    if (item.canUse1)
                     {
-                        RemainingItems.Pop();
+                        if (item.consumesUponUsage1)
+                        {
+                            RemainingItems.Pop();
+                        }
+
+                        Debug.Log("use 1 ");
+
+                        item.use1();
                     }
-                    item.use1();
                 }
                 else
                 {
-                    if (item.consumesUponUsage2)
+                    if (item.canUse2)
                     {
-                        RemainingItems.Pop();
+                        if (item.consumesUponUsage2)
+                        {
+                            RemainingItems.Pop();
+                        }
+
+                        Debug.Log("use 2 ");
+                        item.use2();
                     }
-                    item.use2();
                 }
             }
         }

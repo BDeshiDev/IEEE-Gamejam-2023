@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,6 +14,30 @@ namespace Combat.Pickups
         public Sprite itemIconSprite;
         [FormerlySerializedAs("ItemCOlor")] public Color ItemColor = Color.green;
         public ItemSlot slot;
+        
+        /// <summary>
+        /// Derived clases should call this manually after use1()
+        /// </summary>
+        public event Action onUse1;
+        /// <summary>
+        /// Derived clases should call this manually after use2()
+        /// </summary>
+        public event Action onUse2;
+        
+        public abstract bool canUse2 { get; } 
+        public abstract bool canUse1 { get; } 
+
+        
+        //C# events can't be invoked by derived class
+        protected void handleOnUse1()
+        {
+            onUse1?.Invoke();
+        }
+        //C# events can't be invoked by derived class
+        protected void handleOnUse2()
+        {
+            onUse2?.Invoke();
+        }
 
         public string PickUpID
         {

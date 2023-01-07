@@ -28,12 +28,15 @@ namespace Core.Misc
                 InputManager.PlayModeExitCleanUp();
                 PlayerEntity.PlayModeExitCleanUp();
                 SceneVarTracker.PlayModeExitCleanup();
+                
+                GameProgressTracker.PlayModeExitCleanup();
             }
             else if (playModeState == PlayModeStateChange.ExitingEditMode)
             {
                 ManagerLoadEnsurer.loadedManager = false;
 
                 SceneVarTracker.PlayModeEnterCleanup();
+                GameProgressTracker.PlayModeEnterCleanup();
 
             }
         }

@@ -68,6 +68,7 @@ namespace Combat.Pickups
 
         public void useCurrentPickup1()
         {
+            Debug.Log("cur use 1");
             if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
             {
                 obtainedItemSlots[curPickupIndex].handlePickupUsage1();
@@ -77,6 +78,8 @@ namespace Combat.Pickups
         }
         public void useCurrentPickup2()
         {
+            Debug.Log("cur use 2");
+
             if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
             {
                 obtainedItemSlots[curPickupIndex].handlePickupUsage2();

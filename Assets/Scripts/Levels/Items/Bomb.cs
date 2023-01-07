@@ -83,11 +83,16 @@ namespace Combat.Pickups
             Gizmos.DrawWireSphere(transform.position, explosionRadius);
         }
 
+        public override bool canUse2 => false;
+        public override bool canUse1 => true;
+
         public override void use1()
         {
             //explode in player hands
             transform.position = slot.inventory.owner.transform.position;
             explode();
+            
+            handleOnUse2();
         }
         
         //there are no levels in game where we actually want this

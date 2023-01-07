@@ -7,6 +7,8 @@ namespace Combat.Pickups
     {
         public abstract void handlePickup(PlayerEntity player);
 
+        public event Action<Pickup> onPickedup;
+
         public void handleCollision(GameObject with)
         {
             if (with.CompareTag("Player"))// less expensive check
@@ -15,6 +17,7 @@ namespace Combat.Pickups
                 if (player != null)
                 {
                     handlePickup(player);
+                    onPickedup?.Invoke(this);
                 }
             }
         }

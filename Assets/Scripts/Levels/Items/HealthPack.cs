@@ -1,5 +1,6 @@
 ﻿using Combat;
 using Combat.Pickups;
+using Core.Misc;
 using UnityEngine;
 
 namespace Combat.Pickups
@@ -7,7 +8,11 @@ namespace Combat.Pickups
     public class HealthPack: Item
     {
         public DamageInfo healDamage= new DamageInfo(100);
-
+        // whether or not this should check hasPlayerDIedFromHealthpack
+        // we want to make it so only for the first health in one level
+        // so that players can skip to other levels and still use healthpacks
+        // without needing to kill themselves once
+        public bool checkForPlayerDeath = false;
         public ProjectileThrower thrower;
         void handleUsage()
         {
@@ -23,9 +28,17 @@ namespace Combat.Pickups
             handleUsage();
         }
 
+        public override bool canUse2 => true;
+
+        public override bool canUse1 =>
+            !checkForPlayerDeath || 
+            GameProgressTracker.Instance.hasPlayerDiedFromHealthpack;
+
+
         public override void use1()
         {
             thrower.throwProjectile(slot.inventory.owner);
+            handleOnUse1();
         }
 
 
@@ -33,6 +46,7 @@ namespace Combat.Pickups
         public override void use2()
         {
             useOn(slot.inventory.owner);
+            handleOnUse2();
         }
 
 

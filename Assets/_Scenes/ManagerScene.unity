@@ -403,6 +403,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1951965065}
     m_Modifications:
+    - target: {fileID: 5146675989712840588, guid: 1b618c27a44807048848ab10c93af77d,
+        type: 3}
+      propertyPath: m_text
+      value: You died.
+      objectReference: {fileID: 0}
     - target: {fileID: 5216465253647289373, guid: 1b618c27a44807048848ab10c93af77d,
         type: 3}
       propertyPath: m_AnchorMax.x
