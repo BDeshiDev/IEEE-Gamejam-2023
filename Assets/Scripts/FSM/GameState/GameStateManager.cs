@@ -84,7 +84,7 @@ namespace FSM.GameState
         /// pass a callback if you need run anything immediately after loading
         /// This will also send the CallbackBeforeActiveSceneChanges event
         /// </summary>
-        public void loadLevel(string sceneName, Action callback = null)
+        public void loadScene(string sceneName, Action callback = null)
         {
             CallbackBeforeActiveSceneChanges?.Invoke();
             if (callback != null)

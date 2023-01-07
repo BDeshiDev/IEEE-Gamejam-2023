@@ -19,7 +19,7 @@ public class LevelChangePortal : MonoBehaviour
         {
             hasTriggered = true;
             //assume that the portal will only be placed on levels that have leveldata objects in them
-            GameStateManager.Instance.loadLevel(SceneVarTracker.Instance.CurLevelData.getNextSceneAfterThisLevel());
+            GameStateManager.Instance.loadScene(SceneVarTracker.Instance.CurLevelData.getNextSceneAfterThisLevel());
         }
     }
 

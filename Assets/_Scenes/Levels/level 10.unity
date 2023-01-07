@@ -40505,6 +40505,11 @@ PrefabInstance:
       propertyPath: levelNo
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: -6684636335208194528, guid: a0d73901958f1dc438669a210a920710,
+        type: 3}
+      propertyPath: nextLevelNameOverride
+      value: CreditsScene
+      objectReference: {fileID: 0}
     - target: {fileID: 3090269514819608579, guid: a0d73901958f1dc438669a210a920710,
         type: 3}
       propertyPath: m_RootOrder

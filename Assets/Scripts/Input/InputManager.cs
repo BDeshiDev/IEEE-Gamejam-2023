@@ -30,12 +30,14 @@ namespace Core.Input
         [SerializeField] private InputActionReference sprintAction;
         [SerializeField] private InputActionReference lookAction;
         [SerializeField] private InputActionReference itemShiftAction;
+        [SerializeField] private InputActionReference pauseMenuAction;
         [SerializeField] private InputActionReference debugAction1;
 
         public static InputButtonSlot jumpButton = new InputButtonSlot();
         public static InputButtonSlot use1Button = new InputButtonSlot();
         public static InputButtonSlot use2Button = new InputButtonSlot();
         public static InputButtonSlot sprintButton = new InputButtonSlot();
+        public static InputButtonSlot pauseButton = new InputButtonSlot();
 
         public static InputButtonSlot debugButton1 = new InputButtonSlot();
 
@@ -67,6 +69,7 @@ namespace Core.Input
             use1Button.bind(use1Action);
             use2Button.bind(use2Action);
             sprintButton.bind(sprintAction);
+            pauseButton.bind(pauseMenuAction);
             
             moveAction.action.performed += OnMovePerformed;
             moveAction.action.canceled += OnMoveCancelled;
@@ -98,7 +101,7 @@ namespace Core.Input
             use1Button.unBind(use1Action);
             use2Button.unBind(use2Action);
             sprintButton.unBind(sprintAction);
-            
+            pauseButton.unBind(pauseMenuAction);
 #if UNITY_EDITOR
 
             debugButton1.unBind(debugAction1);
@@ -142,6 +145,7 @@ namespace Core.Input
             use1Button.cleanup();
             use2Button.cleanup();
             sprintButton.cleanup();
+            pauseButton.cleanup();
 #if UNITY_EDITOR
 
             debugButton1.cleanup();

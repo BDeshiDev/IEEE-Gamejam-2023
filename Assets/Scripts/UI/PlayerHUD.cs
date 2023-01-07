@@ -28,10 +28,16 @@ namespace UI.HUD
 
         protected void init()
         {
-            var healthComponent =  SceneVarTracker.Instance.Player.HealthComponent;
-            healthViewController.init(healthComponent);
+            var player = SceneVarTracker.Instance.Player;
+
+            if (player != null)
+            {
+                var healthComponent =  player.HealthComponent;
+                healthViewController.init(healthComponent);
             
-            inventoryView.init();
+                inventoryView.init();
+            }
+
         }
         public virtual void enableHUD()
         {

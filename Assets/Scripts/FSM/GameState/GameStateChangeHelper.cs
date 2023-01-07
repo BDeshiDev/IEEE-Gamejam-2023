@@ -36,7 +36,18 @@ namespace FSM.GameState
         {
             GameStateManager.Instance.fsm.transitionToState(GameStateManager.Instance.gameplayState);
         }
+        
 
+        public void reloadLevel()
+        {
+            GameStateManager.Instance.reloadLevel();
+            GameStateManager.Instance.fsm.transitionToState(GameStateManager.Instance.gameplayState);
+        }
+
+        public void loadFirstLevel()
+        {
+            GameStateManager.Instance.loadScene(LevelData.generateLevelSceneNameFromLevelNo(1));
+        }
         
         public void transitionToGameoverState()
         {

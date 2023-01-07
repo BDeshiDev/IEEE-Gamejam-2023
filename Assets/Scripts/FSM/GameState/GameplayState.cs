@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Input;
 using Core.Misc;
 using UnityEngine;
 
@@ -6,6 +7,23 @@ namespace FSM.GameState
 {
     public class GameplayState: State
     {
+        [SerializeField]private GameObject cursor;
+        private void Start()
+        {
+            InputManager.pauseButton.addPerformedCallback(gameObject, handlePauseToggle);
+        }
+
+        private void handlePauseToggle()
+        {
+            if (GameStateManager.Instance.fsm.CurState == GameStateManager.Instance.gameplayState)
+            {
+                GameStateManager.Instance.fsm.transitionToState(GameStateManager.Instance.pauseMenuState);
+            }
+            else
+            {
+                GameStateManager.Instance.fsm.transitionToState(GameStateManager.Instance.gameplayState);
+            }
+        }
 
         public override void enterState(State prev)
         {
@@ -17,6 +35,8 @@ namespace FSM.GameState
             {
                 doSceneVariableInitialization();
             }
+            
+            cursor.SetActive(true);
         }
 
         void doSceneVariableInitialization()
@@ -36,6 +56,7 @@ namespace FSM.GameState
 
         public override void exitState(State next)
         {
+            cursor.SetActive(false);
             SceneVarTracker.Instance.Player.camController.enabled = false;
         }
     }
