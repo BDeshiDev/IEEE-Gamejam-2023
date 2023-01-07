@@ -57,7 +57,10 @@ namespace FSM.GameState
         public override void exitState(State next)
         {
             cursor.SetActive(false);
-            SceneVarTracker.Instance.Player.camController.enabled = false;
+            if (SceneVarTracker.Instance.Player != null)
+            {
+                SceneVarTracker.Instance.Player.camController.enabled = false;
+            }
         }
     }
 }
