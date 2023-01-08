@@ -6005,12 +6005,12 @@ PrefabInstance:
     - target: {fileID: 8686646002026852665, guid: ee483d088e2c2fe44913fb02e4f711eb,
         type: 3}
       propertyPath: m_text
-      value: I forgot to give them collision.
+      value: They do not collide
       objectReference: {fileID: 0}
     - target: {fileID: 8686646002026852665, guid: ee483d088e2c2fe44913fb02e4f711eb,
         type: 3}
       propertyPath: m_fontSize
-      value: 22.05
+      value: 39.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee483d088e2c2fe44913fb02e4f711eb, type: 3}

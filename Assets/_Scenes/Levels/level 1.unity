@@ -170,7 +170,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 46.72, y: 18.11, z: 26.2}
+  m_Size: {x: 46.72, y: 18.11, z: 35.45}
   m_Center: {x: 7.58, y: -5.06, z: -8.57}
 --- !u!114 &7988391
 MonoBehaviour:
@@ -192,7 +192,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-83510
+  m_Name: pb_Mesh-21682
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -356,7 +356,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh57322
+  m_Name: pb_Mesh43682
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -520,7 +520,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh57268
+  m_Name: pb_Mesh43628
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -5308,7 +5308,7 @@ PrefabInstance:
     - target: {fileID: 8686646002026852663, guid: ee483d088e2c2fe44913fb02e4f711eb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 7.61788
       objectReference: {fileID: 0}
     - target: {fileID: 8686646002026852663, guid: ee483d088e2c2fe44913fb02e4f711eb,
         type: 3}
@@ -5768,7 +5768,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-83494
+  m_Name: pb_Mesh-21666
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6065,7 +6065,7 @@ PrefabInstance:
     - target: {fileID: 8686646002026852663, guid: ee483d088e2c2fe44913fb02e4f711eb,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 7.61788
       objectReference: {fileID: 0}
     - target: {fileID: 8686646002026852663, guid: ee483d088e2c2fe44913fb02e4f711eb,
         type: 3}
