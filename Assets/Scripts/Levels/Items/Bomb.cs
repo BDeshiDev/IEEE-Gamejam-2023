@@ -1,6 +1,7 @@
 ﻿using System;
 using BDeshi.Utility;
 using Core.Misc;
+using Sound;
 using UnityEngine;
 
 namespace Combat.Pickups
@@ -32,6 +33,7 @@ namespace Combat.Pickups
             if (!hasExploded)
             {
                 damageTargetsInRange();
+                SFXManager.Instance.play(SFXManager.Instance.explosionSFX);
                 hasExploded = true;
             }
 

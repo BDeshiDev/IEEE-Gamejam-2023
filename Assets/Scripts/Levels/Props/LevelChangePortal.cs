@@ -38,6 +38,7 @@ public class LevelChangePortal : MonoBehaviour
         //     cam.fieldOfView = Mathf.Lerp(fovStart, pullbackFOV, fovZoomOutTimer.Ratio);
         //     yield return null;
         // }
+        SFXManager.Instance.play(SFXManager.Instance.levelCompleteSFX);
         yield return
         DOTween.Sequence()
             .Insert(0, cam.DOFieldOfView(pullbackFOV, pulloutIime))
@@ -47,8 +48,6 @@ public class LevelChangePortal : MonoBehaviour
             .WaitForCompletion();
 
         // cam.fieldOfView = fovStart;
-        // SFXManager.Instance.play(SFXManager.Instance.levelCompleteSFX);
-        //
         // yield return cam.transform.DOMove(portalOrigin.position, .5f, true).WaitForCompletion();
 
         Debug.Log("done");

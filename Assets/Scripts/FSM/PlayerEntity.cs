@@ -6,6 +6,7 @@ using Combat;
 using Combat.Pickups;
 using Core.Misc.Core;
 using FSM.GameState;
+using Sound;
 using UnityEngine;
 
 public class PlayerEntity : LivingEntity
@@ -56,6 +57,7 @@ public class PlayerEntity : LivingEntity
             if (damage.healthDamage > 0)
             {
                 GameStateManager.Instance.damageFlash.doFlash();
+                SFXManager.Instance.play(SFXManager.Instance.hurtSFX);
             }
         }
         if (damage.resetBoost)

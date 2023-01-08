@@ -12,6 +12,12 @@ namespace FSM.GameState
         private void Start()
         {
             InputManager.pauseButton.addPerformedCallback(gameObject, handlePauseToggle);
+            SceneVarTracker.Instance.onSceneVarsFetched += doSceneVariableInitialization;
+        }
+
+        private void OnDestroy()
+        {
+            SceneVarTracker.Instance.onSceneVarsFetched -= doSceneVariableInitialization;
         }
 
         private void handlePauseToggle()
@@ -44,9 +50,14 @@ namespace FSM.GameState
 
         void doSceneVariableInitialization()
         {
-            SceneVarTracker.Instance.Player.camController.enabled = true;
+            if (SceneVarTracker.Instance.Player != null &&
+                GameStateManager.Instance.fsm.CurState== GameStateManager.Instance.gameplayState)
+            {
+                SceneVarTracker.Instance.Player.camController.enabled = true;
+            }
         }
 
+        
         public override void updateState()
         {
            

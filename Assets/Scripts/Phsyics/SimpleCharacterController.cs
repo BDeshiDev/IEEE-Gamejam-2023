@@ -59,6 +59,7 @@ public class SimpleCharacterController : MonoBehaviour
     [FormerlySerializedAs("groundHeight")] [SerializeField] private float groundCheckDistance;
     [SerializeField] private LayerMask groundLayerMask;
 
+    private Camera cam;
     // public Animator animator;
 
     private void OnValidate()
@@ -71,7 +72,7 @@ public class SimpleCharacterController : MonoBehaviour
     public void calcInput(out Vector3 moveInput)
     {
         moveInput = InputManager.convertVecCamRelative(
-            SceneVarTracker.Instance.Camera,
+            cam, 
             InputManager.RawMoveInput.toTopDown()
             );
 
@@ -190,11 +191,18 @@ public class SimpleCharacterController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        recalcJumpAndGravity();
+    }
+
     public void recalcJumpAndGravity()
     {
         gravity = -(2 * maxJumpHeight) / Mathf.Pow (timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt (2 * Mathf.Abs (gravity) * minJumpHeight);
+
+
     }
 
     public void applyJumpVel()
@@ -205,6 +213,7 @@ public class SimpleCharacterController : MonoBehaviour
         {
             resetJumpLimit();
         }
+        
 
         if (!isJumping)
         {
@@ -252,8 +261,10 @@ public class SimpleCharacterController : MonoBehaviour
 
     public void handleJumpDown()
     {
+        Debug.Log("moveVel.y = " + moveVel.y + " maxjumpvel "  + maxJumpVelocity);   
+
         moveVel.y = (moveVel.y >= 0 ? moveVel.y : 0) + maxJumpVelocity;
-        
+        Debug.Log("moveVel.y = " + moveVel.y);   
         isJumping = true;
     }
     
@@ -294,6 +305,7 @@ public class SimpleCharacterController : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         resetJumpLimit();
+        cam = Camera.main;
     }
 
     private void Update()

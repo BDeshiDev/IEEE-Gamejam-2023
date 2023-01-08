@@ -14,13 +14,13 @@ namespace Sound
 
         public void playBGM()
         {
-            // protect my snaity and ears by not playing it in the unity editor
-            #if !UNITY_EDITOR
+            // protect my sanity and ears by not playing it in the unity editor
+            // #if !UNITY_EDITOR
              if (!player.isPlaying)
             {
                 player.Play();
             }
-            #endif
+            // #endif
            
         }
 

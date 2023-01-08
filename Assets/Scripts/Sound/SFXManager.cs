@@ -11,6 +11,8 @@ namespace Sound
 
         public AudioSource pickupSFXPlayer;
         public AudioSource levelCompleteSFX;
+        public AudioSource hurtSFX;
+        public AudioSource explosionSFX;
 
         protected override void initialize()
         {
