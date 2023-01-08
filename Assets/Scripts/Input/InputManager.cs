@@ -76,11 +76,11 @@ namespace Core.Input
             lookAction.action.performed += OnLookPerformed;
             lookAction.action.canceled += OnLookCancelled;
             itemShiftAction.action.performed += handleItemShiftPerformed;
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
 
             debugButton1.bind(debugAction1);
 
-#endif
+// #endif
 
         }
 
@@ -102,11 +102,11 @@ namespace Core.Input
             use2Button.unBind(use2Action);
             sprintButton.unBind(sprintAction);
             pauseButton.unBind(pauseMenuAction);
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
 
             debugButton1.unBind(debugAction1);
 
-#endif
+// #endif
 
             moveAction.action.performed -= OnMovePerformed;
             moveAction.action.canceled -= OnMoveCancelled;
@@ -146,11 +146,11 @@ namespace Core.Input
             use2Button.cleanup();
             sprintButton.cleanup();
             pauseButton.cleanup();
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
 
             debugButton1.cleanup();
 
-#endif
+// #endif
             if (Instance != null)
             {
                 Instance.itemShift.clear();

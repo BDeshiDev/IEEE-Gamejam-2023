@@ -5,6 +5,8 @@ using BDeshi.Utility;
 using Combat;
 using Combat.Pickups;
 using Core.Misc.Core;
+using FSM.GameState;
+using Sound;
 using UnityEngine;
 
 public class PlayerEntity : LivingEntity
@@ -12,6 +14,8 @@ public class PlayerEntity : LivingEntity
     //will add player specific behaviour here if needed
     public PlayerInventory inventory;
     public Transform gunParent;
+    public Transform firstPersonParticlesParent;
+    public Transform bombSpawnParent;
     public FPSCameraController camController;
     public SimpleCharacterController cc;
     public FiniteTimer damageImmunityTimer = new FiniteTimer(0, .25f);
@@ -20,7 +24,6 @@ public class PlayerEntity : LivingEntity
     /// So that it works across scenes
     /// </summary>
     public static SafeEvent<PlayerEntity> playerDied = new SafeEvent<PlayerEntity>();
-    
     
     public Ray getPlayerShotDirRay()
     {
@@ -50,6 +53,12 @@ public class PlayerEntity : LivingEntity
                 damageImmunityTimer.reset();
             }
             base.takeDamage(damage);
+
+            if (damage.healthDamage > 0)
+            {
+                GameStateManager.Instance.damageFlash.doFlash();
+                SFXManager.Instance.play(SFXManager.Instance.hurtSFX);
+            }
         }
         if (damage.resetBoost)
         {

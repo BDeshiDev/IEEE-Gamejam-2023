@@ -42,7 +42,7 @@ namespace Core.Misc
         protected override void initialize()
         {
             refetchSceneVars();
-
+            
             SceneManager.sceneLoaded += handleSceneLoaded;
 
             foreach (var callback in temporaryCallbacksWaitingForSceneReload)
@@ -55,6 +55,7 @@ namespace Core.Misc
 
         private void handleSceneLoaded(Scene s, LoadSceneMode mode)
         {
+            Debug.Log("loaded" + mode);
             if (mode == LoadSceneMode.Single)//active scene has changed, refetch
             {
                 refetchSceneVars();
@@ -83,6 +84,7 @@ namespace Core.Misc
 
         private void refetchSceneVars()
         {
+            Debug.Log("refetch");
             player = findAndGetComponent<PlayerEntity>(PlayerTag);
             camera = Camera.main;
             curLevelData = findAndGetComponent<LevelData>("LevelData");

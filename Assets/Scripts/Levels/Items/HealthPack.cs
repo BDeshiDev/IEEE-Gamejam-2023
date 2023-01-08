@@ -41,12 +41,28 @@ namespace Combat.Pickups
             handleOnUse1();
         }
 
+        public void handleHit(Vector3 point)
+        {
+            var hitVFX = SpawnManager.Instance.healProjectileHitParticlePool.getItem();
+            hitVFX.transform.position = point;
+        }
+
 
 
         public override void use2()
         {
             useOn(slot.inventory.owner);
+            spawnVFX();
+
             handleOnUse2();
+        }
+
+        private void spawnVFX()
+        {
+            var healVfxPrefab = SpawnManager.Instance.healParticlePool.getItem();
+            healVfxPrefab.transform.parent = slot.inventory.owner.firstPersonParticlesParent;
+            healVfxPrefab.transform.localPosition = Vector3.zero;
+            healVfxPrefab.transform.localRotation = Quaternion.identity;
         }
 
 
@@ -54,6 +70,16 @@ namespace Combat.Pickups
         {
             base.handleAddedToInventorySlot(slot);
             this.gameObject.SetActive(false);
+        }
+
+        public override void handleItemMadeActiveSlot()
+        {
+            
+        }
+
+        public override void handleItemRemovedFromActiveSlot()
+        {
+            
         }
     }
 }

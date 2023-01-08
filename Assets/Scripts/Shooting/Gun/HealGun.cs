@@ -32,6 +32,9 @@ namespace Core.Misc.Core
                     damageText.transform.position = hitResults.point;
                     damageText.text.text = $"+{-damagePerHit.healthDamage}";
                 }
+
+                var vfx = SpawnManager.Instance.gunShotParticlePool.getItem();
+                vfx.transform.position = hitResults.point;
             }
             else
             {
@@ -47,6 +50,17 @@ namespace Core.Misc.Core
         {
             base.handleAddedToInventorySlot(slot);
             attatchToPlayer(slot);
+        }
+
+        public override void handleItemMadeActiveSlot()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public override void handleItemRemovedFromActiveSlot()
+        {
+
+            gameObject.SetActive(false);
         }
 
         private void attatchToPlayer(ItemSlot slot)

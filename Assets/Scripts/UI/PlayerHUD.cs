@@ -32,10 +32,16 @@ namespace UI.HUD
 
             if (player != null)
             {
+                healthViewController.gameObject.SetActive(true);
+
                 var healthComponent =  player.HealthComponent;
                 healthViewController.init(healthComponent);
             
                 inventoryView.init();
+            }
+            else
+            {
+                healthViewController.gameObject.SetActive(false);
             }
 
         }

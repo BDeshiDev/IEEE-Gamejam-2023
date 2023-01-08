@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8507355257167632254}
   - component: {fileID: 8507355257167632253}
   - component: {fileID: 8507355257167632252}
+  - component: {fileID: -5384785775913891856}
   m_Layer: 0
   m_Name: BombPickup
   m_TagString: Untagged
@@ -46,7 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41efdca3a87c4021b6ce1e0a75cb4443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupSFXSource: {fileID: 0}
   item: {fileID: 3041244360539894422}
 --- !u!135 &8507355257167632252
 SphereCollider:
@@ -61,6 +61,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.11
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-5384785775913891856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507355257167632131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a9a8db506d40dba2e717183dc2b4fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinSpeed: 100
 --- !u!1001 &6798470843134350400
 PrefabInstance:
   m_ObjectHideFlags: 0

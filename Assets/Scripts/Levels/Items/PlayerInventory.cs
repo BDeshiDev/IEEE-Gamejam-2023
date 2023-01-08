@@ -23,8 +23,15 @@ namespace Combat.Pickups
                 if (obtainedItemSlots[i].itemID.Equals(item.PickUpID))
                 {
                     obtainedItemSlots[i].addItem(item);
+
+                    if (curPickupIndex != i)
+                    {
+                        setCurItemAsInactive();
+                    }
                     
                     curPickupIndex = i;
+                    
+                    setCurItemAsActive();
                     
                     onInventoryRefreshed?.Invoke(this);
                     return;
@@ -41,34 +48,22 @@ namespace Combat.Pickups
 
         public void shiftSelectedItem(bool shiftRight)
         {
-            if (obtainedItemSlots.Count <= 0)
+            if (obtainedItemSlots.Count <= 1)
             {
                 return;
             }
 
+            var oldItem = obtainedItemSlots[curPickupIndex];
+            oldItem.setSlotAsInactive();
+            
             curPickupIndex = (curPickupIndex + (shiftRight ? 1 : -1) + obtainedItemSlots.Count) % obtainedItemSlots.Count;
+            var newItem = obtainedItemSlots[curPickupIndex];
+            newItem.setSlotAsActive();
+            
             onInventoryRefreshed?.Invoke(this);
         }
-        /// <summary>
-        /// Will entirely remove item from inventory
-        /// Not reduce its usage limit
-        /// </summary>
-        public void removeItem(Item item)
-        {
-            for (int i = 0; i < obtainedItemSlots.Count; i++)
-            {
-                if (obtainedItemSlots[i].itemID.Equals(item.PickUpID))
-                {
-                    obtainedItemSlots.RemoveAt(i);
-                    break;
-                }
-            }
-            onInventoryRefreshed?.Invoke(this);
-        }
-
         public void useCurrentPickup1()
         {
-            Debug.Log("cur use 1");
             if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
             {
                 obtainedItemSlots[curPickupIndex].handlePickupUsage1();
@@ -78,7 +73,6 @@ namespace Combat.Pickups
         }
         public void useCurrentPickup2()
         {
-            Debug.Log("cur use 2");
 
             if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
             {
@@ -90,6 +84,21 @@ namespace Combat.Pickups
             }
         }
 
+        void setCurItemAsActive()
+        {
+            if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
+            {
+                obtainedItemSlots[curPickupIndex].setSlotAsActive();
+            }
+        }
+        
+        void setCurItemAsInactive()
+        {
+            if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
+            {
+                obtainedItemSlots[curPickupIndex].setSlotAsInactive();
+            }
+        }
         void removePickupAtCurIndexIfEmpty()
         {
             if (curPickupIndex >= 0 && curPickupIndex <= obtainedItemSlots.Count )
@@ -100,7 +109,8 @@ namespace Combat.Pickups
                     obtainedItemSlots.RemoveAt(curPickupIndex);
                     
                     Destroy(removed);
-
+                    
+                    //restore curindex to something valid if possible
                     if (obtainedItemSlots.Count <= 0)
                     {
                         curPickupIndex = -1;
@@ -109,7 +119,8 @@ namespace Combat.Pickups
                     {
                         curPickupIndex = Mathf.Clamp(curPickupIndex, 0,obtainedItemSlots.Count-1);
                     }
-                    
+
+                    setCurItemAsActive();
                 }
             }
         }

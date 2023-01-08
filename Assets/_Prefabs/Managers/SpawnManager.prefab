@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &424602710172575732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 424602710172575734}
+  - component: {fileID: 424602710172575733}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &424602710172575734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424602710172575732}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.7018194, y: -2.4844341, z: 1.0374622}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &424602710172575733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424602710172575732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d437863c3a453a9bc0743202212825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunDamagePrefab: {fileID: 7253069479892628738, guid: 65b24de1ff118ca4e84aba507d913836,
+    type: 3}
+  gunShotParticlePrefab: {fileID: 9070420309390695803, guid: 2e741bc91805fd84592a99f61da0d488,
+    type: 3}
+  healParticlePrefab: {fileID: 3723222370813845441, guid: f2f4787c088ba614eb60871c21a3d922,
+    type: 3}
+  healProjectileHitParticlePrefab: {fileID: 6814936451951267622, guid: 2eab18a3b76d87d489e07b5226669892,
+    type: 3}
+  bombParticlePrefab: {fileID: 3454046547435062633, guid: 2b7e3a9d2ba408644a14c6b9f84f1205,
+    type: 3}

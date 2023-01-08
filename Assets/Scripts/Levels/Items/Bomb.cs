@@ -1,5 +1,7 @@
 ﻿using System;
 using BDeshi.Utility;
+using Core.Misc;
+using Sound;
 using UnityEngine;
 
 namespace Combat.Pickups
@@ -31,6 +33,7 @@ namespace Combat.Pickups
             if (!hasExploded)
             {
                 damageTargetsInRange();
+                SFXManager.Instance.play(SFXManager.Instance.explosionSFX);
                 hasExploded = true;
             }
 
@@ -88,19 +91,35 @@ namespace Combat.Pickups
 
         public override void use1()
         {
+            spawnBombParticles();
+            
             //explode in player hands
             transform.position = slot.inventory.owner.transform.position;
             explode();
             
             handleOnUse2();
         }
-        
+
+        private void spawnBombParticles()
+        {
+            var bombVFX = SpawnManager.Instance.bombParticlePool.getItem();
+            bombVFX.transform.position = slot.inventory.owner.bombSpawnParent.position;
+        }
+
         //there are no levels in game where we actually want this
         public override void use2()
         {
             // thrower.throwProjectile(slot.inventory.owner);
         }
 
+        public override void handleItemMadeActiveSlot()
+        {
+            
+        }
 
+        public override void handleItemRemovedFromActiveSlot()
+        {
+            
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace BDeshi.levelloading
         public string managerSceneName = "ManagerScene";
 
         public UnityEvent preManagerSceneCallback;
+        public UnityEvent alreadyManagerSceneLoadedCallback;
         private void Awake()
         {
             Debug.Log("loadedManager = " + loadedManager);
@@ -37,6 +38,10 @@ namespace BDeshi.levelloading
                 // GameStateManager.initialStateID = GameStateManager.gameplayStateID;
                 Debug.Log("GameStateManager.initialStateID = " + GameStateManager.initialStateID);
                 SceneManager.LoadScene(managerSceneName, LoadSceneMode.Additive);
+            }
+            else
+            {
+                alreadyManagerSceneLoadedCallback.Invoke();
             }
         }
 

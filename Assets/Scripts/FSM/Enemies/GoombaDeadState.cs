@@ -4,16 +4,15 @@ public class GoombaDeadState: ModularState
 {
     public GoombaEnemyEntity enemyEntity;
     private string entryAnimation;
+    public Material deadMaterial;
     public override void enterState(State prev)
     {
-        enemyEntity.Animator.Play(entryAnimation);
-        
+        enemyEntity.setFaceMat(deadMaterial);
         //turn enemy into a pushable thing
         // enemyEntity.cc.enabled = false;
         
         enemyEntity.collider.isTrigger = false;
         // enemyEntity.rb.isKinematic = false;
-
     }
 
     public override void updateState()

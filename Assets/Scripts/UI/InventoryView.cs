@@ -26,9 +26,13 @@ namespace UI
         public void init()
         {
             inventory = SceneVarTracker.Instance.Player.inventory;
-            // as the source of the event is destroyed in scene change,
-            // we don't really need to unsub for this  when a new scene is about to be loaded
-            inventory.onInventoryRefreshed += refreshUI;
+            if (inventory != null)
+            {
+                // as the source of the event is destroyed in scene change,
+                // we don't really need to unsub for this  when a new scene is about to be loaded
+                inventory.onInventoryRefreshed += refreshUI;
+                refreshUI(inventory);
+            }
         }
 
         private void OnDestroy()

@@ -101,6 +101,7 @@ namespace BDeshi.Utility
 
         void handleReturnInternal(T item)
         {
+            item.transform.parent = spawnParent;
             item.gameObject.SetActive(false);
             item.NormalReturnCallback -= handleNormalNormalReturn;
 

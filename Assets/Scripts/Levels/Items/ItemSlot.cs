@@ -29,6 +29,23 @@ namespace Combat.Pickups
             addItem(item);
         }
 
+        public void setSlotAsActive()
+        {
+            if (RemainingItems.Count > 0)
+            {
+                RemainingItems.Peek().handleItemMadeActiveSlot();
+            }
+        }
+        
+        public void setSlotAsInactive()
+        {
+            if (RemainingItems.Count > 0)
+            {
+                RemainingItems.Peek().handleItemRemovedFromActiveSlot();
+            }
+        }
+
+
         public void addItem(Item item)
         {
             RemainingItems.Push(item);
