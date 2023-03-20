@@ -83,7 +83,7 @@ MonoBehaviour:
   ShotDir: {x: 0, y: 0, z: 0}
   durationTimer:
     timer: 0
-    maxValue: 1
+    maxValue: 2
   speedCurve:
     serializedVersion: 2
     m_Curve:

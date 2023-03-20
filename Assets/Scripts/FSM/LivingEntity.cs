@@ -8,6 +8,8 @@ public class LivingEntity : MonoBehaviour, IDamagable
     public HealthComponent HealthComponent => healthComponent;
 
     public event Action EntityDied;
+    public event Action<DamageInfo> TookDamage;
+    
 
     public GameObject getGameObject()
     {
@@ -30,6 +32,7 @@ public class LivingEntity : MonoBehaviour, IDamagable
     public virtual void takeDamage(DamageInfo damage)
     {
         healthComponent.modifyAmount(-damage.healthDamage);
+        TookDamage?.Invoke(damage);
     }
 
     protected virtual void Start()
