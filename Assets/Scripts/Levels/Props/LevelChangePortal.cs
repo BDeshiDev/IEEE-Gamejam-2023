@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using BDeshi.Utility;
 using Core.Input;
 using Core.Misc;
+using Core.Misc.Core;
 using DG.Tweening;
 using FSM.GameState;
 using Sound;
@@ -21,6 +22,7 @@ public class LevelChangePortal : MonoBehaviour
     public float pullbackFOV = 160;
     public float pulloutIime = .75f;
     public float pullInIime = .5f;
+    private float pullbackDistance = 1.5f;
     IEnumerator triggerPullInEffect()
     {
         var cam = Camera.main;
@@ -28,8 +30,20 @@ public class LevelChangePortal : MonoBehaviour
         SceneVarTracker.Instance.Player.gameObject.SetActive(false);
 
         cam.transform.position = new Vector3(cam.transform.position.x, portalOrigin.position.y,cam.transform.position.z) ;
-        var camPullBackPos = cam.transform.position + (cam.transform.position - portalOrigin.position).normalized * 5;
+        var camController = cam.GetComponent<FPSCameraController>();
+        camController.enabled = false;
+        var pullBackVector = cam.transform.position - portalOrigin.position;
+        if (pullBackVector.magnitude <= .05)//if too close to portal than just move away in portal forward dir
+        {
+            pullBackVector = portalOrigin.forward;
+        }
+        else
+        {
+            pullBackVector.Normalize();
+        }
+        var camPullBackPos = cam.transform.position + pullBackVector * pullbackDistance;
         cam.transform.LookAt(portalOrigin);
+
         var fovStart = cam.fieldOfView;
         var fovZoomOutTimer = new FiniteTimer(1);
         // while (!fovZoomOutTimer.isComplete)
@@ -56,7 +70,7 @@ public class LevelChangePortal : MonoBehaviour
     }
         
         
-    void handlePortalEntered()
+    public void handlePortalEntered()
     {
         if (!hasTriggered)
         {
@@ -81,10 +95,12 @@ public class LevelChangePortal : MonoBehaviour
     /// </summary>
     private void handleDebugCalled()
     {
-        if (--debugLevelChangeThreshold <= 0)
-        {
-            handlePortalEntered();
-        }
+        #if UNITY_EDITOR
+            if (--debugLevelChangeThreshold <= 0)
+            {
+                handlePortalEntered();
+            }
+        #endif
     }
 
     private void OnTriggerEnter(Collider other)

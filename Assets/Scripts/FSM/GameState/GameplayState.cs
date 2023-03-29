@@ -17,7 +17,8 @@ namespace FSM.GameState
 
         private void OnDestroy()
         {
-            SceneVarTracker.Instance.onSceneVarsFetched -= doSceneVariableInitialization;
+            if(SceneVarTracker.Instance != null)
+                SceneVarTracker.Instance.onSceneVarsFetched -= doSceneVariableInitialization;
         }
 
         private void handlePauseToggle()
