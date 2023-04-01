@@ -9,7 +9,18 @@ namespace Core.Misc.Core
     {
         [SerializeField]private float xRotation;
         private Transform PlayerBody;
-        public float mouseSensitivity = 5;
+        public static float mouseSensitivity = 50;
+        public static float FOV = 60;
+        private Camera cam;
+        public void setFOV(float fov)
+        {
+            FOV = fov;
+            cam.fieldOfView = FOV;
+        }
+        
+
+        
+        
         
         
 
@@ -29,6 +40,9 @@ namespace Core.Misc.Core
         private void Awake()
         {
             PlayerBody = GameObject.FindWithTag("Player").transform;
+            cam = GetComponent<Camera>();
+            
+            setFOV(FOV);
         }
         private void Update()
         {
